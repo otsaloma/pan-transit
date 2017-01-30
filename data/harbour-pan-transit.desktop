@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Pan Transit
+Exec=sailfish-qml harbour-pan-transit
+Icon=harbour-pan-transit
+Type=Application
+X-Nemo-Application-Type=silica-qt5

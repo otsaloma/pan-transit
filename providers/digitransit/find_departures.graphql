@@ -1,0 +1,17 @@
+{
+    stops(ids: [{ids}]) {
+        lat
+        lon
+        stoptimesWithoutPatterns(numberOfDepartures: 30) {
+            realtime
+            realtimeDeparture
+            serviceDay
+            stopHeadsign
+            trip {
+                route {
+                    shortName
+                }
+            }
+        }
+    }
+}

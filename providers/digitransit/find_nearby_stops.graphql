@@ -1,0 +1,27 @@
+{
+    stopsByRadius(
+        lat: {y:.6f}
+        lon: {x:.6f}
+        radius: 1000
+    ) {
+        edges {
+            node {
+                stop {
+                    code
+                    desc
+                    gtfsId
+                    lat
+                    lon
+                    name
+                    patterns {
+                        headsign
+                        route {
+                            mode
+                            shortName
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

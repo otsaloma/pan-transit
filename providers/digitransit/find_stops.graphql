@@ -1,0 +1,17 @@
+{
+    stops(name: "{query}") {
+        code
+        desc
+        gtfsId
+        lat
+        lon
+        name
+        patterns {
+            headsign
+            route {
+                mode
+                shortName
+            }
+        }
+    }
+}
