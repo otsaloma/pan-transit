@@ -60,7 +60,7 @@ ListItem {
         anchors.baseline: lineLabel.baseline
         anchors.left: lineLabel.right
         anchors.leftMargin: Theme.paddingLarge
-        anchors.right: timeLabel.left
+        anchors.right: realLabel.left
         color: Theme.secondaryColor
         text: model.destination
         truncationMode: TruncationMode.Fade
@@ -74,6 +74,34 @@ ListItem {
                 destinationLabel.text += dots;
                 if (destinationLabel.implicitWidth < prev + 1) break;
             }
+        }
+    }
+    Label  {
+        id: realLabel
+        anchors.baseline: lineLabel.baseline
+        anchors.right: timeLabel.left
+        anchors.rightMargin: Theme.paddingMedium
+        horizontalAlignment: Text.AlignRight
+        text: {
+            // If real-time information is available, indicate if
+            // we're behind or ahead of schedule and by how much.
+            if (!model.realtime) return "";
+            var diff = model.time - model.scheduled_time;
+            if (diff >=  600) return "+++";
+            if (diff >=  300) return "++";
+            if (diff >=   60) return "+";
+            if (diff <= -600) return "–––";
+            if (diff <= -300) return "––";
+            if (diff <=  -60) return "–";
+            return "=";
+        }
+        width: page.realWidth
+        Component.onCompleted: realLabel.updateWidth();
+        onTextChanged: realLabel.updateWidth();
+        function updateWidth() {
+            var width = realLabel.implicitWidth;
+            view.model.setProperty(model.index, "realWidth", width);
+            page.realWidth = Math.max(page.realWidth, model.visible * width);
         }
     }
     Label {

@@ -33,6 +33,7 @@ Page {
     property string title: ""
     // Column widths to be set based on data.
     property int lineWidth: 0
+    property int realWidth: 0
     property int timeWidth: 0
     SilicaListView {
         id: view
@@ -105,6 +106,7 @@ Page {
             } else if (results && results.length > 0) {
                 view.model.clear();
                 page.lineWidth = 0;
+                page.realWidth = 0;
                 page.timeWidth = 0;
                 page.results = results;
                 page.title = page.props.name;
@@ -155,15 +157,19 @@ Page {
     function updateWidths() {
         // Update column widths based on visible items.
         var lineWidth = 0;
+        var realWidth = 0;
         var timeWidth = 0;
         for (var i = 0; i < view.model.count; i++) {
             var item = view.model.get(i);
             if (item.visible && item.lineWidth)
                 lineWidth = Math.max(lineWidth, item.lineWidth);
+            if (item.visible && item.realWidth)
+                realWidth = Math.max(realWidth, item.realWidth);
             if (item.visible && item.timeWidth)
                 timeWidth = Math.max(timeWidth, item.timeWidth);
         }
         page.lineWidth = lineWidth;
+        page.realWidth = realWidth;
         page.timeWidth = timeWidth;
     }
 }

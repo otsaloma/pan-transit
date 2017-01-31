@@ -5,6 +5,7 @@
         stoptimesWithoutPatterns(numberOfDepartures: 30) {
             realtime
             realtimeDeparture
+            scheduledDeparture
             serviceDay
             stopHeadsign
             trip {

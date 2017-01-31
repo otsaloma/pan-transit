@@ -59,6 +59,7 @@ def find_departures(stops):
         "destination": parse_headsign(departure["stopHeadsign"]),
         "line": parse_line_name(departure["trip"]["route"]),
         "realtime": bool(departure["realtime"]),
+        "scheduled_time": parse_scheduled_time(departure),
         "time": parse_time(departure),
         "x": float(stop["lon"]),
         "y": float(stop["lat"]),
@@ -128,7 +129,7 @@ def format_graphql(name, **kwargs):
 
 def format_stop_name(stop):
     """Return user visible name for `stop`."""
-    name = stop["name"]
+    name = re.sub(r"(?<! )\(", " (", stop["name"])
     code = stop.get("code", "")
     if not code: return name
     return "{} ({})".format(name, code)
@@ -166,6 +167,10 @@ def parse_headsign(headsign):
 def parse_line_name(route):
     """Return short name to use for line of `route`."""
     return route["shortName"] or route["mode"] or "?"
+
+def parse_scheduled_time(departure):
+    """Return scheduled Unix time in seconds for `departure`."""
+    return int(departure["serviceDay"]) + int(departure["scheduledDeparture"])
 
 def parse_time(departure):
     """Return Unix time in seconds for `departure`."""
