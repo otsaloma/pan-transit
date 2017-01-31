@@ -55,7 +55,7 @@ def find_departures(stops):
         for stop in result["data"]["stops"]:
             for departure in stop["stoptimesWithoutPatterns"]:
                 yield stop, departure
-    return [{
+    departures = [{
         "destination": parse_headsign(departure["stopHeadsign"]),
         "line": parse_line_name(departure["trip"]["route"]),
         "realtime": bool(departure["realtime"]),
@@ -63,6 +63,8 @@ def find_departures(stops):
         "x": float(stop["lon"]),
         "y": float(stop["lat"]),
     } for stop, departure in departures()]
+    return sorted(departures, key=lambda x:
+                  (x["time"], line_to_sort_key(x["line"])))
 
 def find_lines(stops):
     """Return a list of lines that use `stops`."""
@@ -149,7 +151,7 @@ def get_stop_lines(stop):
 def line_to_sort_key(line):
     """Return a key for `line` to use for sorting."""
     # Break into line and modifier, pad with zeros.
-    head, tail = line["name"].replace(" ", ""), ""
+    head, tail = line.replace(" ", ""), ""
     while head and head[0].isdigit() and head[-1].isalpha():
         tail = head[-1:] + tail
         head = head[:-1]
@@ -174,4 +176,4 @@ def sorted_unique_lines(lines):
     unames = set()
     ulines = [line for line in lines
               if not (line["name"] in unames or unames.add(line["name"]))]
-    return sorted(ulines, key=line_to_sort_key)
+    return sorted(ulines, key=lambda x: line_to_sort_key(x["name"]))
