@@ -51,7 +51,6 @@ install:
 	mkdir -p $(DATADIR)/providers
 	cp providers/*.json $(DATADIR)/providers
 	cp providers/[!_]*.py $(DATADIR)/providers
-	cp providers/*.qml $(DATADIR)/providers
 	cp providers/README.md $(DATADIR)/providers
 	mkdir -p $(DATADIR)/providers/digitransit
 	cp providers/digitransit/*.graphql $(DATADIR)/providers/digitransit
