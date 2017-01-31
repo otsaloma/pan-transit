@@ -26,9 +26,8 @@ listing of nearby stops or search for stops by name. Mark frequently used stops
 as favorites along with line filters.
 
 Currently Pan Transit supports the Finnish Digitransit provider, which includes
-Helsinki Region Transport (HSL) and experimentally the Waltti region and whole
-Finland. Pan Transit is Open Source and new providers are added based on
-contributions from the community.
+Helsinki Region Transport (HSL) and whole Finland. Pan Transit is Open Source
+and new providers are added based on contributions from the community.
 
 %prep
 %setup -q

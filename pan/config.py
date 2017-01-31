@@ -27,7 +27,7 @@ __all__ = ("ConfigurationStore",)
 DEFAULTS = {
     "departure_time_cutoff": 10,
     "favorite_highlight_radius": 1000,
-    "provider": "digitransit",
+    "provider": "digitransit_hsl",
     "units": "metric",
 }
 

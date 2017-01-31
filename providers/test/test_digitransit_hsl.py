@@ -21,7 +21,7 @@ import pan.test
 class TestModule(pan.test.TestCase):
 
     def setup_method(self, method):
-        self.provider = pan.Provider("digitransit")
+        self.provider = pan.Provider("digitransit_hsl")
 
     def test_find_departures(self):
         stops = ["HSL:1020447", "HSL:1020463"]

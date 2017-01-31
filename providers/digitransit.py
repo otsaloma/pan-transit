@@ -27,6 +27,8 @@ import os
 import pan
 import re
 
+from pan.i18n import _
+
 COLORS = {
  "AIRPLANE": "#ed145d",
       "BUS": "#007ac9",
@@ -37,19 +39,17 @@ COLORS = {
      "WALK": "#888888",
 }
 
-CONF_DEFAULTS = {
-    # "hsl", "waltti" or "finland"
-    "region": "hsl",
-}
-
 HEADERS = {"Content-Type": "application/graphql"}
 URL = "http://api.digitransit.fi/routing/v1/routers/{region}/index/graphql"
+
+# Overriden by region-specific implementations.
+REGION = None
 
 def find_departures(stops):
     """Return a list of departures from `stops`."""
     stops = ", ".join('"{}"'.format(x) for x in stops)
     body = format_graphql("find_departures", ids=stops)
-    url = URL.format(region=pan.conf.providers.digitransit.region)
+    url = URL.format(region=REGION)
     result = pan.http.post_json(url, body, headers=HEADERS)
     def departures():
         for stop in result["data"]["stops"]:
@@ -57,7 +57,7 @@ def find_departures(stops):
                 yield stop, departure
     return [{
         "destination": parse_headsign(departure["stopHeadsign"]),
-        "line": departure["trip"]["route"]["shortName"],
+        "line": parse_line_name(departure["trip"]["route"]),
         "realtime": bool(departure["realtime"]),
         "time": parse_time(departure),
         "x": float(stop["lon"]),
@@ -68,7 +68,7 @@ def find_lines(stops):
     """Return a list of lines that use `stops`."""
     stops = ", ".join('"{}"'.format(x) for x in stops)
     body = format_graphql("find_lines", ids=stops)
-    url = URL.format(region=pan.conf.providers.digitransit.region)
+    url = URL.format(region=REGION)
     result = pan.http.post_json(url, body, headers=HEADERS)
     def patterns():
         for stop in result["data"]["stops"]:
@@ -78,17 +78,17 @@ def find_lines(stops):
         "color": COLORS.get(pattern["route"]["mode"], COLORS["BUS"]),
         "destination": parse_headsign(pattern["headsign"]),
         "id": pattern["route"]["gtfsId"],
-        "name": pattern["route"]["shortName"],
+        "name": parse_line_name(pattern["route"]),
     } for pattern in patterns()])
 
 def find_nearby_stops(x, y):
     """Return a list of stops near given coordinates."""
     body = format_graphql("find_nearby_stops", x=x, y=y)
-    url = URL.format(region=pan.conf.providers.digitransit.region)
+    url = URL.format(region=REGION)
     result = pan.http.post_json(url, body, headers=HEADERS)
     return [{
         "color": get_stop_color(stop),
-        "description": stop["desc"] or "",
+        "description": stop["desc"] or _("Stop"),
         "id": stop["gtfsId"],
         "lines": get_stop_lines(stop),
         "name": format_stop_name(stop),
@@ -101,11 +101,11 @@ def find_stops(query, x, y):
     """Return a list of stops matching `query`."""
     query = re.sub('["{}]', "", query)
     body = format_graphql("find_stops", query=query)
-    url = URL.format(region=pan.conf.providers.digitransit.region)
+    url = URL.format(region=REGION)
     result = pan.http.post_json(url, body, headers=HEADERS)
     return [{
         "color": get_stop_color(stop),
-        "description": stop["desc"] or "",
+        "description": stop["desc"] or _("Stop"),
         "id": stop["gtfsId"],
         "lines": get_stop_lines(stop),
         "name": format_stop_name(stop),
@@ -142,14 +142,14 @@ def get_stop_color(stop):
 def get_stop_lines(stop):
     """Return a list of lines that use `stop`."""
     return sorted_unique_lines([{
-        "name": pattern["route"]["shortName"],
+        "name": parse_line_name(pattern["route"]),
         "destination": parse_headsign(pattern["headsign"]),
     } for pattern in stop["patterns"]])
 
 def line_to_sort_key(line):
     """Return a key for `line` to use for sorting."""
     # Break into line and modifier, pad with zeros.
-    head, tail = line["name"], ""
+    head, tail = line["name"].replace(" ", ""), ""
     while head and head[0].isdigit() and head[-1].isalpha():
         tail = head[-1:] + tail
         head = head[:-1]
@@ -160,6 +160,10 @@ def parse_headsign(headsign):
     headsign = re.sub(r" via .+$", "", headsign)
     headsign = re.sub(r"(?<! )\(", " (", headsign)
     return headsign
+
+def parse_line_name(route):
+    """Return short name to use for line of `route`."""
+    return route["shortName"] or route["mode"] or "?"
 
 def parse_time(departure):
     """Return Unix time in seconds for `departure`."""
