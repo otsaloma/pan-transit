@@ -21,6 +21,6 @@ import pan.test
 class TestProvider(pan.test.TestCase):
 
     def test___new____yes(self):
-        a = pan.Provider("digitransit")
-        b = pan.Provider("digitransit")
+        a = pan.Provider("digitransit_hsl")
+        b = pan.Provider("digitransit_hsl")
         assert a is b
