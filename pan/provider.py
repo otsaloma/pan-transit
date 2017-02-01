@@ -48,6 +48,7 @@ class Provider:
         self.name = values["name"]
         self._path = path
         self._provider = None
+        self.update_interval = int(values["update_interval"])
         self._init_provider(id, re.sub(r"\.json$", ".py", path))
 
     @pan.util.api_query([])

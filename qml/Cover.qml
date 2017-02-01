@@ -72,7 +72,7 @@ CoverBackground {
     }
     Timer {
         // Update times remaining periodically.
-        interval: 30000
+        interval: 15000
         repeat: true
         running: app.running
         triggeredOnStart: true

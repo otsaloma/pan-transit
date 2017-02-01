@@ -85,7 +85,7 @@ Page {
         running: page.loading
     }
     Timer {
-        interval: 30000
+        interval: 15000
         repeat: true
         running: app.running && page.populated
         triggeredOnStart: true
@@ -142,7 +142,8 @@ Page {
         app.cover.update();
     }
     function update() {
-        if (Date.now() - page.downloadTime > 300000) {
+        if (Date.now() - page.downloadTime >
+            py.evaluate("pan.app.provider.update_interval") * 1000) {
             // Load new departures from the API.
             page.populate(true);
         } else {

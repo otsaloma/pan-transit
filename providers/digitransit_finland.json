@@ -1,4 +1,5 @@
 {
     "_name": "Digitransit Finland",
-    "_description": "Public transport routing in Finland"
+    "_description": "Public transport routing in Finland",
+    "update_interval": 300
 }
