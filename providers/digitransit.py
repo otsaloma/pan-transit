@@ -166,7 +166,7 @@ def parse_headsign(headsign):
 
 def parse_line_name(route):
     """Return short name to use for line of `route`."""
-    return route["shortName"] or route["mode"] or "?"
+    return route["shortName"] or (route["mode"] or "").capitalize() or "?"
 
 def parse_scheduled_time(departure):
     """Return scheduled Unix time in seconds for `departure`."""

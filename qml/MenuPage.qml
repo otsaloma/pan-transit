@@ -24,6 +24,7 @@ import "."
 Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
+    property string populatedProvider: ""
     SilicaGridView {
         id: view
         anchors.fill: parent
@@ -122,7 +123,12 @@ Page {
         }
     }
     onStatusChanged: {
-        page.status === PageStatus.Activating && page.update();
+        if (page.status === PageStatus.Activating) {
+            if (page.populatedProvider &&
+                page.populatedProvider !== app.conf.get("provider"))
+                page.populate();
+            page.update();
+        }
     }
     function populate() {
         // Load favorites from the Python backend.
@@ -132,8 +138,8 @@ Page {
             favorites[i].near = false;
             view.model.append(favorites[i]);
         }
-        if (view.model.count === 0)
-            viewPlaceholder.enabled = true;
+        viewPlaceholder.enabled = (view.model.count === 0);
+        page.populatedProvider = app.conf.get("provider");
     }
     function update() {
         // Update favorite display based on positioning.
@@ -144,7 +150,7 @@ Page {
             var item = view.model.get(i);
             var dist = gps.position.coordinate.distanceTo(
                 QtPositioning.coordinate(item.y, item.x));
-            item.near = dist < threshold;
+            item.near = threshold < 1000000 ? (dist < threshold) : true;
             if (i >= favorites.length) continue;
             if (favorites[i].key !== item.key) continue;
             item.name = favorites[i].name;

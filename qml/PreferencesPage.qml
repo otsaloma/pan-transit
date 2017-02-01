@@ -31,6 +31,19 @@ Page {
             id: column
             anchors.fill: parent
             PageHeader { title: qsTranslate("", "Preferences") }
+            ValueButton {
+                id: providerButton
+                label: qsTranslate("", "Provider")
+                height: Theme.itemSizeSmall
+                value: py.evaluate("pan.app.provider.name")
+                width: parent.width
+                onClicked: {
+                    var dialog = app.pageStack.push("ProviderPage.qml");
+                    dialog.accepted.connect(function() {
+                        providerButton.value = py.evaluate("pan.app.provider.name");
+                    });
+                }
+            }
             TextField {
                 id: radiusField
                 inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
