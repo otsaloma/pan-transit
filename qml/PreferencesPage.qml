@@ -44,6 +44,7 @@ Page {
                     });
                 }
             }
+            SectionHeader { text: "Display" }
             TextField {
                 id: radiusField
                 inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
