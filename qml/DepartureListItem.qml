@@ -80,7 +80,7 @@ ListItem {
         id: realLabel
         anchors.baseline: lineLabel.baseline
         anchors.right: timeLabel.left
-        anchors.rightMargin: Theme.paddingLarge
+        anchors.rightMargin: page.realWidth > 0 ? Theme.paddingLarge : 0
         color: Theme.secondaryColor
         font.pixelSize: Theme.fontSizeSmall
         horizontalAlignment: Text.AlignRight
