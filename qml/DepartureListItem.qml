@@ -80,21 +80,11 @@ ListItem {
         id: realLabel
         anchors.baseline: lineLabel.baseline
         anchors.right: timeLabel.left
-        anchors.rightMargin: Theme.paddingMedium
+        anchors.rightMargin: Theme.paddingLarge
+        color: Theme.secondaryColor
+        font.pixelSize: Theme.fontSizeSmall
         horizontalAlignment: Text.AlignRight
-        text: {
-            // If real-time information is available, indicate if
-            // we're behind or ahead of schedule and by how much.
-            if (!model.realtime) return "";
-            var diff = model.time - model.scheduled_time;
-            if (diff >=  600) return "+++";
-            if (diff >=  300) return "++";
-            if (diff >=   60) return "+";
-            if (diff <= -600) return "–––";
-            if (diff <= -300) return "––";
-            if (diff <=  -60) return "–";
-            return "=";
-        }
+        text: model.realtime ? "R" : ""
         width: page.realWidth
         Component.onCompleted: realLabel.updateWidth();
         onTextChanged: realLabel.updateWidth();
