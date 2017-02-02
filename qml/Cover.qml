@@ -26,21 +26,17 @@ CoverBackground {
     Image {
         id: image
         anchors.centerIn: parent
-        height: width/sourceSize.width * sourceSize.height
-        opacity: 0.1
+        height: 0.6 * parent.height
+        opacity: 0.15
         smooth: true
-        source: "icons/cover1.png"
-        width: 1.5 * parent.width
+        source: "icons/cover.png"
+        width: height/sourceSize.height * sourceSize.width
     }
     Label {
         id: title
         anchors.centerIn: parent
-        color: Theme.primaryColor
-        font.family: Theme.fontFamilyHeading
         font.pixelSize: Theme.fontSizeLarge
-        horizontalAlignment: Text.AlignHCenter
-        text: "Pan\nTransit"
-        width: parent.width
+        text: "Pan Transit"
     }
     SilicaListView {
         id: view
@@ -130,9 +126,9 @@ CoverBackground {
             }
         }
         if (!model || countVisible === 0) {
-            // No departures; show title.
+            // No departures; show image and title.
             cover.clear();
-            image.opacity = 0.1;
+            image.opacity = 0.15;
             title.visible = true;
         }
     }

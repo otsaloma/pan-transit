@@ -44,9 +44,10 @@ install:
 	mkdir -p $(DATADIR)/pan
 	cp pan/*.py $(DATADIR)/pan
 	@echo "Installing QML files..."
-	mkdir -p $(DATADIR)/qml
+	mkdir -p $(DATADIR)/qml/icons
 	cp qml/pan-transit.qml $(DATADIR)/qml/$(NAME).qml
 	cp qml/[ABCDEFGHIJKLMNOPQRSTUVXYZ]*.qml $(DATADIR)/qml
+	cp qml/icons/*.png $(DATADIR)/qml/icons
 	@echo "Installing providers..."
 	mkdir -p $(DATADIR)/providers
 	cp providers/*.json $(DATADIR)/providers
