@@ -23,6 +23,15 @@ CoverBackground {
     id: cover
     anchors.fill: parent
     property bool active: status === Cover.Active
+    Image {
+        id: image
+        anchors.centerIn: parent
+        height: width/sourceSize.width * sourceSize.height
+        opacity: 0.1
+        smooth: true
+        source: "icons/cover1.png"
+        width: 1.5 * parent.width
+    }
     Label {
         id: title
         anchors.centerIn: parent
@@ -116,12 +125,14 @@ CoverBackground {
                 // Show the first few departures.
                 cover.clear();
                 cover.copyFrom(model);
+                image.opacity = 0;
                 title.visible = false;
             }
         }
         if (!model || countVisible === 0) {
             // No departures; show title.
             cover.clear();
+            image.opacity = 0.1;
             title.visible = true;
         }
     }

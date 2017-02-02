@@ -129,9 +129,11 @@ def format_graphql(name, **kwargs):
 
 def format_stop_name(stop):
     """Return user visible name for `stop`."""
-    name = re.sub(r"(?<! )\(", " (", stop["name"])
-    code = stop.get("code", "")
-    if not code: return name
+    name = stop.get("name", "") or ""
+    code = stop.get("code", "") or ""
+    if name and not code: return name
+    if code and not name: return code
+    name = re.sub(r"(?<! )\(", " (", name)
     return "{} ({})".format(name, code)
 
 def get_stop_color(stop):
@@ -139,8 +141,8 @@ def get_stop_color(stop):
     modes = [x["route"]["mode"] for x in stop["patterns"]]
     order = ["AIRPLANE", "FERRY", "RAIL", "SUBWAY", "TRAM"]
     order = [x for x in order if x in modes]
-    if order: return COLORS[order[0]]
-    return COLORS["BUS"]
+    if not order: return COLORS["BUS"]
+    return COLORS.get(order[0], COLORS["BUS"])
 
 def get_stop_lines(stop):
     """Return a list of lines that use `stop`."""
@@ -152,7 +154,8 @@ def get_stop_lines(stop):
 def line_to_sort_key(line):
     """Return a key for `line` to use for sorting."""
     # Break into line and modifier, pad with zeros.
-    head, tail = line.replace(" ", ""), ""
+    # XXX: This only works consistently in the HSL area.
+    head, tail = re.sub(r"\W", "", line), ""
     while head and head[0].isdigit() and head[-1].isalpha():
         tail = head[-1:] + tail
         head = head[:-1]
@@ -160,21 +163,25 @@ def line_to_sort_key(line):
 
 def parse_headsign(headsign):
     """Return shortened headsign for display."""
+    if not headsign: return ""
     headsign = re.sub(r" via .+$", "", headsign)
     headsign = re.sub(r"(?<! )\(", " (", headsign)
     return headsign
 
 def parse_line_name(route):
     """Return short name to use for line of `route`."""
-    return route["shortName"] or (route["mode"] or "").capitalize() or "?"
+    mode = (route["mode"] or "").capitalize()
+    return route["shortName"] or mode or "?"
 
 def parse_scheduled_time(departure):
     """Return scheduled Unix time in seconds for `departure`."""
-    return int(departure["serviceDay"]) + int(departure["scheduledDeparture"])
+    return (int(departure["serviceDay"]) +
+            int(departure["scheduledDeparture"]))
 
 def parse_time(departure):
     """Return Unix time in seconds for `departure`."""
-    return int(departure["serviceDay"]) + int(departure["realtimeDeparture"])
+    return (int(departure["serviceDay"]) +
+            int(departure["realtimeDeparture"]))
 
 def sorted_unique_lines(lines):
     """Return a unique, sorted list of lines."""
