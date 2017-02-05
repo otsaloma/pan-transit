@@ -89,6 +89,7 @@ Dialog {
                 label: qsTranslate("", "Name")
                 text: page.name
                 EnterKey.enabled: text.length > 0
+                EnterKey.iconSource: "image://theme/icon-m-enter-close"
                 EnterKey.onClicked: nameField.focus = false;
             }
             SectionHeader {
