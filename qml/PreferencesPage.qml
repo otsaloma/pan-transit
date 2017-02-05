@@ -44,7 +44,7 @@ Page {
                     });
                 }
             }
-            SectionHeader { text: "Display" }
+            SectionHeader { text: qsTranslate("", "Display") }
             TextField {
                 id: radiusField
                 inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
