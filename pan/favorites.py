@@ -174,10 +174,9 @@ class Favorites:
         favorite["x"] = (sumx/n if n > 0 else 0)
         favorite["y"] = (sumy/n if n > 0 else 0)
 
-    def _update_lines(self, key):
+    def _update_lines(self, key, provider):
         """Update list of lines using stops of favorite `key`."""
         with pan.util.silent(Exception, tb=True):
-            provider = self.get_provider(key)
             stops = self.get_stop_ids(key)
             lines = provider.find_lines(stops)
             lines = [x["name"] for x in lines]
@@ -196,8 +195,11 @@ class Favorites:
             self._update_coordinates(favorite["key"])
             if time.time() - favorite.get("updated", -1) > 7 * 86400:
                 favorite["updated"] = int(time.time())
+                # Make sure the first instantiation of a singleton
+                # provider happens in the main thread.
+                provider = self.get_provider(favorite["key"])
                 threading.Thread(target=self._update_lines,
-                                 args=[favorite["key"]],
+                                 args=[favorite["key"], provider],
                                  daemon=True).start()
 
     def write(self):

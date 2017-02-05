@@ -35,11 +35,11 @@ from pan.paths import *
 from pan import i18n
 from pan import util
 from pan import http
+from pan.provider import *
 from pan.favorites import *
 from pan.history import *
 from pan.config import *
 conf = ConfigurationStore()
-from pan.provider import *
 from pan.application import *
 
 def main():
