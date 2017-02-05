@@ -1,5 +1,5 @@
 {
     "_name": "Digitransit HSL",
-    "_description": "Public transport routing in the Helsinki region",
+    "_description": "Public transport in the Helsinki region",
     "update_interval": 60
 }
