@@ -56,6 +56,28 @@ class TestModule(pan.test.TestCase):
         assert pan.util.format_distance_metric(123, 2) == "120 m"
         assert pan.util.format_distance_metric(1234, 1) == "1 km"
 
+    def test_line_to_sort_key__1(self):
+        key = pan.util.line_to_sort_key
+        lines = ["58", "58B", "506"]
+        assert sorted(lines[::-1], key=key) == lines
+
+    def test_line_to_sort_key__2(self):
+        key = pan.util.line_to_sort_key
+        lines = ["A", "A1", "AA", "AAA", "B"]
+        assert sorted(lines[::-1], key=key) == lines
+
+    def test_line_to_sort_key__3(self):
+        key = pan.util.line_to_sort_key
+        lines = ["Arles", "Bordeaux 11", "Bordeaux 12", "Cannes"]
+        assert sorted(lines[::-1], key=key) == lines
+
     def test_most_common(self):
         assert pan.util.most_common([1,1,1,2,2,3]) == 1
         assert pan.util.most_common([2,2,1,1]) == 1
+
+    def test_sorted_unique_lines(self):
+        lines = ["10", "103", "103", "102", "102T", "102T"]
+        lines = [dict(name=x) for x in lines]
+        ulines = pan.util.sorted_unique_lines(lines)
+        ulines = [x["name"] for x in ulines]
+        assert ulines == ["10", "102", "102T", "103"]

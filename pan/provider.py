@@ -85,7 +85,7 @@ class Provider:
         stops = self._provider.find_nearby_stops(x, y)
         stops = pan.util.sorted_by_distance(stops, x, y)
         self.store_stops(stops)
-        self._add_distances(stops)
+        self._add_distances(stops, x, y)
         return stops
 
     @pan.util.api_query([])
@@ -94,7 +94,7 @@ class Provider:
         if not query: return []
         stops = self._provider.find_stops(query, x, y)
         self.store_stops(stops)
-        self._add_distances(stops)
+        self._add_distances(stops, x, y)
         return stops
 
     def _init_provider(self, id, path):

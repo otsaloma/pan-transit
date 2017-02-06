@@ -55,17 +55,16 @@ def find_departures(stops):
         for stop in result["data"]["stops"]:
             for departure in stop["stoptimesWithoutPatterns"]:
                 yield stop, departure
-    departures = [{
+    return pan.util.sorted_departures([{
         "destination": parse_headsign(departure["stopHeadsign"]),
         "line": parse_line_name(departure["trip"]["route"]),
         "realtime": bool(departure["realtime"]),
         "scheduled_time": parse_scheduled_time(departure),
+        "stop": stop["gtfsId"],
         "time": parse_time(departure),
         "x": float(stop["lon"]),
         "y": float(stop["lat"]),
-    } for stop, departure in departures()]
-    return sorted(departures, key=lambda x:
-                  (x["time"], line_to_sort_key(x["line"])))
+    } for stop, departure in departures()])
 
 def find_lines(stops):
     """Return a list of lines that use `stops`."""
@@ -77,7 +76,7 @@ def find_lines(stops):
         for stop in result["data"]["stops"]:
             for pattern in stop["patterns"]:
                 yield pattern
-    return sorted_unique_lines([{
+    return pan.util.sorted_unique_lines([{
         "color": COLORS.get(pattern["route"]["mode"], COLORS["BUS"]),
         "destination": parse_headsign(pattern["headsign"]),
         "id": pattern["route"]["gtfsId"],
@@ -146,27 +145,15 @@ def get_stop_color(stop):
 
 def get_stop_lines(stop):
     """Return a list of lines that use `stop`."""
-    return sorted_unique_lines([{
+    return pan.util.sorted_unique_lines([{
         "name": parse_line_name(pattern["route"]),
         "destination": parse_headsign(pattern["headsign"]),
     } for pattern in stop["patterns"]])
 
-def line_to_sort_key(line):
-    """Return a key for `line` to use for sorting."""
-    # Break into line and modifier, pad with zeros.
-    # XXX: This only works consistently in the HSL area.
-    head, tail = re.sub(r"\W", "", line), ""
-    while head and head[0].isdigit() and head[-1].isalpha():
-        tail = head[-1:] + tail
-        head = head[:-1]
-    return head.zfill(3), tail.zfill(3)
-
 def parse_headsign(headsign):
     """Return shortened headsign for display."""
-    if not headsign: return ""
-    headsign = re.sub(r" via .+$", "", headsign)
-    headsign = re.sub(r"(?<! )\(", " (", headsign)
-    return headsign
+    return re.sub(r"(?<! )\(", " (",
+                  re.sub(r" via .+$", "", headsign or ""))
 
 def parse_line_name(route):
     """Return short name to use for line of `route`."""
@@ -182,10 +169,3 @@ def parse_time(departure):
     """Return Unix time in seconds for `departure`."""
     return (int(departure["serviceDay"]) +
             int(departure["realtimeDeparture"]))
-
-def sorted_unique_lines(lines):
-    """Return a unique, sorted list of lines."""
-    unames = set()
-    ulines = [line for line in lines
-              if not (line["name"] in unames or unames.add(line["name"]))]
-    return sorted(ulines, key=lambda x: line_to_sort_key(x["name"]))

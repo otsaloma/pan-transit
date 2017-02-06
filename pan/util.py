@@ -28,6 +28,7 @@ import math
 import os
 import pan
 import random
+import re
 import shutil
 import socket
 import stat
@@ -213,6 +214,21 @@ def get_providers():
     providers.sort(key=lambda x: x["name"])
     return providers
 
+def line_to_sort_key(line):
+    """Return a key for `line` to use for sorting."""
+    line = re.sub(r"\W", "", line.upper())
+    if not line:
+        return line_to_sort_key("0")
+    alpha = re.match("^([A-Z]+)(.*)$", line)
+    digit = re.match("^([0-9]+)(.*)$", line)
+    if alpha is not None:
+        head, tail = alpha.group(1), alpha.group(2)
+        return head, tail.zfill(100)
+    if digit is not None:
+        head, tail = digit.group(1), digit.group(2)
+        return head.zfill(100), tail
+    raise ValueError("Bad line: {}".format(repr(line)))
+
 def locked_method(function):
     """
     Decorator for methods to be run thread-safe.
@@ -292,6 +308,18 @@ def sorted_by_distance(items, x, y):
     for item in items:
         del item["__dist"]
     return items
+
+def sorted_departures(departures):
+    """Return `departures` sorted by time and line."""
+    return sorted(departures, key=lambda x:
+                  (x["time"], line_to_sort_key(x["line"])))
+
+def sorted_unique_lines(lines):
+    """Return a unique, sorted list of lines."""
+    unames = set()
+    ulines = [line for line in lines
+              if not (line["name"] in unames or unames.add(line["name"]))]
+    return sorted(ulines, key=lambda x: line_to_sort_key(x["name"]))
 
 def write_json(data, path):
     """Write `data` to JSON file at `path`."""

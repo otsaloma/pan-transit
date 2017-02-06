@@ -30,6 +30,7 @@ class TestModule(pan.test.TestCase):
         for departure in departures:
             assert departure["destination"]
             assert departure["line"]
+            assert departure["stop"]
             assert departure["time"]
             assert departure["x"]
             assert departure["y"]
