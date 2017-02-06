@@ -193,11 +193,12 @@ class Favorites:
             favorite["updated"] = -1
         for favorite in self._favorites:
             self._update_coordinates(favorite["key"])
+            # Make sure the first instantiation of a singleton
+            # provider happens in the main thread.
+            provider = self.get_provider(favorite["key"])
+            provider.store_stops(favorite["stops"])
             if time.time() - favorite.get("updated", -1) > 7 * 86400:
                 favorite["updated"] = int(time.time())
-                # Make sure the first instantiation of a singleton
-                # provider happens in the main thread.
-                provider = self.get_provider(favorite["key"])
                 threading.Thread(target=self._update_lines,
                                  args=[favorite["key"], provider],
                                  daemon=True).start()

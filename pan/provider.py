@@ -17,6 +17,7 @@
 
 """A proxy for information from providers."""
 
+import copy
 import importlib.machinery
 import os
 import pan
@@ -48,14 +49,29 @@ class Provider:
         self.name = values["name"]
         self._path = path
         self._provider = None
+        self._stop_cache = {}
         self.update_interval = int(values["update_interval"])
         self._init_provider(id, re.sub(r"\.json$", ".py", path))
+
+    def _add_distances(self, items, x, y):
+        """Store distances to given coordinates in-place to `items`."""
+        for item in items:
+            item["dist"] = pan.util.format_distance(
+                pan.util.calculate_distance(x, y, item["x"], item["y"]))
 
     @pan.util.api_query([])
     def find_departures(self, stops):
         """Return a list of departures from `stops`."""
         if not stops: return []
-        return self._provider.find_departures(stops)
+        departures = self._provider.find_departures(stops)
+        for departure in departures:
+            if "x" in departure and "y" in departure: continue
+            # Add coordinates from cache if not set by provider.
+            stop = self.recall_stop(departure["stop"])
+            stop = stop or dict(x=0, y=0)
+            departure["x"] = stop["x"]
+            departure["y"] = stop["y"]
+        return departures
 
     @pan.util.api_query([])
     def find_lines(self, stops):
@@ -68,9 +84,8 @@ class Provider:
         """Return a list of stops near given coordinates."""
         stops = self._provider.find_nearby_stops(x, y)
         stops = pan.util.sorted_by_distance(stops, x, y)
-        for stop in stops:
-            dist = pan.util.calculate_distance(x, y, stop["x"], stop["y"])
-            stop["dist"] = pan.util.format_distance(dist)
+        self.store_stops(stops)
+        self._add_distances(stops)
         return stops
 
     @pan.util.api_query([])
@@ -78,9 +93,8 @@ class Provider:
         """Return a list of stops matching `query`."""
         if not query: return []
         stops = self._provider.find_stops(query, x, y)
-        for stop in stops:
-            dist = pan.util.calculate_distance(x, y, stop["x"], stop["y"])
-            stop["dist"] = pan.util.format_distance(dist)
+        self.store_stops(stops)
+        self._add_distances(stops)
         return stops
 
     def _init_provider(self, id, path):
@@ -99,9 +113,20 @@ class Provider:
             path = os.path.join(pan.DATA_DIR, leaf)
         return path, pan.util.read_json(path)
 
+    def recall_stop(self, id):
+        """Return stop from the cache of seen stops or ``None``."""
+        with pan.util.silent(LookupError):
+            return self._stop_cache[id]
+        return None
+
     @property
     def settings_qml_uri(self):
         """Return URI to router settings QML file or ``None``."""
         path = re.sub(r"\.json$", "_settings.qml", self._path)
         if not os.path.isfile(path): return None
         return pan.util.path2uri(path)
+
+    def store_stops(self, stops):
+        """Inject `stops` into the cache of seen stops."""
+        for stop in copy.deepcopy(stops):
+            self._stop_cache[stop["id"]] = stop
