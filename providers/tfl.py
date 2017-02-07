@@ -82,7 +82,9 @@ def find_departures(stops):
     url = format_url("/StopPoint/{}/Arrivals".format(stops[0]))
     result = pan.http.get_json(url)
     return pan.util.sorted_departures([{
-        "destination": departure["towards"],
+        "destination": (
+            departure.get("destinationName", "") or
+            departure.get("towards", "")),
         "line": departure["lineName"],
         "realtime": False,
         "scheduled_time": parse_time(departure["expectedArrival"]),
