@@ -44,6 +44,20 @@ class TestModule(pan.test.TestCase):
         dist = pan.util.calculate_distance(24.94, 60.17, -9.14, 38.72)
         assert round(dist/1000) == 3361
 
+    def test_filter_departures(self):
+        a = dict(line="a", destination="aaa")
+        b = dict(line="b", destination="bbb")
+        ignores = [dict(name="B", destination="BBB")]
+        value = pan.util.filter_departures([a, b], ignores)
+        assert value == [a]
+
+    def test_filter_lines(self):
+        a = dict(name="a", destination="aaa")
+        b = dict(name="b", destination="bbb")
+        ignores = [dict(name="B", destination="BBB")]
+        value = pan.util.filter_lines([a, b], ignores)
+        assert value == [a]
+
     def test_format_distance_american(self):
         assert pan.util.format_distance_american(123, 2) == "120 ft"
         assert pan.util.format_distance_american(6000, 1) == "1 mi"
@@ -77,7 +91,7 @@ class TestModule(pan.test.TestCase):
 
     def test_sorted_unique_lines(self):
         lines = ["10", "103", "103", "102", "102T", "102T"]
-        lines = [dict(name=x) for x in lines]
+        lines = [dict(name=x, destination="") for x in lines]
         ulines = pan.util.sorted_unique_lines(lines)
         ulines = [x["name"] for x in ulines]
         assert ulines == ["10", "102", "102T", "103"]

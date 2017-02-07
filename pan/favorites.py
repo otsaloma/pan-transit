@@ -80,7 +80,8 @@ class Favorites:
         provider = self.get_provider(key)
         if provider is None: return []
         stops = self.get_stop_ids(key)
-        return provider.find_departures(stops)
+        ignores = self.get(key)["ignore_lines"]
+        return provider.find_departures(stops, ignores)
 
     def get(self, key):
         """Return favorite `key` or raise :exc:`LookupError`."""
@@ -104,7 +105,7 @@ class Favorites:
     def get_lines_label(self, key):
         """Return a string listing lines of favorite `key`."""
         favorite = self.get(key)
-        return ", ".join(favorite.get("lines", []))
+        return ", ".join(x["name"] for x in favorite.get("lines", []))
 
     def get_name(self, key):
         """Return name of favorite `key`."""
@@ -179,10 +180,9 @@ class Favorites:
         with pan.util.silent(Exception, tb=True):
             stops = self.get_stop_ids(key)
             lines = provider.find_lines(stops)
-            lines = [x["name"] for x in lines]
             favorite = self.get(key)
-            ignore = favorite["ignore_lines"]
-            lines = [x for x in lines if not x in ignore]
+            ignores = favorite["ignore_lines"]
+            lines = pan.util.filter_lines(lines, ignores)
             favorite["lines"] = list(filter(None, lines))
 
     def _update_meta(self, *keys):

@@ -120,6 +120,24 @@ def departure_time_to_color(dist, departure):
     if min_left > 1 and dist / 100 <= min_left: return "#fff444"
     return "#ff4744"
 
+def filter_departures(departures, ignores):
+    """Return `departures` with lines to ignore dropped."""
+    if not ignores: return departures
+    return [x for x in departures if not
+            any((x["line"].lower() ==
+                 y["name"].lower() and
+                 x["destination"].lower() ==
+                 y["destination"].lower()) for y in ignores)]
+
+def filter_lines(lines, ignores):
+    """Return `lines` with ones to ignore dropped."""
+    if not ignores: return lines
+    return [x for x in lines if not
+            any((x["name"].lower() ==
+                 y["name"].lower() and
+                 x["destination"].lower() ==
+                 y["destination"].lower()) for y in ignores)]
+
 def format_departure_time(departure):
     """Format Unix time `departure` for display."""
     min_left = (departure - time.time()) / 60
@@ -316,10 +334,11 @@ def sorted_departures(departures):
 
 def sorted_unique_lines(lines):
     """Return a unique, sorted list of lines."""
-    unames = set()
-    ulines = [line for line in lines
-              if not (line["name"] in unames or unames.add(line["name"]))]
-    return sorted(ulines, key=lambda x: line_to_sort_key(x["name"]))
+    key = lambda x: (x["name"].lower(), x["destination"].lower())
+    ukeys = set()
+    ulines = [x for x in lines if not (key(x) in ukeys or ukeys.add(key(x)))]
+    return sorted(ulines, key=lambda x: (line_to_sort_key(x["name"]),
+                                         x["destination"]))
 
 def write_json(data, path):
     """Write `data` to JSON file at `path`."""

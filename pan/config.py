@@ -109,10 +109,10 @@ class ConfigurationStore(AttrDict):
                 self._register(values[name],
                                root.setdefault(name, AttrDict()),
                                defaults.setdefault(name, {}))
-                continue
-            # Do not change values if they already exist.
-            root.setdefault(name, copy.deepcopy(value))
-            defaults.setdefault(name, copy.deepcopy(value))
+            else:
+                # Do not change values if they already exist.
+                root.setdefault(name, copy.deepcopy(value))
+                defaults.setdefault(name, copy.deepcopy(value))
 
     def register_provider(self, name, values):
         """

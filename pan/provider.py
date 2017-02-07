@@ -57,13 +57,15 @@ class Provider:
         """Store distances to given coordinates in-place to `items`."""
         for item in items:
             item["dist"] = pan.util.format_distance(
-                pan.util.calculate_distance(x, y, item["x"], item["y"]))
+                pan.util.calculate_distance(
+                    x, y, item["x"], item["y"]))
 
     @pan.util.api_query([])
-    def find_departures(self, stops):
+    def find_departures(self, stops, ignores=None):
         """Return a list of departures from `stops`."""
         if not stops: return []
         departures = self._provider.find_departures(stops)
+        departures = pan.util.filter_departures(departures, ignores)
         for departure in departures:
             if "x" in departure and "y" in departure: continue
             # Add coordinates from cache if not set by provider.
