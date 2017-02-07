@@ -176,5 +176,6 @@ def get_stop_types():
 
 def parse_time(time):
     """Return Unix time in seconds for `departure`."""
-    time = datetime.datetime.strptime(time, "%Y-%m-%dT%H:%M:%SZ")
+    time = "{}+0000".format(time)
+    time = datetime.datetime.strptime(time, "%Y-%m-%dT%H:%M:%SZ%z")
     return int(time.timestamp())
