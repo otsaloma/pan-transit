@@ -24,8 +24,6 @@ ListItem {
     id: listItem
     contentHeight: nameLabel.height + descriptionLabel.height + repeater.height
     property var result: page.results[index]
-    // Column width to be set based on data.
-    property int lineWidth: 0
     Rectangle {
         id: bar
         anchors.bottom: repeater.bottom
@@ -82,29 +80,14 @@ ListItem {
             Label {
                 id: lineLabel
                 anchors.left: row.left
-                color: Theme.secondaryColor
-                font.pixelSize: Theme.fontSizeSmall
-                height: implicitHeight + Theme.paddingSmall
-                horizontalAlignment: Text.AlignRight
-                text: line.name
-                verticalAlignment: Text.AlignVCenter
-                width: listItem.lineWidth
-                y: repeater.y + index * row.height
-                Component.onCompleted: listItem.lineWidth =
-                    Math.max(listItem.lineWidth, lineLabel.implicitWidth);
-            }
-            Label {
-                id: destinationLabel
-                anchors.left: lineLabel.right
                 anchors.right: row.right
-                anchors.rightMargin: Theme.horizontalPageMargin
-                anchors.top: lineLabel.top
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeSmall
                 height: implicitHeight + Theme.paddingSmall
-                text: " → %1".arg(line.destination)
+                text: line.destination ? "%1 → %2".arg(line.name).arg(line.destination) : line.name
                 truncationMode: TruncationMode.Fade
                 verticalAlignment: Text.AlignVCenter
+                y: repeater.y + index * row.height
             }
             Component.onCompleted: repeater.height += row.height;
         }
