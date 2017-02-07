@@ -49,6 +49,7 @@ CoverBackground {
             Label {
                 id: lineLabel
                 anchors.left: parent.left
+                anchors.leftMargin: Theme.paddingLarge
                 anchors.right: parent.horizontalCenter
                 anchors.rightMargin: Theme.paddingLarge / 2
                 font.pixelSize: Theme.fontSizeLarge
@@ -64,6 +65,7 @@ CoverBackground {
                 anchors.left: parent.horizontalCenter
                 anchors.leftMargin: Theme.paddingLarge / 2
                 anchors.right: parent.right
+                anchors.rightMargin: Theme.paddingLarge
                 font.pixelSize: Theme.fontSizeMedium
                 height: implicitHeight + 2 * Theme.paddingSmall
                 horizontalAlignment: Text.AlignLeft
