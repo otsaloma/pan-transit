@@ -57,7 +57,7 @@ Page {
                         py.call_sync(setIgnore, [page.props.key, dialog.ignore]);
                         for (var i = 0; i < view.model.count; i++) {
                             var item = view.model.get(i);
-                            item.visible = dialog.ignore.indexOf(item.line) < 0;
+                            item.visible = !matchesIgnore(dialog.ignore, item.line);
                         }
                         page.update();
                         py.call("pan.app.save", [], null);
@@ -94,6 +94,12 @@ Page {
         // Return list view model with current departures.
         return view.model;
     }
+    function matchesIgnore(ignore, line) {
+        // Return true if line is to be ignored.
+        return ignore.map(function(x) {
+            return toLowerCase(x);
+        }).indexOf(line.toLowerCase()) > -1;
+    }
     function populate(silent) {
         // Load departures from the Python backend.
         silent = silent || false;
@@ -114,7 +120,7 @@ Page {
                 for (var i = 0; i < results.length; i++) {
                     results[i].color_qml = ""
                     results[i].time_qml = ""
-                    results[i].visible = ignore.indexOf(results[i].line) < 0;
+                    results[i].visible = !matchesIgnore(ignore, results[i].line);
                     view.model.append(results[i]);
                 }
             } else {
