@@ -23,9 +23,9 @@ import "."
 Dialog {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
-    property var stops: []
-    property var ignore: []
+    property var ignores: []
     property bool loading: false
+    property var stops: []
     SilicaGridView {
         id: view
         anchors.fill: parent
@@ -92,10 +92,13 @@ Dialog {
     }
     onAccepted: {
         // Construct an array out of unchecked lines.
-        page.ignore = [];
+        page.ignores = [];
         for (var i = 0; i < view.model.count; i++) {
             var item = view.model.get(i);
-            item.checked || page.ignore.push(item.name);
+            item.checked || page.ignores.push({
+                "name": item.name,
+                "destination": item.destination
+            });
         }
     }
     function populate() {
@@ -106,7 +109,13 @@ Dialog {
                 busy.error = results.message;
             } else if (results && results.length > 0) {
                 for (var i = 0; i < results.length; i++) {
-                    results[i].checked = page.ignore.indexOf(results[i].line) < 0;
+                    results[i].checked = true;
+                    for (var j = 0; j < page.ignores.length; j++)
+                        if (page.ignores[j].name.toLowerCase() ===
+                            results[i].name.toLowerCase() &&
+                            page.ignores[j].destination.toLowerCase() ===
+                            results[i].destination.toLowerCase())
+                            results[i].checked = false;
                     view.model.append(results[i]);
                 }
             } else {

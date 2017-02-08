@@ -47,20 +47,19 @@ Page {
                 text: qsTranslate("", "Filter lines")
                 onClicked: {
                     var getIds = "pan.app.favorites.get_stop_ids";
-                    var getIgnore = "pan.app.favorites.get_ignore_lines";
+                    var getIgnores = "pan.app.favorites.get_ignore_lines";
                     var dialog = pageStack.push("LineFilterPage.qml", {
                         "stops": py.call_sync(getIds, [page.props.key]),
-                        "ignore": py.call_sync(getIgnore, [page.props.key])
+                        "ignores": py.call_sync(getIgnores, [page.props.key])
                     });
                     dialog.accepted.connect(function() {
-                        var setIgnore = "pan.app.favorites.set_ignore_lines";
-                        py.call_sync(setIgnore, [page.props.key, dialog.ignore]);
-                        for (var i = 0; i < view.model.count; i++) {
-                            var item = view.model.get(i);
-                            item.visible = !matchesIgnore(dialog.ignore, item.line);
-                        }
-                        page.update();
-                        py.call("pan.app.save", [], null);
+                        var setIgnores = "pan.app.favorites.set_ignore_lines";
+                        py.call_sync(setIgnores, [page.props.key, dialog.ignores]);
+                        view.model.clear();
+                        page.loading = true;
+                        page.title = "";
+                        busy.text = qsTranslate("", "Loading");
+                        page.populate();
                     });
                 }
             }
@@ -94,12 +93,6 @@ Page {
         // Return list view model with current departures.
         return view.model;
     }
-    function matchesIgnore(ignore, line) {
-        // Return true if line is to be ignored.
-        return ignore.map(function(x) {
-            return toLowerCase(x);
-        }).indexOf(line.toLowerCase()) > -1;
-    }
     function populate(silent) {
         // Load departures from the Python backend.
         silent = silent || false;
@@ -116,11 +109,9 @@ Page {
                 page.timeWidth = 0;
                 page.results = results;
                 page.title = page.props.name;
-                var ignore = py.call_sync("pan.app.favorites.get_ignore_lines", [key]);
                 for (var i = 0; i < results.length; i++) {
                     results[i].color_qml = ""
                     results[i].time_qml = ""
-                    results[i].visible = !matchesIgnore(ignore, results[i].line);
                     view.model.append(results[i]);
                 }
             } else {
@@ -168,12 +159,9 @@ Page {
         var timeWidth = 0;
         for (var i = 0; i < view.model.count; i++) {
             var item = view.model.get(i);
-            if (item.visible && item.lineWidth)
-                lineWidth = Math.max(lineWidth, item.lineWidth);
-            if (item.visible && item.realWidth)
-                realWidth = Math.max(realWidth, item.realWidth);
-            if (item.visible && item.timeWidth)
-                timeWidth = Math.max(timeWidth, item.timeWidth);
+            lineWidth = Math.max(lineWidth, item.lineWidth || 0);
+            realWidth = Math.max(realWidth, item.realWidth || 0);
+            timeWidth = Math.max(timeWidth, item.timeWidth || 0);
         }
         page.lineWidth = lineWidth;
         page.realWidth = realWidth;

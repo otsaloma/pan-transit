@@ -26,7 +26,7 @@ Page {
     allowedOrientations: app.defaultAllowedOrientations
     property bool canCover: true
     property var downloadTime: -1
-    property var ignore: []
+    property var ignores: []
     property bool loading: false
     property bool populated: false
     property var props: {}
@@ -65,15 +65,15 @@ Page {
             MenuItem {
                 text: qsTranslate("", "Filter lines")
                 onClicked: {
-                    var options = {"stops": [page.props.id], "ignore": page.ignore};
+                    var options = {"stops": [page.props.id], "ignores": page.ignores};
                     var dialog = pageStack.push("LineFilterPage.qml", options);
                     dialog.accepted.connect(function() {
-                        for (var i = 0; i < view.model.count; i++) {
-                            var item = view.model.get(i);
-                            item.visible = !matchesIgnore(dialog.ignore, item.line);
-                        }
-                        page.ignore = dialog.ignore;
-                        page.update();
+                        page.ignores = dialog.ignores;
+                        view.model.clear();
+                        page.loading = true;
+                        page.title = "";
+                        busy.text = qsTranslate("", "Loading");
+                        page.populate();
                     });
                 }
             }
@@ -107,18 +107,12 @@ Page {
         // Return list view model with current departures.
         return view.model;
     }
-    function matchesIgnore(ignore, line) {
-        // Return true if line is to be ignored.
-        return ignore.map(function(x) {
-            return toLowerCase(x);
-        }).indexOf(line.toLowerCase()) > -1;
-    }
     function populate(silent) {
         // Load departures from the Python backend.
         silent = silent || false;
         silent || view.model.clear();
-        var ids = [page.props.id];
-        py.call("pan.app.provider.find_departures", [ids], function(results) {
+        var args = [[page.props.id], page.ignores];
+        py.call("pan.app.provider.find_departures", args, function(results) {
             if (results && results.error && results.message) {
                 silent || (page.title = "");
                 silent || (busy.error = results.message);
@@ -132,7 +126,6 @@ Page {
                 for (var i = 0; i < results.length; i++) {
                     results[i].color_qml = ""
                     results[i].time_qml = ""
-                    results[i].visible = !matchesIgnore(page.ignore, results[i].line);
                     view.model.append(results[i]);
                 }
             } else {
@@ -180,12 +173,9 @@ Page {
         var timeWidth = 0;
         for (var i = 0; i < view.model.count; i++) {
             var item = view.model.get(i);
-            if (item.visible && item.lineWidth)
-                lineWidth = Math.max(lineWidth, item.lineWidth);
-            if (item.visible && item.realWidth)
-                realWidth = Math.max(realWidth, item.realWidth);
-            if (item.visible && item.timeWidth)
-                timeWidth = Math.max(timeWidth, item.timeWidth);
+            lineWidth = Math.max(lineWidth, item.lineWidth || 0);
+            realWidth = Math.max(realWidth, item.realWidth || 0);
+            timeWidth = Math.max(timeWidth, item.timeWidth || 0);
         }
         page.lineWidth = lineWidth;
         page.realWidth = realWidth;

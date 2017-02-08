@@ -101,7 +101,6 @@ CoverBackground {
     function copyFrom(model) {
         // Copy departure items from given model.
         for (var i = 0, j = 0; i < model.count && j < view.model.count; i++) {
-            if (!model.get(i).visible) continue;
             view.model.setProperty(j, "line", model.get(i).line);
             view.model.setProperty(j, "time", model.get(i).time_qml);
             j++;
@@ -111,15 +110,9 @@ CoverBackground {
         // Query departures from the current page.
         var page = app.pageStack.currentPage;
         var model = null;
-        var countVisible = 0;
         if (page && page.canCover) {
             var model = page.getModel();
-            for (var i = 0; i < model.count; i++) {
-                // Departures can be hidden by line filters.
-                if (model.get(i).visible)
-                    countVisible++;
-            }
-            if (model && countVisible > 0) {
+            if (model && model.count > 0) {
                 // Show the first few departures.
                 cover.clear();
                 cover.copyFrom(model);
@@ -127,7 +120,7 @@ CoverBackground {
                 title.visible = false;
             }
         }
-        if (!model || countVisible === 0) {
+        if (!model || model.count === 0) {
             // No departures; show image and title.
             cover.clear();
             image.opacity = 0.15;

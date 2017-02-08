@@ -105,7 +105,11 @@ class Favorites:
     def get_lines_label(self, key):
         """Return a string listing lines of favorite `key`."""
         favorite = self.get(key)
-        return ", ".join(x["name"] for x in favorite.get("lines", []))
+        lines = favorite.get("lines", [])
+        for line in lines:
+            line["destination"] = ""
+        lines = pan.util.sorted_unique_lines(lines)
+        return ", ".join(x["name"] for x in lines)
 
     def get_name(self, key):
         """Return name of favorite `key`."""

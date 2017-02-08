@@ -21,9 +21,8 @@ import Sailfish.Silica 1.0
 
 ListItem {
     id: listItem
-    contentHeight: visible ? Theme.itemSizeSmall : 0
+    contentHeight: Theme.itemSizeSmall
     enabled: false
-    visible: model.visible
     property var result: page.results[index]
     Rectangle {
         id: bar
@@ -52,7 +51,7 @@ ListItem {
         function updateWidth() {
             var width = lineLabel.implicitWidth;
             view.model.setProperty(model.index, "lineWidth", width);
-            page.lineWidth = Math.max(page.lineWidth, model.visible * width);
+            page.lineWidth = Math.max(page.lineWidth, width);
         }
     }
     Label {
@@ -91,7 +90,7 @@ ListItem {
         function updateWidth() {
             var width = realLabel.implicitWidth;
             view.model.setProperty(model.index, "realWidth", width);
-            page.realWidth = Math.max(page.realWidth, model.visible * width);
+            page.realWidth = Math.max(page.realWidth, width);
         }
     }
     Label {
@@ -107,7 +106,7 @@ ListItem {
         function updateWidth() {
             var width = timeLabel.implicitWidth;
             view.model.setProperty(model.index, "timeWidth", width);
-            page.timeWidth = Math.max(page.timeWidth, model.visible * width);
+            page.timeWidth = Math.max(page.timeWidth, width);
         }
     }
     ListView.onRemove: animateRemoval(listItem);
