@@ -42,7 +42,7 @@ Dialog {
             }
         }
         header: Column {
-            height: header.height + favoriteCombo.height + nameField.height
+            height: header.height + favoriteCombo.height + spacer.height + nameField.height
             width: parent.width
             DialogHeader { id: header }
             ComboBox {
@@ -63,6 +63,10 @@ Dialog {
                     view.model.clear();
                     nameField.visible || page.populate();
                 }
+            }
+            Spacer {
+                id: spacer
+                height: Theme.paddingMedium
             }
             TextField {
                 id: nameField
