@@ -43,30 +43,11 @@ Page {
                 id: contextMenu
                 MenuItem {
                     text: qsTranslate("", "Edit")
-                    onClicked: {
-                        var dialog = pageStack.push("EditFavoritePage.qml", {
-                            "key": model.key, "name": model.name});
-                        dialog.accepted.connect(function() {
-                            // Rename favorite and/or remove associated stops.
-                            py.call_sync("pan.app.favorites.rename", [model.key, dialog.name]);
-                            for (var i = 0; i < dialog.removals.length; i++)
-                                py.call_sync("pan.app.favorites.remove_stop",
-                                             [model.key, dialog.removals[i]]);
-                            var color = py.call_sync("pan.app.favorites.get_color", [model.key]);
-                            view.model.setProperty(model.index, "name", dialog.name);
-                            view.model.setProperty(model.index, "color", color);
-                            py.call("pan.app.save", [], null);
-                        });
-                    }
+                    onClicked: page.editFavorite(model.index);
                 }
                 MenuItem {
                     text: qsTranslate("", "Remove")
-                    onClicked: {
-                        remorseAction(qsTranslate("", "Removing"), function() {
-                            py.call_sync("pan.app.favorites.remove", [model.key]);
-                            view.model.remove(index);
-                        });
-                    }
+                    onClicked: page.removeFavorite(model.index);
                 }
                 onActiveChanged: view.menuOpen = contextMenu.active;
             }
@@ -101,7 +82,7 @@ Page {
         ViewPlaceholder {
             id: viewPlaceholder
             enabled: false
-            text: qsTranslate("", "Once added, favorites appear here. Pull down to search for nearby stops or stops by name or number.")
+            text: qsTranslate("", "Once added, favorites appear here. Pull down to select a provider and to search for stops.")
         }
         VerticalScrollDecorator {}
     }
@@ -113,15 +94,8 @@ Page {
         triggeredOnStart: true
         onTriggered: page.update();
     }
-    Component.onCompleted: {
-        if (py.ready) {
-            page.populate();
-        } else {
-            py.onReadyChanged.connect(function() {
-                page.populate();
-            });
-        }
-    }
+    Component.onCompleted: py.ready ? page.populate() :
+        py.onReadyChanged.connect(page.populate);
     onStatusChanged: {
         if (page.status === PageStatus.Activating) {
             if (page.populatedProvider &&
@@ -129,6 +103,21 @@ Page {
                 page.populate();
             page.update();
         }
+    }
+    function editFavorite(index) {
+        // Open separate page to edit favorite at index.
+        var item = view.model.get(index);
+        var dialog = pageStack.push("EditFavoritePage.qml", {
+            "key": item.key, "name": item.name});
+        dialog.accepted.connect(function() {
+            py.call_sync("pan.app.favorites.rename", [item.key, dialog.name]);
+            for (var i = 0; i < dialog.removals.length; i++)
+                py.call_sync("pan.app.favorites.remove_stop", [item.key, dialog.removals[i]]);
+            var color = py.call_sync("pan.app.favorites.get_color", [item.key]);
+            view.model.setProperty(index, "name", dialog.name);
+            view.model.setProperty(index, "color", color);
+            py.call("pan.app.save", [], null);
+        });
     }
     function populate() {
         // Load favorites from the Python backend.
@@ -140,6 +129,14 @@ Page {
         }
         viewPlaceholder.enabled = (view.model.count === 0);
         page.populatedProvider = app.conf.get("provider");
+    }
+    function removeFavorite(index) {
+        // Remove favorite at index.
+        remorseAction(qsTranslate("", "Removing"), function() {
+            var item = view.model.get(index);
+            py.call_sync("pan.app.favorites.remove", [item.key]);
+            view.model.remove(index);
+        });
     }
     function update() {
         // Update favorite display based on positioning.
@@ -155,7 +152,7 @@ Page {
             if (favorites[i].key !== item.key) continue;
             item.name = favorites[i].name;
             item.color = favorites[i].color;
-            item.lines_label = favorites[i].lines_label;
+            item.line_summary = favorites[i].line_summary;
         }
     }
 }

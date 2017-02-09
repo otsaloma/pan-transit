@@ -33,7 +33,7 @@ Dialog {
             // Use a dynamic column count based on available screen width.
             var width = page.isPortrait ? Screen.width : Screen.height;
             width = width - Theme.horizontalPageMargin;
-            return width / Math.floor(width / (Theme.pixelRatio * 170));
+            return width / Math.floor(width / (Theme.pixelRatio * 200));
         }
         // Prevent list items from stealing focus.
         currentIndex: -1
@@ -63,20 +63,19 @@ Dialog {
         header: DialogHeader {}
         model: ListModel {}
         PullDownMenu {
+            id: menu
             visible: !page.loading && view.model.count > 0
             MenuItem {
                 text: qsTranslate("", "Mark all")
-                onClicked: {
-                    for (var i = 0; i < view.model.count; i++)
-                        view.model.setProperty(i, "checked", true);
-                }
+                onClicked: menu.setAllChecked(true);
             }
             MenuItem {
                 text: qsTranslate("", "Unmark all")
-                onClicked: {
-                    for (var i = 0; i < view.model.count; i++)
-                        view.model.setProperty(i, "checked", false);
-                }
+                onClicked: menu.setAllChecked(false);
+            }
+            function setAllChecked(checked) {
+                for (var i = 0; i < view.model.count; i++)
+                    view.model.setProperty(i, "checked", checked);
             }
         }
         VerticalScrollDecorator {}
