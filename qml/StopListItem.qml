@@ -71,9 +71,9 @@ ListItem {
         anchors.top: descriptionLabel.bottom
         color: Theme.secondaryColor
         font.pixelSize: Theme.fontSizeSmall
-        height: implicitHeight + Theme.paddingLarge
+        height: text ? implicitHeight + Theme.paddingLarge : Theme.paddingLarge
         lineHeight: 1.1
-        text: model.line_summary
+        text: model.line_summary || ""
         truncationMode: TruncationMode.Fade
         verticalAlignment: Text.AlignTop
         wrapMode: model.line_summary.match(/\n/) ? Text.NoWrap : Text.WordWrap
