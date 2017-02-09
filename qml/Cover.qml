@@ -100,10 +100,9 @@ CoverBackground {
     }
     function copyFrom(model) {
         // Copy departure items from given model.
-        for (var i = 0, j = 0; i < model.count && j < view.model.count; i++) {
-            view.model.setProperty(j, "line", model.get(i).line);
-            view.model.setProperty(j, "time", model.get(i).time_qml);
-            j++;
+        for (var i = 0; i < model.count && i < view.model.count; i++) {
+            view.model.setProperty(i, "line", model.get(i).line);
+            view.model.setProperty(i, "time", model.get(i).time_qml);
         }
     }
     function update() {
