@@ -26,10 +26,12 @@ Page {
     allowedOrientations: app.defaultAllowedOrientations
     property bool canCover: true
     property var downloadTime: -1
+    property var ignores: []
     property bool loading: false
     property bool populated: false
     property var props: {}
     property var results: {}
+    property var stops: []
     property string title: ""
     // Column widths to be set based on data.
     property int lineWidth: 0
@@ -38,7 +40,13 @@ Page {
     SilicaListView {
         id: view
         anchors.fill: parent
-        delegate: DepartureListItem {}
+        delegate: Component {
+            Loader {
+                // Allow provider-specific layouts for departure list items.
+                source: py.evaluate("pan.app.provider.departure_list_item_qml")
+                width: view.width
+            }
+        }
         header: PageHeader { title: page.title }
         model: ListModel {}
         PullDownMenu {
@@ -46,15 +54,11 @@ Page {
             MenuItem {
                 text: qsTranslate("", "Filter lines")
                 onClicked: {
-                    var getIds = "pan.app.favorites.get_stop_ids";
-                    var getIgnores = "pan.app.favorites.get_ignore_lines";
-                    var dialog = pageStack.push("LineFilterPage.qml", {
-                        "stops": py.call_sync(getIds, [page.props.key]),
-                        "ignores": py.call_sync(getIgnores, [page.props.key])
-                    });
+                    var options = {"stops": page.stops, "ignores": page.ignores};
+                    var dialog = pageStack.push("LineFilterPage.qml", options);
                     dialog.accepted.connect(function() {
-                        var setIgnores = "pan.app.favorites.set_ignore_lines";
-                        py.call_sync(setIgnores, [page.props.key, dialog.ignores]);
+                        var args = [page.props.key, dialog.ignores];
+                        py.call_sync("pan.app.favorites.set_ignore_lines", args);
                         view.model.clear();
                         page.loading = true;
                         page.title = "";
@@ -90,7 +94,7 @@ Page {
         }
     }
     function getModel() {
-        // Return list view model with current departures.
+        // Return the list view model with current departures.
         return view.model;
     }
     function populate(silent) {
@@ -98,6 +102,8 @@ Page {
         silent = silent || false;
         silent || view.model.clear();
         var key = page.props.key;
+        page.ignores = py.call_sync("pan.app.favorites.get_ignore_lines", [page.props.key]);
+        page.stops = py.call_sync("pan.app.favorites.get_stop_ids", [page.props.key]);
         py.call("pan.app.favorites.find_departures", [key], function(results) {
             if (results && results.error && results.message) {
                 silent || (page.title = "");
@@ -143,11 +149,9 @@ Page {
             var item = view.model.get(i);
             var dist = gps.position.coordinate.distanceTo(
                 QtPositioning.coordinate(item.y, item.x));
-            var getTime = "pan.util.format_departure_time";
-            var getColor = "pan.util.departure_time_to_color";
-            item.time_qml = py.call_sync(getTime, [item.time]);
-            item.color_qml = item.color ||
-                py.call_sync(getColor, [dist, item.time]);
+            item.time_qml = py.call_sync("pan.util.format_departure_time", [item.time]);
+            item.color_qml = item.color || py.call_sync(
+                "pan.util.departure_time_to_color", [dist, item.time]);
             // Remove departures already passed.
             item.time_qml || view.model.remove(i);
         }

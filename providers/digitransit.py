@@ -92,7 +92,7 @@ def find_nearby_stops(x, y):
         "color": get_stop_color(stop),
         "description": stop["desc"] or _("Stop"),
         "id": stop["gtfsId"],
-        "lines": get_stop_lines(stop),
+        "line_summary": get_line_summary(stop),
         "name": format_stop_name(stop),
         "x": float(stop["lon"]),
         "y": float(stop["lat"]),
@@ -109,7 +109,7 @@ def find_stops(query, x, y):
         "color": get_stop_color(stop),
         "description": stop["desc"] or _("Stop"),
         "id": stop["gtfsId"],
-        "lines": get_stop_lines(stop),
+        "line_summary": get_line_summary(stop),
         "name": format_stop_name(stop),
         "x": float(stop["lon"]),
         "y": float(stop["lat"]),
@@ -135,6 +135,15 @@ def format_stop_name(stop):
     name = re.sub(r"(?<! )\(", " (", name)
     return "{} ({})".format(name, code)
 
+def get_line_summary(stop):
+    """Return a summary of lines that use `stop`."""
+    lines = pan.util.sorted_unique_lines([{
+        "name": parse_line_name(pattern["route"]),
+        "destination": parse_headsign(pattern["headsign"]),
+    } for pattern in stop["patterns"]])
+    return "\n".join("{} → {}".format(x["name"], x["destination"])
+                     for x in lines[:3])
+
 def get_stop_color(stop):
     """Return color to use for `stop` based on modes."""
     modes = [x["route"]["mode"] for x in stop["patterns"]]
@@ -142,13 +151,6 @@ def get_stop_color(stop):
     order = [x for x in order if x in modes]
     if not order: return COLORS["BUS"]
     return COLORS.get(order[0], COLORS["BUS"])
-
-def get_stop_lines(stop):
-    """Return a list of lines that use `stop`."""
-    return pan.util.sorted_unique_lines([{
-        "name": parse_line_name(pattern["route"]),
-        "destination": parse_headsign(pattern["headsign"]),
-    } for pattern in stop["patterns"]])
 
 def parse_headsign(headsign):
     """Return shortened headsign for display."""

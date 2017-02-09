@@ -44,6 +44,7 @@ class Provider:
         # Initialize properties only once.
         if hasattr(self, "id"): return
         path, values = self._load_attributes(id)
+        self.departure_list_item_qml = values["departure_list_item_qml"]
         self.description = values["description"]
         self.id = id
         self.name = values["name"]
@@ -123,7 +124,7 @@ class Provider:
 
     @property
     def settings_qml_uri(self):
-        """Return URI to router settings QML file or ``None``."""
+        """Return URI to provider settings QML file or ``None``."""
         path = re.sub(r"\.json$", "_settings.qml", self._path)
         if not os.path.isfile(path): return None
         return pan.util.path2uri(path)

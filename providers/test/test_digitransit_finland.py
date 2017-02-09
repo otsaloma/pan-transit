@@ -51,7 +51,7 @@ class TestModule(pan.test.TestCase):
         for stop in stops:
             assert stop["color"]
             assert stop["id"]
-            assert stop["lines"]
+            assert stop["line_summary"]
             assert stop["name"]
             assert stop["x"]
             assert stop["y"]
@@ -62,7 +62,7 @@ class TestModule(pan.test.TestCase):
         for stop in stops:
             assert stop["color"]
             assert stop["id"]
-            assert stop["lines"]
+            assert stop["line_summary"]
             assert stop["name"]
             assert stop["x"]
             assert stop["y"]

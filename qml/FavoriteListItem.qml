@@ -61,7 +61,7 @@ ListItem {
             model.near ? Theme.primaryColor : Theme.secondaryColor)
         font.pixelSize: Theme.fontSizeSmall
         horizontalAlignment: Text.AlignLeft
-        text: model.lines_label || "—"
+        text: model.line_summary || "—"
         truncationMode: TruncationMode.Fade
         verticalAlignment: Text.AlignTop
     }

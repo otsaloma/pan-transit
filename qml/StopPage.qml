@@ -39,7 +39,13 @@ Page {
     SilicaListView {
         id: view
         anchors.fill: parent
-        delegate: DepartureListItem {}
+        delegate: Component {
+            Loader {
+                // Allow provider-specific layouts for departure list items.
+                source: py.evaluate("pan.app.provider.departure_list_item_qml")
+                width: view.width
+            }
+        }
         header: PageHeader { title: page.title }
         model: ListModel {}
         PullDownMenu {
@@ -104,7 +110,7 @@ Page {
         }
     }
     function getModel() {
-        // Return list view model with current departures.
+        // Return the list view model with current departures.
         return view.model;
     }
     function populate(silent) {
@@ -157,11 +163,9 @@ Page {
             var item = view.model.get(i);
             var dist = gps.position.coordinate.distanceTo(
                 QtPositioning.coordinate(item.y, item.x));
-            var getTime = "pan.util.format_departure_time";
-            var getColor = "pan.util.departure_time_to_color";
-            item.time_qml = py.call_sync(getTime, [item.time]);
-            item.color_qml = item.color ||
-                py.call_sync(getColor, [dist, item.time]);
+            item.time_qml = py.call_sync("pan.util.format_departure_time", [item.time]);
+            item.color_qml = item.color || py.call_sync(
+                "pan.util.departure_time_to_color", [dist, item.time]);
             // Remove departures already passed.
             item.time_qml || view.model.remove(i);
         }

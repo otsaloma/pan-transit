@@ -109,7 +109,6 @@ def find_lines(stops):
 
 def find_nearby_stops(x, y):
     """Return a list of stops near given coordinates."""
-    # XXX: Lines are missing destinations.
     # The API endpoint used by find_stops only returns top-levels
     # of stop hierarchies. For consistency with that request
     # stops as a hierarchy and only parse top-levels from that.
@@ -127,7 +126,7 @@ def find_nearby_stops(x, y):
         "color": get_stop_color(stop["modes"]),
         "description": ", ".join(stop["modes"]),
         "id": stop["id"],
-        "lines": get_stop_lines(stop),
+        "line_summary": get_line_summary(stop),
         "name": stop["commonName"],
         "x": float(stop["lon"]),
         "y": float(stop["lat"]),
@@ -145,7 +144,7 @@ def find_stops(query, x, y):
         "color": get_stop_color(match["modes"]),
         "description": ", ".join(match["modes"]),
         "id": match["id"],
-        "lines": [],
+        "line_summary": "",
         "name": match["name"],
         "x": float(match["lon"]),
         "y": float(match["lat"]),
@@ -158,16 +157,17 @@ def format_url(path, **params):
     params = "&".join("=".join(x) for x in params.items())
     return "?".join((url, params))
 
+def get_line_summary(stop):
+    """Return a list of lines that use `stop`."""
+    line = lambda x: dict(name=x["name"], destination="")
+    lines = pan.util.sorted_unique_lines(map(line, stop["lines"]))
+    return ", ".join(x["name"] for x in lines[:10])
+
 def get_stop_color(modes):
     """Return color to use for stop based on `modes`."""
     order = [x for x in MODE_COLOR_ORDER if x in modes]
     if not order: return COLORS["bus"]
     return COLORS.get(order[0], COLORS["bus"])
-
-def get_stop_lines(stop):
-    """Return a list of lines that use `stop`."""
-    line = lambda x: dict(name=x["name"], destination="")
-    return pan.util.sorted_unique_lines(map(line, stop["lines"]))
 
 @functools.lru_cache(1)
 def get_stop_types():

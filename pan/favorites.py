@@ -72,7 +72,7 @@ class Favorites:
         for favorite in favorites:
             favorite["stops"] = self.get_stops(favorite["key"])
             favorite["color"] = self.get_color(favorite["key"])
-            favorite["lines_label"] = self.get_lines_label(favorite["key"])
+            favorite["line_summary"] = self.get_line_summary(favorite["key"])
         return favorites
 
     def find_departures(self, key):
@@ -80,7 +80,7 @@ class Favorites:
         provider = self.get_provider(key)
         if provider is None: return []
         stops = self.get_stop_ids(key)
-        ignores = self.get(key)["ignore_lines"]
+        ignores = self.get_ignore_lines(key)
         return provider.find_departures(stops, ignores)
 
     def get(self, key):
@@ -102,7 +102,7 @@ class Favorites:
         favorite = self.get(key)
         return copy.deepcopy(favorite["ignore_lines"])
 
-    def get_lines_label(self, key):
+    def get_line_summary(self, key):
         """Return a string listing lines of favorite `key`."""
         favorite = self.get(key)
         lines = favorite.get("lines", [])
@@ -182,10 +182,10 @@ class Favorites:
     def _update_lines(self, key, provider):
         """Update list of lines using stops of favorite `key`."""
         with pan.util.silent(Exception, tb=True):
+            favorite = self.get(key)
             stops = self.get_stop_ids(key)
             lines = provider.find_lines(stops)
-            favorite = self.get(key)
-            ignores = favorite["ignore_lines"]
+            ignores = self.get_ignore_lines(key)
             lines = pan.util.filter_lines(lines, ignores)
             favorite["lines"] = list(filter(None, lines))
 

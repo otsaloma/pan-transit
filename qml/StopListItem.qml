@@ -22,11 +22,11 @@ import "."
 
 ListItem {
     id: listItem
-    contentHeight: nameLabel.height + descriptionLabel.height + repeater.height
+    contentHeight: nameLabel.height + descriptionLabel.height + linesLabel.height
     property var result: page.results[index]
     Rectangle {
         id: bar
-        anchors.bottom: repeater.bottom
+        anchors.bottom: linesLabel.bottom
         anchors.bottomMargin: 1.5 * Theme.paddingMedium
         anchors.left: parent.left
         anchors.leftMargin: Theme.horizontalPageMargin
@@ -62,34 +62,20 @@ ListItem {
         truncationMode: TruncationMode.Fade
         verticalAlignment: Text.AlignVCenter
     }
-    Repeater {
-        // List at most three lines using the stop along with their destinations
-        // to clarify which stop and on which side of the street it is located on.
-        id: repeater
-        anchors.left: descriptionLabel.left
+    Label {
+        id: linesLabel
+        anchors.left: bar.right
+        anchors.leftMargin: Theme.paddingLarge
+        anchors.right: parent.right
+        anchors.rightMargin: Theme.horizontalPageMargin
         anchors.top: descriptionLabel.bottom
-        height: Theme.paddingLarge
-        model: listItem.result ? Math.min(3, listItem.result.lines.length) : 0
-        width: parent.width
-        Item {
-            id: row
-            anchors.left: repeater.left
-            height: lineLabel.height
-            width: listItem.width
-            property var line: listItem.result.lines[index]
-            Label {
-                id: lineLabel
-                anchors.left: row.left
-                anchors.right: row.right
-                color: Theme.secondaryColor
-                font.pixelSize: Theme.fontSizeSmall
-                height: implicitHeight + Theme.paddingSmall
-                text: line.destination ? "%1 → %2".arg(line.name).arg(line.destination) : line.name
-                truncationMode: TruncationMode.Fade
-                verticalAlignment: Text.AlignVCenter
-                y: repeater.y + index * row.height
-            }
-            Component.onCompleted: repeater.height += row.height;
-        }
+        color: Theme.secondaryColor
+        font.pixelSize: Theme.fontSizeSmall
+        height: implicitHeight + Theme.paddingLarge
+        lineHeight: 1.1
+        text: model.line_summary
+        truncationMode: TruncationMode.Fade
+        verticalAlignment: Text.AlignTop
+        wrapMode: model.line_summary.match(/\n/) ? Text.NoWrap : Text.WordWrap
     }
 }
