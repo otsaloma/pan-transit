@@ -72,7 +72,7 @@ Page {
                 // contributed to this translation; in that case, please write
                 // them on separate lines seperated by newlines (\n).
                 text: qsTranslate("", "translator-credits")
-                visible: text !== "translator-credits"
+                visible: text && text !== "translator-credits"
             }
             ListItemLabel {
                 font.pixelSize: Theme.fontSizeSmall
