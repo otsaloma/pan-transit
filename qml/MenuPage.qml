@@ -47,7 +47,7 @@ Page {
                 }
                 MenuItem {
                     text: qsTranslate("", "Remove")
-                    onClicked: page.removeFavorite(model.index);
+                    onClicked: page.removeFavorite(listItem, model.index);
                 }
                 onActiveChanged: view.menuOpen = contextMenu.active;
             }
@@ -130,9 +130,9 @@ Page {
         viewPlaceholder.enabled = (view.model.count === 0);
         page.populatedProvider = app.conf.get("provider");
     }
-    function removeFavorite(index) {
+    function removeFavorite(listItem, index) {
         // Remove favorite at index.
-        remorseAction(qsTranslate("", "Removing"), function() {
+        listItem.remorseAction(qsTranslate("", "Removing"), function() {
             var item = view.model.get(index);
             py.call_sync("pan.app.favorites.remove", [item.key]);
             view.model.remove(index);
