@@ -24,8 +24,8 @@ https://tfl.gov.uk/plan-a-journey/
 """
 
 import datetime
-import functools
 import pan
+import re
 import urllib.parse
 
 COLORS = {
@@ -43,14 +43,11 @@ COLORS = {
             "tube": "#244ba6",
 }
 
-# XXX: TfL has stop types in a very complicated hierarchy.
-# We should perhaps remove some levels, but I can't tell which.
-# For now, just remove stop types that are not mass transit.
-IGNORE_STOP_TYPES = [
-    "CarPickupSetDownArea",
-    "NaptanHailAndRideSection",
-    "NaptanSharedTaxi",
-    "NaptanTaxiRank",
+DESTINATION_SUFFIXES = [
+    "dlr station",
+    "rail station",
+    "tram stop",
+    "underground station",
 ]
 
 MODE_COLOR_ORDER = [
@@ -73,6 +70,18 @@ PARAMS = {
     "app_key": "57d410a780f5bf0361430f742a1e5189",
 }
 
+# Full list of stop types is available from the API. There's a lot of
+# stop types and they form a confusing hierarchy and not all of them
+# even work. Based on some experimentation, it seems the below short list
+# would be enough and would keep non-functional results to a minimum.
+# https://api.tfl.gov.uk/StopPoint/Meta/StopType
+STOP_TYPES = [
+    "NaptanFerryPort",
+    "NaptanMetroStation",
+    "NaptanPublicBusCoachTram",
+    "NaptanRailStation",
+]
+
 def find_departures(stops):
     """Return a list of departures from `stops`."""
     if len(stops) > 1:
@@ -82,7 +91,7 @@ def find_departures(stops):
     url = format_url("/StopPoint/{}/Arrivals".format(stops[0]))
     result = pan.http.get_json(url)
     return pan.util.sorted_departures([{
-        "destination": (
+        "destination": parse_destination(
             departure.get("destinationName", "") or
             departure.get("towards", "")),
         "line": departure["lineName"],
@@ -102,19 +111,19 @@ def find_lines(stops):
     result = pan.http.get_json(url)
     return pan.util.sorted_unique_lines([{
         "color": COLORS.get(line["mode"], COLORS["bus"]),
-        "destination": line["destinationName"],
+        "destination": parse_destination(line["destinationName"]),
         "id": line["naptanId"],
         "name": line["lineId"],
     } for line in result])
 
 def find_nearby_stops(x, y):
     """Return a list of stops near given coordinates."""
-    # The API endpoint used by find_stops only returns top-levels
-    # of stop hierarchies. For consistency with that request
-    # stops as a hierarchy and only parse top-levels from that.
-    params = dict(stopTypes=",".join(get_stop_types()),
+    # XXX: The API endpoint used by find_stops doesn't require
+    # a stopTypes argument, but returns sensibly filtered results.
+    # We try to match that, but don't quite succeed.
+    params = dict(stopTypes=",".join(STOP_TYPES),
                   radius="500",
-                  useStopPointHierarchy="true",
+                  useStopPointHierarchy="false",
                   categories="none",
                   returnLines="true",
                   lat="{:.6f}".format(y),
@@ -124,7 +133,7 @@ def find_nearby_stops(x, y):
     result = pan.http.get_json(url)
     return [{
         "color": get_stop_color(stop["modes"]),
-        "description": ", ".join(stop["modes"]),
+        "description": get_stop_description(stop),
         "id": stop["id"],
         "line_summary": get_line_summary(stop),
         "name": stop["commonName"],
@@ -138,11 +147,11 @@ def find_stops(query, x, y):
     # needing to do separate API calls for each stop.
     query = urllib.parse.quote(query)
     path = "/StopPoint/Search/{}".format(query)
-    url = format_url(path, maxResults="50")
+    url = format_url(path, maxResults="50", includeHubs="false")
     result = pan.http.get_json(url)
     return [{
         "color": get_stop_color(match["modes"]),
-        "description": ", ".join(match["modes"]),
+        "description": get_stop_description(match),
         "id": match["id"],
         "line_summary": "",
         "name": match["name"],
@@ -169,12 +178,21 @@ def get_stop_color(modes):
     if not order: return COLORS["bus"]
     return COLORS.get(order[0], COLORS["bus"])
 
-@functools.lru_cache(1)
-def get_stop_types():
-    """Return a list of stop types to query for."""
-    # XXX: Maybe this doesn't change and we could just save it?
-    types = pan.http.get_json(format_url("/StopPoint/Meta/StopTypes"))
-    return sorted(set(types) - set(IGNORE_STOP_TYPES))
+def get_stop_description(stop):
+    """Return description to use for stop."""
+    modes = stop.get("modes", "") or "—"
+    indicator = stop.get("indicator", "")
+    if not indicator: return ", ".join(modes)
+    return " · ".join((", ".join(modes), indicator))
+
+def parse_destination(destination):
+    """Return `destination` with possible suffixes removed."""
+    # Some API endpoints include these suffixes, others don't.
+    # To be able to do line filtering correctly we need consistency.
+    for suffix in DESTINATION_SUFFIXES:
+        pattern = " +{}$".format(suffix)
+        destination = re.sub(pattern, "", destination, flags=re.I)
+    return destination.strip()
 
 def parse_time(time):
     """Return Unix time in seconds for `departure`."""
