@@ -1,6 +1,6 @@
 {
     "_name": "Finnish Transport Agency",
     "_description": "Public transport in Finland",
-    "departure_list_item_qml": "DepartureListItemTfl.qml",
+    "departure_list_item_qml": "DepartureListItemHsl.qml",
     "update_interval": 300
 }

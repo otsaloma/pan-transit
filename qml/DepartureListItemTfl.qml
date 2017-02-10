@@ -21,12 +21,12 @@ import Sailfish.Silica 1.0
 
 ListItem {
     id: listItem
-    contentHeight: Theme.itemSizeSmall
+    contentHeight: Theme.itemSizeMedium
     enabled: false
     property var result: page.results[index]
     Rectangle {
         id: bar
-        anchors.bottom: lineLabel.bottom
+        anchors.bottom: destinationLabel.bottom
         anchors.bottomMargin: Theme.paddingMedium
         anchors.left: parent.left
         anchors.leftMargin: Theme.horizontalPageMargin
@@ -38,42 +38,47 @@ ListItem {
     }
     Label {
         id: lineLabel
+        anchors.bottom: parent.verticalCenter
         anchors.left: bar.right
         anchors.leftMargin: Theme.paddingLarge
-        font.pixelSize: Theme.fontSizeLarge
-        height: Theme.itemSizeSmall
-        horizontalAlignment: Text.AlignRight
+        anchors.right: realLabel.left
+        anchors.top: parent.top
         text: model.line
-        verticalAlignment: Text.AlignVCenter
-        width: page.lineWidth
-        Component.onCompleted: lineLabel.updateWidth();
-        onTextChanged: lineLabel.updateWidth();
-        function updateWidth() {
-            var width = lineLabel.implicitWidth;
-            view.model.setProperty(model.index, "lineWidth", width);
-            page.lineWidth = Math.max(page.lineWidth, width);
-        }
+        truncationMode: TruncationMode.Fade
+        verticalAlignment: Text.AlignBottom
     }
     Label {
-        id: destinationLabel
+        id: dotLabel
         anchors.baseline: lineLabel.baseline
-        anchors.left: lineLabel.right
-        anchors.leftMargin: Theme.paddingLarge
-        anchors.right: realLabel.left
         color: Theme.secondaryColor
-        text: model.destination
         truncationMode: TruncationMode.Fade
+        width: Math.max(0, realLabel.x - x)
+        x: lineLabel.x + lineLabel.implicitWidth + Theme.paddingSmall
         Component.onCompleted: {
             // Add a dotted line long enough for all orientations.
             var dots = " . . . . . . . . . . . . . . . . . . . .";
             var dots = dots + dots + dots + dots + dots;
             var size = Math.max(page.width, page.height);
-            while (destinationLabel.implicitWidth < size) {
-                var prev = destinationLabel.implicitWidth;
-                destinationLabel.text += dots;
-                if (destinationLabel.implicitWidth < prev + 1) break;
+            while (dotLabel.implicitWidth < size) {
+                var prev = dotLabel.implicitWidth;
+                dotLabel.text += dots;
+                if (dotLabel.implicitWidth < prev + 1) break;
             }
         }
+    }
+    Label {
+        id: destinationLabel
+        anchors.left: bar.right
+        anchors.leftMargin: Theme.paddingLarge
+        anchors.right: parent.right
+        anchors.rightMargin: Theme.horizontalPageMargin
+        anchors.top: parent.verticalCenter
+        anchors.bottom: parent.bottom
+        color: Theme.secondaryColor
+        font.pixelSize: Theme.fontSizeSmall
+        text: model.destination
+        truncationMode: TruncationMode.Fade
+        verticalAlignment: Text.AlignTop
     }
     Label  {
         id: realLabel
