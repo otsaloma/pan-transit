@@ -8,20 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-05 02:28+0200\n"
+"POT-Creation-Date: 2017-02-13 03:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pan/util.py:55
+#: pan/util.py:56
 msgid "Connection timed out"
 msgstr ""
 
-#: providers/digitransit.py:94 providers/digitransit.py:111
+#: providers/digitransit.py:93 providers/digitransit.py:110
 msgid "Stop"
 msgstr ""
 
@@ -67,11 +67,11 @@ msgstr ""
 msgid "Add to existing"
 msgstr ""
 
-#: qml/AddFavoritePage.qml:74 qml/EditFavoritePage.qml:89
+#: qml/AddFavoritePage.qml:78 qml/EditFavoritePage.qml:89
 msgid "Name"
 msgstr ""
 
-#: qml/EditFavoritePage.qml:68 qml/MenuPage.qml:63 qml/SearchPage.qml:47
+#: qml/EditFavoritePage.qml:68 qml/MenuPage.qml:49 qml/SearchPage.qml:47
 msgid "Remove"
 msgstr ""
 
@@ -79,27 +79,28 @@ msgstr ""
 msgid "Stops"
 msgstr ""
 
-#: qml/FavoritePage.qml:47 qml/StopPage.qml:66
+#: qml/FavoritePage.qml:55 qml/StopPage.qml:73
 msgid "Filter lines"
 msgstr ""
 
-#: qml/FavoritePage.qml:88 qml/LineFilterPage.qml:90 qml/StopPage.qml:101
+#: qml/FavoritePage.qml:65 qml/FavoritePage.qml:91 qml/LineFilterPage.qml:89
+#: qml/StopPage.qml:82 qml/StopPage.qml:108
 msgid "Loading"
 msgstr ""
 
-#: qml/FavoritePage.qml:122 qml/StopPage.qml:134
+#: qml/FavoritePage.qml:125 qml/StopPage.qml:140
 msgid "No departures found"
 msgstr ""
 
-#: qml/LineFilterPage.qml:68
+#: qml/LineFilterPage.qml:69
 msgid "Mark all"
 msgstr ""
 
-#: qml/LineFilterPage.qml:75
+#: qml/LineFilterPage.qml:73
 msgid "Unmark all"
 msgstr ""
 
-#: qml/LineFilterPage.qml:113
+#: qml/LineFilterPage.qml:121
 msgid "No lines found"
 msgstr ""
 
@@ -107,28 +108,28 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: qml/MenuPage.qml:65
-msgid "Removing"
-msgstr ""
-
-#: qml/MenuPage.qml:81
+#: qml/MenuPage.qml:62
 msgid "About"
 msgstr ""
 
-#: qml/MenuPage.qml:85 qml/PreferencesPage.qml:33
+#: qml/MenuPage.qml:66 qml/PreferencesPage.qml:33
 msgid "Preferences"
 msgstr ""
 
-#: qml/MenuPage.qml:89 qml/SearchPage.qml:67
+#: qml/MenuPage.qml:70 qml/SearchPage.qml:67
 msgid "Search"
 msgstr ""
 
-#: qml/MenuPage.qml:97
+#: qml/MenuPage.qml:78
 msgid "Nearby"
 msgstr ""
 
-#: qml/MenuPage.qml:104
-msgid "Once added, favorites appear here. Pull down to search for nearby stops or stops by name or number."
+#: qml/MenuPage.qml:85
+msgid "Once added, favorites appear here. Pull down to select a provider and to search for stops."
+msgstr ""
+
+#: qml/MenuPage.qml:135
+msgid "Removing"
 msgstr ""
 
 #: qml/NearbyPage.qml:63 qml/SearchResultsPage.qml:63
@@ -167,12 +168,12 @@ msgstr ""
 msgid "Stop name or number"
 msgstr ""
 
-#: qml/StopPage.qml:48
+#: qml/StopPage.qml:54
 msgid "Add to favorites"
 msgstr ""
 
 #: standard input:1
-msgid "Digitransit Finland"
+msgid "Finnish Transport Agency"
 msgstr ""
 
 #: standard input:2
@@ -180,9 +181,13 @@ msgid "Public transport in Finland"
 msgstr ""
 
 #: standard input:3
-msgid "Digitransit HSL"
+msgid "Helsinki Region Transport (HSL)"
 msgstr ""
 
 #: standard input:4
 msgid "Public transport in the Helsinki region"
+msgstr ""
+
+#: standard input:5
+msgid "Public transport in the London region · Powered by TfL Open Data · Contains OS data © Crown copyright and database rights 2016"
 msgstr ""

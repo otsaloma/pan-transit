@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan-transit 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-05 02:28+0200\n"
-"PO-Revision-Date: 2017-02-05 02:39+0200\n"
+"POT-Creation-Date: 2017-02-13 03:04+0200\n"
+"PO-Revision-Date: 2017-02-13 03:12+0200\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>\n"
 "Language-Team: Finnish\n"
 "Language: fi\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pan/util.py:55
+#: pan/util.py:56
 msgid "Connection timed out"
 msgstr "Yhteys aikakatkaistiin"
 
-#: providers/digitransit.py:94 providers/digitransit.py:111
+#: providers/digitransit.py:93 providers/digitransit.py:110
 msgid "Stop"
 msgstr "Pysäkki"
 
@@ -67,11 +67,11 @@ msgstr "Luo uusi"
 msgid "Add to existing"
 msgstr "Lisää olemassa olevaan"
 
-#: qml/AddFavoritePage.qml:74 qml/EditFavoritePage.qml:89
+#: qml/AddFavoritePage.qml:78 qml/EditFavoritePage.qml:89
 msgid "Name"
 msgstr "Nimi"
 
-#: qml/EditFavoritePage.qml:68 qml/MenuPage.qml:63 qml/SearchPage.qml:47
+#: qml/EditFavoritePage.qml:68 qml/MenuPage.qml:49 qml/SearchPage.qml:47
 msgid "Remove"
 msgstr "Poista"
 
@@ -79,57 +79,58 @@ msgstr "Poista"
 msgid "Stops"
 msgstr "Pysäkit"
 
-#: qml/FavoritePage.qml:47 qml/StopPage.qml:66
+#: qml/FavoritePage.qml:55 qml/StopPage.qml:73
 msgid "Filter lines"
 msgstr "Valitse linjat"
 
-#: qml/FavoritePage.qml:88 qml/LineFilterPage.qml:90 qml/StopPage.qml:101
+#: qml/FavoritePage.qml:65 qml/FavoritePage.qml:91 qml/LineFilterPage.qml:89
+#: qml/StopPage.qml:82 qml/StopPage.qml:108
 msgid "Loading"
 msgstr "Ladataan"
 
-#: qml/FavoritePage.qml:122 qml/StopPage.qml:134
+#: qml/FavoritePage.qml:125 qml/StopPage.qml:140
 msgid "No departures found"
 msgstr "Ei löytynyt lähtöjä"
 
-#: qml/LineFilterPage.qml:68
+#: qml/LineFilterPage.qml:69
 msgid "Mark all"
 msgstr "Merkitse kaikki"
 
-#: qml/LineFilterPage.qml:75
+#: qml/LineFilterPage.qml:73
 msgid "Unmark all"
 msgstr "Tyhjennä merkinnät"
 
-#: qml/LineFilterPage.qml:113
+#: qml/LineFilterPage.qml:121
 msgid "No lines found"
-msgstr "Ei löytynyt lähtöjä"
+msgstr "Ei lähtöjä"
 
 #: qml/MenuPage.qml:45
 msgid "Edit"
 msgstr "Muokkaa"
 
-#: qml/MenuPage.qml:65
-msgid "Removing"
-msgstr "Poistetaan"
-
-#: qml/MenuPage.qml:81
+#: qml/MenuPage.qml:62
 msgid "About"
 msgstr "Tietoja"
 
-#: qml/MenuPage.qml:85 qml/PreferencesPage.qml:33
+#: qml/MenuPage.qml:66 qml/PreferencesPage.qml:33
 msgid "Preferences"
 msgstr "Asetukset"
 
-#: qml/MenuPage.qml:89 qml/SearchPage.qml:67
+#: qml/MenuPage.qml:70 qml/SearchPage.qml:67
 msgid "Search"
 msgstr "Etsi"
 
-#: qml/MenuPage.qml:97
+#: qml/MenuPage.qml:78
 msgid "Nearby"
 msgstr "Lähellä"
 
-#: qml/MenuPage.qml:104
-msgid "Once added, favorites appear here. Pull down to search for nearby stops or stops by name or number."
-msgstr "Kun lisätty, suosikit näkyvät tässä. Vedä alaspäin etsiäksesi lähellä olevia pysäkkejä tai pysäkkejä nimellä tai numerolla."
+#: qml/MenuPage.qml:85
+msgid "Once added, favorites appear here. Pull down to select a provider and to search for stops."
+msgstr "Kun lisätty, suosikit näkyvät tässä. Vedä alaspäin valitaksesi palveluntarjoajan ja etsiäksesi pysäkkejä."
+
+#: qml/MenuPage.qml:135
+msgid "Removing"
+msgstr "Poistetaan"
 
 #: qml/NearbyPage.qml:63 qml/SearchResultsPage.qml:63
 msgid "Searching"
@@ -141,11 +142,11 @@ msgstr "%1 pysäkkiä"
 
 #: qml/NearbyPage.qml:84 qml/SearchResultsPage.qml:85
 msgid "No stops found"
-msgstr "Ei löytynyt pysäkkejä"
+msgstr "Ei pysäkkejä"
 
 #: qml/PreferencesPage.qml:36
 msgid "Provider"
-msgstr "Operaattori"
+msgstr "Palveluntarjoaja"
 
 #: qml/PreferencesPage.qml:47
 msgid "Display"
@@ -167,22 +168,26 @@ msgstr "Kun lähtöön jäljellä oleva aika on alle aikarajan, niin se näytet�
 msgid "Stop name or number"
 msgstr "Pysäkin nimi tai numero"
 
-#: qml/StopPage.qml:48
+#: qml/StopPage.qml:54
 msgid "Add to favorites"
 msgstr "Lisää suosikkeihin"
 
 #: standard input:1
-msgid "Digitransit Finland"
-msgstr "Digitransit Suomi"
+msgid "Finnish Transport Agency"
+msgstr "Liikennevirasto"
 
 #: standard input:2
 msgid "Public transport in Finland"
 msgstr "Joukkoliikenne Suomessa"
 
 #: standard input:3
-msgid "Digitransit HSL"
-msgstr "Digitransit HSL"
+msgid "Helsinki Region Transport (HSL)"
+msgstr "Helsingin seudun liikenne (HSL)"
 
 #: standard input:4
 msgid "Public transport in the Helsinki region"
 msgstr "Joukkoliikenne Helsingin seudulla"
+
+#: standard input:5
+msgid "Public transport in the London region · Powered by TfL Open Data · Contains OS data © Crown copyright and database rights 2016"
+msgstr "Joukkoliikenne Lontoon seudulla · Powered by TfL Open Data · Contains OS data © Crown copyright and database rights 2016"
