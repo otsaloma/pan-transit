@@ -4,6 +4,7 @@ po
 providers
 qml
 rpm
+tools
 AUTHORS.md
 COPYING
 Makefile
