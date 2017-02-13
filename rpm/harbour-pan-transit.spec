@@ -21,13 +21,9 @@ Requires: qt5-qtdeclarative-import-positioning >= 5.2
 Requires: sailfishsilica-qt5
 
 %description
-View next buses, trams, trains, metro or ferries departing from a stop. View a
-listing of nearby stops or search for stops by name. Mark frequently used stops
-as favorites along with line filters.
-
-Currently Pan Transit supports the Finnish Digitransit provider, which includes
-Helsinki Region Transport (HSL) and whole Finland. Pan Transit is Open Source
-and new providers are added based on contributions from the community.
+Pan Transit is an application for Sailfish OS to view departures from
+public transport stops. It is designed to support multiple different
+providers (i.e. cities/regions).
 
 %prep
 %setup -q
