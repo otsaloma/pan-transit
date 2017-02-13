@@ -35,19 +35,30 @@ as part of Pan Transit.
 
 ```json
 {
-    "_name": "Digitransit HSL",
+    "_name": "Helsinki Region Transport (HSL)",
     "_description": "Public transport in the Helsinki region",
+    "departure_list_item_qml": "DepartureListItemHsl.qml",
     "update_interval": 60
 }
 ```
 
-The JSON metadata file is mostly self-explanatory. For `name` and
-`description`, use underscore prefixes if the values of the fields are
-translatable. `update_interval` is the time in seconds between which new
-API calls are made to request departures. If your API provides real-time
-data or considerably limits the amount of departures per call, you might
-want to set this low, e.g. 60–300 seconds, otherwise something higher to
-avoid unnecessary data traffic.
+* **`name`** and **`description`** are visible to the user in the
+  provider selection screen. Use underscore prefixes if the values of
+  the fields are translatable. If your provider requires some copyright
+  etc. attribution, you can include that in the description.
+
+* **`departure_list_item_qml`** should be the name of the QML file used
+  for list items of individual departures. Currently there's two
+  choices: `DepartureListItemHsl.qml`, a compact display suitable for
+  short line names, and `DepartureListItemTfl.qml`, a two-line display
+  suitable for longer line names.
+
+* **`update_interval`** should be the time in seconds between which new
+  API calls are made to request departures. If your API provides
+  real-time data or considerably limits the amount of departures
+  returned per call, you might want to set this low, e.g. 60–300
+  seconds, otherwise something higher to avoid unnecessary data traffic.
+
 
 ## Python code
 
@@ -63,10 +74,9 @@ value should be something like
         "destination": "Munkkiniemi",
         "line": "4",
         "realtime": False,
-        "scheduled_time": 1486271460,
-        "time": 1486271460,
-        "x": 24.94210060000002,
-        "y": 60.16884440000022,
+        "scheduled_time": 1486957140,
+        "stop": "HSL:1020444",
+        "time": 1486957140,
     }, ...
 ]
 ```
@@ -97,12 +107,20 @@ where
   indicate how many minutes late a departure is by comparing it with the
   real-time departure time.
 
+* **`stop`** should be the stop ID copied from the function argument
+  into the return value. When multiple stops are given as arguments,
+  this is used connect departures later with stop metadata.
+
 * **`time`** should be the Unix time of departure. This is what is shown
   to the user. If real-time data is available, it should be used here,
   otherwise it should be schedule data.
 
-* **`x`** and **`y`** should be the WGS 84 longitude and latitude
-  coordinates of the stop from which the departure leaves.
+* **`x`** and **`y` (both optional)** should be the WGS 84 longitude and
+  latitude coordinates of the stop from which the departure leaves.
+  Provide these only if your API directly returns them. If these are
+  left out, Pan Transit will fill them in based on coordinates saved
+  along with a favorite, or seen earlier as part of a `find_stops` or
+  `find_nearby_stops` call.
 
 ### `find_lines(stops)`
 
@@ -124,8 +142,8 @@ should be something like
 * **`color`** color should be whatever color your local transit agency
   uses for a particular line or a vehicle type. This is currently not
   shown for individual lines, but for stops, i.e. if bus and tram lines
-  are assigned different colors, then bus and tram stops will be be
-  colored differently.
+  are assigned different colors, then bus and tram stops will be colored
+  differently.
 
 * **`destination`** should be the name of the final destination of the
   line or the headsign of the vehicle or something similar.
@@ -149,12 +167,12 @@ like
 [
     {
         "color": "#007ac9",
-        "description": "Erottaja",
-        "id": "HSL:1030121",
-        "lines": [{"destination": "Erottaja", "name": "20"}],
-        "name": "Erottaja (1001)",
-        "x": 24.94357149999999,
-        "y": 60.16692740000021,
+        "description": "Albertinkatu 10",
+        "id": "HSL:1050110",
+        "line_summary": "14 → Hernesaari\n17 → Viiskulma\n18 → Eira",
+        "name": "Merimiehenkatu (1172)",
+        "x": 24.937910200000015,
+        "y": 60.160916900000124,
     }, ...
 ]
 ```
@@ -164,16 +182,19 @@ like
   agency uses to refer to a particular line or a vehicle type.
 
 * **`description`** should be a short one-line description of the stop,
-  e.g. an address. If your API does not provide this, use some
-  placeholder, e.g. "Stop".
+  e.g. an address. If your API does not provide this, you can e.g. list
+  the vehicle types ("Bus, tram") or use something as generic as "Stop".
 
 * **`id`** should be the unique ID (string) of the stop. If your API
   does not provide stop IDs, but the stop names are unique, then
   duplicate the names as IDs.
 
-* **`lines`** should be a list of lines passing through the stop, with
-  "name" and "destination" for each line. These are used in stop
-  listings to provide additional details.
+* **`line_summary`** should be a single or multiple line string summary
+  of the lines passing through the stop. These are used in stop listings
+  to provide additional details. If your provider groups different
+  directions as a single stop, you might want just a line listing, e.g.
+  "14, 17, 18". If different directions have separate stops, you might
+  want to include destinations as in the above example.
 
 * **`name`** should be the name of the stop and is shown prominently as
   first thing in stop listings and page title when viewing departures.
