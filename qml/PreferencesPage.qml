@@ -88,6 +88,26 @@ Page {
                 text: qsTranslate("", "When the time remaining to departure is below cutoff, it is shown as minutes remaining instead of the departure time.")
                 wrapMode: Text.WordWrap
             }
+            ComboBox {
+                id: unitsComboBox
+                label: qsTranslate("", "Units")
+                menu: ContextMenu {
+                    MenuItem { text: qsTranslate("", "Metric") }
+                    MenuItem { text: qsTranslate("", "American") }
+                    MenuItem { text: qsTranslate("", "British") }
+                }
+                property var values: ["metric", "american", "british"]
+                Component.onCompleted: {
+                    var value = app.conf.get("units");
+                    var index = unitsComboBox.values.indexOf(value);
+                    unitsComboBox.currentIndex = index;
+                }
+                onCurrentIndexChanged: {
+                    var index = unitsComboBox.currentIndex;
+                    var value = unitsComboBox.values[index];
+                    app.conf.set("units", value);
+                }
+            }
         }
         VerticalScrollDecorator {}
     }
