@@ -62,10 +62,9 @@ Page {
                         stop.x = page.props.x;
                         stop.y = page.props.y;
                         stop.color = page.props.color;
-                        py.call("pan.app.favorites.add_stop", [dialog.key, stop], function() {
-                            py.call("pan.app.save", [], null);
-                            menu.populate();
-                        });
+                        py.call_sync("pan.app.favorites.add_stop", [dialog.key, stop]);
+                        py.call("pan.app.save", [], null);
+                        menu.populate();
                     });
                 }
             }

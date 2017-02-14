@@ -58,7 +58,7 @@ Page {
                     var dialog = pageStack.push("LineFilterPage.qml", options);
                     dialog.accepted.connect(function() {
                         var args = [page.props.key, dialog.ignores];
-                        py.call("pan.app.favorites.set_ignore_lines", args, null);
+                        py.call_sync("pan.app.favorites.set_ignore_lines", args);
                         view.model.clear();
                         page.loading = true;
                         page.title = "";
