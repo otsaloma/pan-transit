@@ -7,8 +7,9 @@ Releasing a New Version
     - `emacs po/fi.po`
     - `tx push -s`
     - `tx push -tf -l fi`
-    - `tx pull -a [--minimum-perc=95]`
+    - `tx pull -a --minimum-perc=95`
     - `tools/check-translations`
+    - `tools/check-translations | grep %`
     - `git commit -a -m "Update translations for X.Y.Z"`
 * Do final quality checks
     - `make check`
