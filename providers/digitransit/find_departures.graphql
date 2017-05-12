@@ -8,12 +8,12 @@
             realtimeDeparture
             scheduledDeparture
             serviceDay
-            stopHeadsign
             trip {
                 route {
                     mode
                     shortName
                 }
+                tripHeadsign
             }
         }
     }

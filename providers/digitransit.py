@@ -56,7 +56,7 @@ def find_departures(stops):
             for departure in stop["stoptimesWithoutPatterns"]:
                 yield stop, departure
     return pan.util.sorted_departures([{
-        "destination": parse_headsign(departure["stopHeadsign"]),
+        "destination": parse_headsign(departure["trip"]["tripHeadsign"]),
         "line": parse_line_name(departure["trip"]["route"]),
         "realtime": bool(departure["realtime"]),
         "scheduled_time": parse_scheduled_time(departure),
