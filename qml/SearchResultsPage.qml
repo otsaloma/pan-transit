@@ -23,10 +23,12 @@ import "."
 Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
+
     property bool loading: false
     property string populatedQuery: ""
     property var results: {}
     property string title: ""
+
     SilicaGridView {
         id: view
         anchors.fill: parent
@@ -36,6 +38,7 @@ Page {
             var width = page.isPortrait ? Screen.width : Screen.height;
             return width / Math.floor(width / (Theme.pixelRatio * 400));
         }
+
         delegate: StopListItem {
             id: listItem
             width: view.cellWidth
@@ -45,14 +48,22 @@ Page {
             }
             onClicked: app.pageStack.push("StopPage.qml", {"props": model});
         }
-        header: PageHeader { title: page.title }
+
+        header: PageHeader {
+            title: page.title
+        }
+
         model: ListModel {}
+
         VerticalScrollDecorator {}
+
     }
+
     BusyModal {
         id: busy
         running: page.loading
     }
+
     onStatusChanged: {
         if (page.populatedQuery === app.searchQuery) {
             return;
@@ -65,6 +76,7 @@ Page {
             page.populate(app.searchQuery);
         }
     }
+
     function populate(query) {
         // Load stops from the Python backend.
         py.call_sync("pan.app.history.add", [query]);
@@ -88,4 +100,5 @@ Page {
             page.populatedQuery = query;
         });
     }
+
 }

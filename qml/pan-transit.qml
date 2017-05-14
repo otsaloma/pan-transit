@@ -25,12 +25,16 @@ ApplicationWindow {
     allowedOrientations: defaultAllowedOrientations
     cover: Cover {}
     initialPage: MenuPage { id: menu }
+
     property var conf: Config {}
     property bool running: applicationActive || cover.active
     property string searchQuery: ""
+
     PositionSource { id: gps }
     Python { id: py }
+
     Component.onDestruction: {
         py.ready && py.call_sync("pan.app.quit", []);
     }
+
 }

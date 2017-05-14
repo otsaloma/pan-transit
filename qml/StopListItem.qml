@@ -23,7 +23,9 @@ import "."
 ListItem {
     id: listItem
     contentHeight: nameLabel.height + descriptionLabel.height + linesLabel.height
+
     property var result: page.results[index]
+
     Rectangle {
         id: bar
         anchors.bottom: linesLabel.bottom
@@ -36,6 +38,7 @@ ListItem {
         radius: width / 3
         width: Theme.paddingSmall
     }
+
     Label {
         id: nameLabel
         anchors.left: bar.right
@@ -48,6 +51,7 @@ ListItem {
         truncationMode: TruncationMode.Fade
         verticalAlignment: Text.AlignBottom
     }
+
     Label {
         id: descriptionLabel
         anchors.left: bar.right
@@ -62,6 +66,7 @@ ListItem {
         truncationMode: TruncationMode.Fade
         verticalAlignment: Text.AlignVCenter
     }
+
     Label {
         id: linesLabel
         anchors.left: bar.right
@@ -78,4 +83,5 @@ ListItem {
         verticalAlignment: Text.AlignTop
         wrapMode: model.line_summary.match(/\n/) ? Text.NoWrap : Text.WordWrap
     }
+
 }

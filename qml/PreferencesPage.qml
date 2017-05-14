@@ -23,14 +23,20 @@ import "."
 Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
         contentWidth: parent.width
+
         Column {
             id: column
             anchors.fill: parent
-            PageHeader { title: qsTranslate("", "Preferences") }
+
+            PageHeader {
+                title: qsTranslate("", "Preferences")
+            }
+
             ValueButton {
                 id: providerButton
                 label: qsTranslate("", "Provider")
@@ -44,7 +50,11 @@ Page {
                     });
                 }
             }
-            SectionHeader { text: qsTranslate("", "Display") }
+
+            SectionHeader {
+                text: qsTranslate("", "Display")
+            }
+
             TextField {
                 id: radiusField
                 inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
@@ -63,6 +73,7 @@ Page {
                     });
                 }
             }
+
             TextField {
                 id: cutOffField
                 inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
@@ -81,13 +92,18 @@ Page {
                     });
                 }
             }
-            Spacer { height: Theme.paddingMedium }
+
+            Spacer {
+                height: Theme.paddingMedium
+            }
+
             ListItemLabel {
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeSmall
                 text: qsTranslate("", "When the time remaining to departure is below cutoff, it is shown as minutes remaining instead of the departure time.")
                 wrapMode: Text.WordWrap
             }
+
             ComboBox {
                 id: unitsComboBox
                 label: qsTranslate("", "Units")
@@ -109,6 +125,8 @@ Page {
                 }
             }
         }
+
         VerticalScrollDecorator {}
+
     }
 }

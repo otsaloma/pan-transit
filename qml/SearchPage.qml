@@ -24,23 +24,28 @@ Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
     canNavigateForward: app.searchQuery.length > 0
+
     property var history: []
+
     SilicaListView {
         id: view
         anchors.fill: parent
         // Prevent list items from stealing focus.
         currentIndex: -1
+
         delegate: ListItem {
             id: listItem
             contentHeight: visible ? Theme.itemSizeSmall : 0
             menu: contextMenu
             visible: model.visible
+
             ListItemLabel {
                 anchors.leftMargin: view.searchField.textLeftMargin
                 color: listItem.highlighted ? Theme.highlightColor : Theme.primaryColor
                 height: Theme.itemSizeSmall
                 text: model.text
             }
+
             ContextMenu {
                 id: contextMenu
                 MenuItem {
@@ -53,19 +58,25 @@ Page {
                     }
                 }
             }
+
             ListView.onRemove: animateRemoval(listItem)
+
             onClicked: {
                 app.searchQuery = model.name;
                 app.pageStack.navigateForward();
             }
+
         }
+
         header: Column {
             height: header.height + searchField.height
             width: parent.width
+
             PageHeader {
                 id: header
                 title: qsTranslate("", "Search")
             }
+
             SearchField {
                 id: searchField
                 placeholderText: qsTranslate("", "Stop name or number")
@@ -77,18 +88,26 @@ Page {
                     page.filterHistory();
                 }
             }
+
             Component.onCompleted: view.searchField = searchField;
+
         }
+
         model: ListModel {}
+
         property var searchField
+
         VerticalScrollDecorator {}
+
     }
+
     onStatusChanged: {
         if (page.status === PageStatus.Activating) {
             page.loadHistory();
             page.filterHistory();
         }
     }
+
     function filterHistory() {
         // Filter search history for the current search field text.
         var query = view.searchField.text.toLowerCase();
@@ -114,6 +133,7 @@ Page {
         for (var i = found.length; i < view.count; i++)
             view.model.setProperty(i, "visible", false);
     }
+
     function loadHistory() {
         // Load search history and preallocate list items.
         page.history = py.evaluate("pan.app.history.queries");
@@ -124,4 +144,5 @@ Page {
                 "visible": false
             });
     }
+
 }

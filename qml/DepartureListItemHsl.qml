@@ -23,7 +23,9 @@ ListItem {
     id: listItem
     contentHeight: Theme.itemSizeSmall
     enabled: false
+
     property var result: page.results[index]
+
     Rectangle {
         id: bar
         anchors.bottom: lineLabel.bottom
@@ -36,6 +38,7 @@ ListItem {
         radius: width / 3
         width: Theme.paddingSmall
     }
+
     Label {
         id: lineLabel
         anchors.left: bar.right
@@ -54,6 +57,7 @@ ListItem {
             page.lineWidth = Math.max(page.lineWidth, width);
         }
     }
+
     Label {
         id: destinationLabel
         anchors.baseline: lineLabel.baseline
@@ -75,6 +79,7 @@ ListItem {
             }
         }
     }
+
     Label  {
         id: realLabel
         anchors.baseline: lineLabel.baseline
@@ -93,6 +98,7 @@ ListItem {
             page.realWidth = Math.max(page.realWidth, width);
         }
     }
+
     Label {
         id: timeLabel
         anchors.baseline: lineLabel.baseline
@@ -109,5 +115,7 @@ ListItem {
             page.timeWidth = Math.max(page.timeWidth, width);
         }
     }
+
     ListView.onRemove: animateRemoval(listItem);
+
 }

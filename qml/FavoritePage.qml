@@ -24,6 +24,7 @@ import "."
 Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
+
     property bool canCover: true
     property var downloadTime: -1
     property var ignores: []
@@ -33,10 +34,12 @@ Page {
     property var results: {}
     property var stops: []
     property string title: ""
+
     // Column widths to be set based on data.
     property int lineWidth: 0
     property int realWidth: 0
     property int timeWidth: 0
+
     SilicaListView {
         id: view
         anchors.fill: parent
@@ -49,8 +52,10 @@ Page {
         }
         header: PageHeader { title: page.title }
         model: ListModel {}
+
         PullDownMenu {
             visible: !page.loading || false
+
             MenuItem {
                 text: qsTranslate("", "Filter lines")
                 onClicked: {
@@ -67,13 +72,18 @@ Page {
                     });
                 }
             }
+
         }
+
         VerticalScrollDecorator {}
+
     }
+
     BusyModal {
         id: busy
         running: page.loading
     }
+
     Timer {
         interval: 15000
         repeat: true
@@ -81,6 +91,7 @@ Page {
         triggeredOnStart: true
         onTriggered: page.update();
     }
+
     onStatusChanged: {
         if (page.populated) {
             return;
@@ -93,10 +104,12 @@ Page {
             page.populate();
         }
     }
+
     function getModel() {
         // Return the list view model with current departures.
         return view.model;
     }
+
     function populate(silent) {
         // Load departures from the Python backend.
         silent = silent || false;
@@ -132,6 +145,7 @@ Page {
         });
         app.cover.update();
     }
+
     function update() {
         if (Date.now() - page.downloadTime >
             py.evaluate("pan.app.provider.update_interval") * 1000) {
@@ -143,6 +157,7 @@ Page {
             app.cover.update();
         }
     }
+
     function updateTimes() {
         // Update colors and times remaining to departure.
         for (var i = view.model.count - 1; i > -1; i--) {
@@ -156,6 +171,7 @@ Page {
             item.time_qml || view.model.remove(i);
         }
     }
+
     function updateWidths() {
         // Update column widths based on visible items.
         var lineWidth = 0;
@@ -171,4 +187,5 @@ Page {
         page.realWidth = realWidth;
         page.timeWidth = timeWidth;
     }
+
 }

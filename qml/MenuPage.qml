@@ -24,7 +24,9 @@ import "."
 Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
+
     property string populatedProvider: ""
+
     SilicaGridView {
         id: view
         anchors.fill: parent
@@ -34,6 +36,7 @@ Page {
             var width = page.isPortrait ? Screen.width : Screen.height;
             return width / Math.floor(width / (Theme.pixelRatio * 400));
         }
+
         delegate: FavoriteListItem {
             id: listItem
             contentHeight: view.cellHeight
@@ -54,18 +57,25 @@ Page {
             ListView.onRemove: animateRemoval(listItem);
             onClicked: app.pageStack.push("FavoritePage.qml", {"props": model});
         }
+
         header: PageHeader { title: "Pan Transit" }
+
         model: ListModel {}
+
         property bool menuOpen: false
+
         PullDownMenu {
+
             MenuItem {
                 text: qsTranslate("", "About")
                 onClicked: app.pageStack.push("AboutPage.qml");
             }
+
             MenuItem {
                 text: qsTranslate("", "Preferences")
                 onClicked: app.pageStack.push("PreferencesPage.qml");
             }
+
             MenuItem {
                 text: qsTranslate("", "Search")
                 onClicked: {
@@ -73,19 +83,25 @@ Page {
                     app.pageStack.pushAttached("SearchResultsPage.qml");
                 }
             }
+
             MenuItem {
                 enabled: gps.ready
                 text: qsTranslate("", "Nearby")
                 onClicked: app.pageStack.push("NearbyPage.qml");
             }
+
         }
+
         ViewPlaceholder {
             id: viewPlaceholder
             enabled: false
             text: qsTranslate("", "Once added, favorites appear here. Pull down to select a provider and to search for stops.")
         }
+
         VerticalScrollDecorator {}
+
     }
+
     Timer {
         id: timer
         interval: 5000
@@ -94,8 +110,10 @@ Page {
         triggeredOnStart: true
         onTriggered: page.update();
     }
+
     Component.onCompleted: py.ready ? page.populate() :
         py.onReadyChanged.connect(page.populate);
+
     onStatusChanged: {
         if (page.status === PageStatus.Activating) {
             if (page.populatedProvider &&
@@ -104,6 +122,7 @@ Page {
             page.update();
         }
     }
+
     function editFavorite(index) {
         // Open separate page to edit favorite at index.
         var item = view.model.get(index);
@@ -119,6 +138,7 @@ Page {
             py.call("pan.app.save", [], null);
         });
     }
+
     function populate() {
         // Load favorites from the Python backend.
         view.model.clear();
@@ -130,6 +150,7 @@ Page {
         viewPlaceholder.enabled = (view.model.count === 0);
         page.populatedProvider = app.conf.get("provider");
     }
+
     function removeFavorite(listItem, index) {
         // Remove favorite at index.
         listItem.remorseAction(qsTranslate("", "Removing"), function() {
@@ -138,6 +159,7 @@ Page {
             view.model.remove(index);
         });
     }
+
     function update() {
         // Update favorite display based on positioning.
         if (view.model.count === 0) return;
@@ -155,4 +177,5 @@ Page {
             item.line_summary = favorites[i].line_summary;
         }
     }
+
 }

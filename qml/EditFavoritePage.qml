@@ -24,10 +24,12 @@ Dialog {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
     canAccept: nameField && nameField.text.length > 0
+
     property string key: ""
     property string name: ""
     property var nameField
     property var removals: []
+
     SilicaListView {
         id: view
         anchors.fill: parent
@@ -37,6 +39,7 @@ Dialog {
             id: listItem
             contentHeight: Theme.itemSizeSmall
             menu: contextMenu
+
             Rectangle {
                 id: bar
                 anchors.bottom: nameLabel.bottom
@@ -49,6 +52,7 @@ Dialog {
                 radius: width / 3
                 width: Theme.paddingSmall
             }
+
             Label {
                 id: nameLabel
                 anchors.left: bar.right
@@ -62,6 +66,7 @@ Dialog {
                 truncationMode: TruncationMode.Fade
                 verticalAlignment: Text.AlignVCenter
             }
+
             ContextMenu {
                 id: contextMenu
                 MenuItem {
@@ -73,13 +78,21 @@ Dialog {
                     }
                 }
             }
+
             ListView.onRemove: animateRemoval(listItem);
+
             onClicked: listItem.showMenu();
+
         }
+
         header: Column {
             height: header.height + nameField.height + titleLabel.height
             width: parent.width
-            DialogHeader { id: header }
+
+            DialogHeader {
+                id: header
+            }
+
             TextField {
                 id: nameField
                 anchors.left: parent.left
@@ -92,15 +105,22 @@ Dialog {
                 EnterKey.iconSource: "image://theme/icon-m-enter-close"
                 EnterKey.onClicked: nameField.focus = false;
             }
+
             SectionHeader {
                 id: titleLabel
                 text: qsTranslate("", "Stops")
             }
+
             Component.onCompleted: page.nameField = nameField;
+
         }
+
         model: ListModel {}
+
         VerticalScrollDecorator {}
+
     }
+
     Component.onCompleted: {
         // Load stops from the Python backend.
         view.model.clear();
@@ -108,8 +128,10 @@ Dialog {
         for (var i = 0; i < stops.length; i++)
             view.model.append(stops[i]);
     }
+
     onAccepted: {
         // Save name to use for renaming.
         page.name = nameField.text;
     }
+
 }

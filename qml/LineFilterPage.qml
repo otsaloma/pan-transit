@@ -23,9 +23,11 @@ import "."
 Dialog {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
+
     property var ignores: []
     property bool loading: false
     property var stops: []
+
     SilicaGridView {
         id: view
         anchors.fill: parent
@@ -42,6 +44,7 @@ Dialog {
             clip: true
             contentHeight: lineSwitch.height
             width: view.cellWidth
+
             TextSwitch {
                 id: lineSwitch
                 checked: model.checked
@@ -53,15 +56,19 @@ Dialog {
                 onCheckedChanged: view.model.setProperty(
                     model.index, "checked", lineSwitch.checked);
             }
+
             OpacityRampEffect {
                 direction: OpacityRamp.LeftToRight
                 offset: (view.cellWidth - Theme.paddingLarge) / lineSwitch.width
                 slope: lineSwitch.width / Theme.paddingLarge
                 sourceItem: lineSwitch
             }
+
         }
+
         header: DialogHeader {}
         model: ListModel {}
+
         PullDownMenu {
             id: menu
             visible: !page.loading && view.model.count > 0
@@ -78,17 +85,22 @@ Dialog {
                     view.model.setProperty(i, "checked", checked);
             }
         }
+
         VerticalScrollDecorator {}
+
     }
+
     BusyModal {
         id: busy
         running: page.loading
     }
+
     Component.onCompleted: {
         page.loading = true;
         busy.text = qsTranslate("", "Loading")
         page.populate();
     }
+
     onAccepted: {
         // Construct an array out of unchecked lines.
         page.ignores = [];
@@ -100,6 +112,7 @@ Dialog {
             });
         }
     }
+
     function populate() {
         // Load lines from the Python backend.
         view.model.clear();
@@ -123,4 +136,5 @@ Dialog {
             page.loading = false;
         });
     }
+
 }

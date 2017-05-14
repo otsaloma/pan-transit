@@ -23,13 +23,17 @@ import "."
 Dialog {
     id: dialog
     allowedOrientations: app.defaultAllowedOrientations
+
     property string pid: py.evaluate("pan.app.provider.id")
+
     SilicaListView {
         id: listView
         anchors.fill: parent
+
         delegate: ListItem {
             id: listItem
             contentHeight: nameLabel.height + descriptionLabel.height
+
             ListItemLabel {
                 id: nameLabel
                 color: (model.active || listItem.highlighted) ?
@@ -38,6 +42,7 @@ Dialog {
                 text: model.name
                 verticalAlignment: Text.AlignBottom
             }
+
             ListItemLabel {
                 id: descriptionLabel
                 anchors.top: nameLabel.bottom
@@ -48,14 +53,20 @@ Dialog {
                 verticalAlignment: Text.AlignTop
                 wrapMode: Text.WordWrap
             }
+
             onClicked: {
                 dialog.pid = model.pid;
                 dialog.accept();
             }
+
         }
+
         header: DialogHeader {}
+
         model: ListModel {}
+
         VerticalScrollDecorator {}
+
         Component.onCompleted: {
             // Load provider model entries from the Python backend.
             py.call("pan.util.get_providers", [], function(providers) {
@@ -63,8 +74,11 @@ Dialog {
                     listView.model.append(providers[i]);
             });
         }
+
     }
+
     onAccepted: {
         py.call_sync("pan.app.set_provider", [dialog.pid]);
     }
+
 }

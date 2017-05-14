@@ -22,7 +22,9 @@ import Sailfish.Silica 1.0
 CoverBackground {
     id: cover
     anchors.fill: parent
+
     property bool active: status === Cover.Active
+
     Image {
         id: image
         anchors.centerIn: parent
@@ -32,12 +34,14 @@ CoverBackground {
         source: "icons/cover.png"
         width: height/sourceSize.height * sourceSize.width
     }
+
     Label {
         id: title
         anchors.centerIn: parent
         font.pixelSize: Theme.fontSizeLarge
         text: "Pan Transit"
     }
+
     SilicaListView {
         id: view
         anchors.centerIn: parent
@@ -46,6 +50,7 @@ CoverBackground {
             id: listItem
             height: lineLabel.height
             width: parent.width
+
             Label {
                 id: lineLabel
                 anchors.left: parent.left
@@ -59,6 +64,7 @@ CoverBackground {
                 truncationMode: TruncationMode.Fade
                 verticalAlignment: Text.AlignVCenter
             }
+
             Label {
                 id: timeLabel
                 anchors.baseline: lineLabel.baseline
@@ -73,10 +79,15 @@ CoverBackground {
                 truncationMode: TruncationMode.Fade
                 verticalAlignment: Text.AlignVCenter
             }
+
             Component.onCompleted: view.height = view.model.count * listItem.height;
+
         }
+
         model: ListModel {}
+
     }
+
     Timer {
         // Update times remaining periodically.
         interval: 15000
@@ -85,12 +96,14 @@ CoverBackground {
         triggeredOnStart: true
         onTriggered: cover.update();
     }
+
     Component.onCompleted: {
         // Pre-fill list view model with blank entries.
         for (var i = 0; i < 5; i++)
             view.model.append({"line": "", "time": ""});
         app.pageStack.onCurrentPageChanged.connect(cover.update);
     }
+
     function clear() {
         // Clear the visible list of departures.
         for (var i = 0; i < view.model.count; i++) {
@@ -98,6 +111,7 @@ CoverBackground {
             view.model.setProperty(i, "time", "");
         }
     }
+
     function copyFrom(model) {
         // Copy departure items from given model.
         for (var i = 0; i < model.count && i < view.model.count; i++) {
@@ -105,6 +119,7 @@ CoverBackground {
             view.model.setProperty(i, "time", model.get(i).time_qml);
         }
     }
+
     function update() {
         // Query departures from the current page.
         var page = app.pageStack.currentPage;
@@ -126,4 +141,5 @@ CoverBackground {
             title.visible = true;
         }
     }
+
 }

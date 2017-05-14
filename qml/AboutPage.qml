@@ -23,18 +23,25 @@ import "."
 Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
+
         Column {
             id: column
             width: parent.width
-            PageHeader { title: qsTranslate("", "About Pan Transit") }
+
+            PageHeader {
+                title: qsTranslate("", "About Pan Transit")
+            }
+
             ListItemLabel {
                 height: Theme.itemSizeExtraSmall
                 horizontalAlignment: Text.AlignHCenter
                 text: qsTranslate("", "version %1").arg(py.evaluate("pan.__version__"))
             }
+
             ListItemLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 height: Theme.itemSizeExtraSmall
@@ -45,12 +52,14 @@ Page {
                 text: '<a href="https://github.com/otsaloma/pan-transit">https://github.com/otsaloma/pan-transit</a>'
                 onLinkActivated: Qt.openUrlExternally(link);
             }
+
             ListItemLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 height: Theme.itemSizeExtraSmall
                 horizontalAlignment: Text.AlignHCenter
                 text: "Copyright © 2014–2017 Osmo Salomaa"
             }
+
             ListItemLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 height: implicitHeight + Theme.paddingLarge
@@ -60,7 +69,11 @@ Page {
                 text: qsTranslate("", "Pan Transit is free software released under the GNU General Public License (GPL), version 3 or later.")
                 wrapMode: Text.WordWrap
             }
-            SectionHeader { text: qsTranslate("", "Translated by") }
+
+            SectionHeader {
+                text: qsTranslate("", "Translated by")
+            }
+
             ListItemLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 height: visible ? Theme.itemSizeExtraSmall : 0
@@ -74,6 +87,7 @@ Page {
                 text: qsTranslate("", "translator-credits")
                 visible: text && text !== "translator-credits"
             }
+
             ListItemLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 height: implicitHeight + Theme.paddingLarge
@@ -83,6 +97,7 @@ Page {
                 text: qsTranslate("", "You can add new user interface translations or contribute to existing ones at Transifex.")
                 wrapMode: Text.WordWrap
             }
+
             ListItemLabel {
                 font.pixelSize: Theme.fontSizeSmall
                 height: Theme.itemSizeExtraSmall
@@ -93,7 +108,10 @@ Page {
                 text: '<a href="https://www.transifex.com/otsaloma/pan-transit/">https://www.transifex.com/otsaloma/pan-transit/</a>'
                 onLinkActivated: Qt.openUrlExternally(link);
             }
+
         }
+
         VerticalScrollDecorator {}
+
     }
 }

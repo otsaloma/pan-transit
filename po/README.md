@@ -25,15 +25,15 @@ desktop/laptop for that. Instructions below.
    use". You should find it via the language list, or
    use [this full link][dl-po], replacing `fi` with your language code.
 
-2. Download Pan Transit from GitHub. Usually you'll probably want the
+1. Download Pan Transit from GitHub. Usually you'll probably want the
    source code of the latest release, which can be downloaded from
    the [releases][releases] page.
 
-3. Unpack the downloaded source code and place your translation in the
+1. Unpack the downloaded source code and place your translation in the
    `po` directory with the correct short language and possibly country
    code, e.g. `fi.po` or `pt_BR.po`.
 
-4. Run command `make rpm` in the source directory. You'll need `make`,
+1. Run command `make rpm` in the source directory. You'll need `make`,
    `rpmbuild`, `gettext` and `linguist` from `qttools`. You'll find the
    resulting RPM under the `rpm` directory. Copy that to your device and
    install e.g. via the File Browser app or `pkcon install-local ...` at

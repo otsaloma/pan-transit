@@ -21,6 +21,7 @@ import Sailfish.Silica 1.0
 
 ListItem {
     id: listItem
+
     Rectangle {
         id: bar
         anchors.bottom: linesLabel.bottom
@@ -34,6 +35,7 @@ ListItem {
         radius: width / 3
         width: Theme.paddingSmall
     }
+
     Label {
         id: nameLabel
         anchors.bottom: parent.verticalCenter
@@ -49,6 +51,7 @@ ListItem {
         truncationMode: TruncationMode.Fade
         verticalAlignment: Text.AlignBottom
     }
+
     Label {
         id: linesLabel
         anchors.bottom: parent.bottom
@@ -65,4 +68,5 @@ ListItem {
         truncationMode: TruncationMode.Fade
         verticalAlignment: Text.AlignTop
     }
+
 }

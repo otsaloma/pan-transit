@@ -23,10 +23,12 @@ import "."
 Item {
     id: busy
     anchors.fill: parent
+
     property string description: ""
     property string error: ""
     property bool running: false
     property string text: ""
+
     Label {
         anchors.bottom: indicator.top
         anchors.bottomMargin: Math.round(indicator.height/4)
@@ -37,6 +39,7 @@ Item {
         visible: busy.running || busy.error
         width: parent.width
     }
+
     BusyIndicator {
         id: indicator
         anchors.centerIn: parent
@@ -44,6 +47,7 @@ Item {
         size: BusyIndicatorSize.Large
         visible: busy.running
     }
+
     ListItemLabel {
         anchors.top: indicator.bottom
         anchors.topMargin: Math.round(indicator.height/4)
@@ -53,6 +57,8 @@ Item {
         visible: busy.running
         wrapMode: Text.WordWrap
     }
+
     onErrorChanged: busy.error && (busy.text = "");
     onTextChanged: busy.text && (busy.error = "");
+
 }

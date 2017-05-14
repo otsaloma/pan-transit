@@ -19,28 +19,35 @@
 import QtQuick 2.0
 
 QtObject {
+
     function add(option, item) {
         // Add item to the value of option.
         return py.call_sync("pan.conf.add", [option, item]);
     }
+
     function contains(option, item) {
         // Return true if the value of option contains item.
         return py.call_sync("pan.conf.contains", [option, item]);
     }
+
     function get(option) {
         // Return the value of option.
         return py.call_sync("pan.conf.get", [option]);
     }
+
     function getDefault(option) {
         // Return the default value of option.
         return py.call_sync("pan.conf.get_default", [option]);
     }
+
     function remove(option, item) {
         // Remove item from the value of option.
         return py.call_sync("pan.conf.remove", [option, item]);
     }
+
     function set(option, value) {
         // Set the value of option.
         return py.call_sync("pan.conf.set", [option, value]);
     }
+
 }

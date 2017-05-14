@@ -23,7 +23,9 @@ ListItem {
     id: listItem
     contentHeight: Theme.itemSizeMedium
     enabled: false
+
     property var result: page.results[index]
+
     Rectangle {
         id: bar
         anchors.bottom: destinationLabel.bottom
@@ -36,6 +38,7 @@ ListItem {
         radius: width / 3
         width: Theme.paddingSmall
     }
+
     Label {
         id: lineLabel
         anchors.bottom: parent.verticalCenter
@@ -47,6 +50,7 @@ ListItem {
         truncationMode: TruncationMode.Fade
         verticalAlignment: Text.AlignBottom
     }
+
     Label {
         id: dotLabel
         anchors.baseline: lineLabel.baseline
@@ -66,6 +70,7 @@ ListItem {
             }
         }
     }
+
     Label {
         id: destinationLabel
         anchors.left: bar.right
@@ -80,6 +85,7 @@ ListItem {
         truncationMode: TruncationMode.Fade
         verticalAlignment: Text.AlignTop
     }
+
     Label  {
         id: realLabel
         anchors.baseline: lineLabel.baseline
@@ -98,6 +104,7 @@ ListItem {
             page.realWidth = Math.max(page.realWidth, width);
         }
     }
+
     Label {
         id: timeLabel
         anchors.baseline: lineLabel.baseline
@@ -114,5 +121,7 @@ ListItem {
             page.timeWidth = Math.max(page.timeWidth, width);
         }
     }
+
     ListView.onRemove: animateRemoval(listItem);
+
 }
