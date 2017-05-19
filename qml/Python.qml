@@ -38,6 +38,7 @@ Python {
     function call_sync(func, args) {
         // XXX: Work around a call_sync bug by using evaluate.
         // https://github.com/thp/pyotherside/issues/49
+        // https://together.jolla.com/question/156736
         args = args.map(py.stringify).join(", ");
         return py.evaluate("%1(%2)".arg(func).arg(args));
     }

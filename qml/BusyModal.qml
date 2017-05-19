@@ -26,8 +26,16 @@ Item {
 
     property string description: ""
     property string error: ""
-    property bool running: false
+    property bool   running: false
     property string text: ""
+
+    BusyIndicator {
+        id: indicator
+        anchors.centerIn: parent
+        running: busy.running
+        size: BusyIndicatorSize.Large
+        visible: busy.running
+    }
 
     Label {
         anchors.bottom: indicator.top
@@ -38,14 +46,6 @@ Item {
         text: busy.error || busy.text
         visible: busy.running || busy.error
         width: parent.width
-    }
-
-    BusyIndicator {
-        id: indicator
-        anchors.centerIn: parent
-        running: busy.running
-        size: BusyIndicatorSize.Large
-        visible: busy.running
     }
 
     ListItemLabel {

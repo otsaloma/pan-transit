@@ -35,11 +35,6 @@ QtObject {
         return py.call_sync("pan.conf.get", [option]);
     }
 
-    function getDefault(option) {
-        // Return the default value of option.
-        return py.call_sync("pan.conf.get_default", [option]);
-    }
-
     function remove(option, item) {
         // Remove item from the value of option.
         return py.call_sync("pan.conf.remove", [option, item]);

@@ -18,6 +18,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "."
 
 CoverBackground {
     id: cover
@@ -45,7 +46,9 @@ CoverBackground {
     SilicaListView {
         id: view
         anchors.centerIn: parent
+        visible: false
         width: parent.width
+
         delegate: Item {
             id: listItem
             height: lineLabel.height
@@ -132,11 +135,13 @@ CoverBackground {
                 cover.copyFrom(model);
                 image.opacity = 0;
                 title.visible = false;
+                view.visible = true;
             }
         }
         if (!model || model.count === 0) {
             // No departures; show image and title.
             cover.clear();
+            view.visible = false;
             image.opacity = 0.15;
             title.visible = true;
         }

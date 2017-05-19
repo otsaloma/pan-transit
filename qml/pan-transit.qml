@@ -27,7 +27,7 @@ ApplicationWindow {
     initialPage: MenuPage { id: menu }
 
     property var conf: Config {}
-    property bool running: applicationActive || cover.active
+    property bool running: Qt.application.active || cover.active
     property string searchQuery: ""
 
     PositionSource { id: gps }

@@ -23,7 +23,9 @@ PositionSource {
     id: gps
     active: app.applicationActive
     updateInterval: 1000
+
     property bool ready: false
+
     onPositionChanged: {
         // We need some level of accuracy for nearby stops to be correct.
         gps.ready = (gps.position.coordinate.longitude &&
@@ -32,4 +34,5 @@ PositionSource {
                      gps.position.horizontalAccuracy < 1000) || false;
 
     }
+
 }
