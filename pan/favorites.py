@@ -139,9 +139,9 @@ class Favorites:
 
     def _read(self):
         """Read list of favorites from file."""
-        if not os.path.isfile(self._path): return
         with pan.util.silent(Exception, tb=True):
-            self._favorites = pan.util.read_json(self._path)
+            if os.path.isfile(self._path):
+                self._favorites = pan.util.read_json(self._path)
         self._update_meta()
 
     def remove(self, key):

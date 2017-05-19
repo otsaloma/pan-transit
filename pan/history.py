@@ -47,9 +47,9 @@ class History:
 
     def _read(self):
         """Read list of queries from file."""
-        if not os.path.isfile(self._path): return
         with pan.util.silent(Exception, tb=True):
-            self._queries = pan.util.read_json(self._path)
+            if os.path.isfile(self._path):
+                self._queries = pan.util.read_json(self._path)
 
     def remove(self, query):
         """Remove `query` from the list of queries."""
