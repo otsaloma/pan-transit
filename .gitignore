@@ -2,5 +2,4 @@
 .cache
 __pycache__
 dist
-po/*.ts
 rpm/*.rpm
