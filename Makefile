@@ -12,7 +12,7 @@ DESKTOPDIR = $(DESTDIR)$(PREFIX)/share/applications
 ICONDIR    = $(DESTDIR)$(PREFIX)/share/icons/hicolor
 
 LCONVERT = $(or $(wildcard /usr/lib/qt5/bin/lconvert),\
-$(wildcard /usr/lib/x86_64-linux-gnu/qt5/bin/lconvert))
+$(wildcard /usr/lib/*/qt5/bin/lconvert))
 
 check:
 	pyflakes pan providers
