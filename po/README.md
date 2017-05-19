@@ -13,13 +13,7 @@ update translations. Try to keep your translation consistent with the
 
 If you wish to test your translation (e.g. for context or brevity)
 before it's included in a public release, the easiest way is to add your
-translation to the Pan Transit source tree, build the RPM and install
-it. Since Pan Transit is written in Python, the code is not compiled, so
-you don't need any SDK, but you do need a few basic tools, which should,
-at least on modern Linux systems, be easily available. Note that
-building the RPM on a Sailfish OS device doesn't work (probably due to
-gettext or make being too old, patches accepted), you need a
-desktop/laptop for that. Instructions below.
+translation to the Pan Transit source tree, build the RPM and install it.
 
 1. Download your translation from Transifex with the link "Download for
    use". You should find it via the language list, or
