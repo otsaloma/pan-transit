@@ -32,75 +32,62 @@ class TestConfigurationStore(pan.test.TestCase):
         os.remove(self.path)
 
     def test_add(self):
-        pan.conf.set("items", [1,2,3])
-        assert pan.conf.items == [1,2,3]
-        pan.conf.add("items", 4)
-        assert pan.conf.items == [1,2,3,4]
+        pan.conf.set("test", [1, 2, 3])
+        assert pan.conf.test == [1, 2, 3]
+        pan.conf.add("test", 4)
+        assert pan.conf.test == [1, 2, 3, 4]
 
     def test_contains(self):
-        pan.conf.set("items", [1,2,3])
-        assert pan.conf.items == [1,2,3]
-        assert pan.conf.contains("items", 1)
-        assert not pan.conf.contains("items", 4)
+        pan.conf.set("test", [1, 2, 3])
+        assert pan.conf.test == [1, 2, 3]
+        assert pan.conf.contains("test", 1)
+        assert not pan.conf.contains("test", 4)
 
     def test_get(self):
-        assert pan.conf.get("units") == "metric"
+        assert pan.conf.get("provider") == "digitransit_hsl"
 
     def test_get_default(self):
-        assert pan.conf.get_default("units") == "metric"
+        assert pan.conf.get_default("provider") == "digitransit_hsl"
 
     def test_get_default__nested(self):
-        pan.config.DEFAULTS["foo"] = pan.config.AttrDict()
-        pan.config.DEFAULTS["foo"]["bar"] = 1
+        pan.config.DEFAULTS["foo"] = dict(bar=1)
         assert pan.conf.get_default("foo.bar") == 1
 
     def test_read(self):
-        pan.conf.units = "american"
+        pan.conf.provider = "foo"
         pan.conf.write(self.path)
         pan.conf.clear()
         assert not pan.conf
         pan.conf.read(self.path)
-        assert pan.conf.units == "american"
+        assert pan.conf.provider == "foo"
 
     def test_read__nested(self):
-        pan.conf.register_provider("foo", {"type": 1})
+        pan.config.DEFAULTS["foo"] = dict(bar=1)
+        pan.conf.set("foo.bar", 2)
         pan.conf.write(self.path)
-        del pan.conf.providers["foo"]
-        assert not "foo" in pan.conf.providers
+        del pan.conf.foo
+        assert not "foo" in pan.conf
         pan.conf.read(self.path)
-        assert pan.conf.providers.foo.type == 1
-
-    def test_register_provider(self):
-        pan.conf.register_provider("foo", {"type": 1})
-        assert pan.conf.providers.foo.type == 1
-        assert pan.conf.get_default("providers.foo.type") == 1
-
-    def test_register_provider__again(self):
-        # Subsequent calls should not change values.
-        pan.conf.register_provider("foo", {"type": 1})
-        pan.conf.providers.foo.type = 2
-        pan.conf.register_provider("foo", {"type": 1})
-        assert pan.conf.providers.foo.type == 2
-        assert pan.conf.get_default("providers.foo.type") == 1
+        assert pan.conf.foo.bar == 2
 
     def test_remove(self):
-        pan.conf.set("items", [1,2,3])
-        assert pan.conf.items == [1,2,3]
-        pan.conf.remove("items", 3)
-        assert pan.conf.items == [1,2]
+        pan.conf.set("test", [1, 2, 3])
+        assert pan.conf.test == [1, 2, 3]
+        pan.conf.remove("test", 3)
+        assert pan.conf.test == [1, 2]
 
     def test_set(self):
-        pan.conf.set("units", "american")
-        assert pan.conf.units == "american"
+        pan.conf.set("provider", "foo")
+        assert pan.conf.provider == "foo"
 
     def test_set__nested(self):
         pan.conf.set("foo.bar", 1)
         assert pan.conf.foo.bar == 1
 
     def test_write(self):
-        pan.conf.units = "american"
+        pan.conf.provider = "foo"
         pan.conf.write(self.path)
         pan.conf.clear()
         assert not pan.conf
         pan.conf.read(self.path)
-        assert pan.conf.units == "american"
+        assert pan.conf.provider == "foo"

@@ -32,38 +32,22 @@ DEFAULTS = {
 }
 
 
-class AttrDict(dict):
+class ConfigurationStore(pan.AttrDict):
 
-    """Dictionary with attribute access to keys."""
-
-    def __init__(self, *args, **kwargs):
-        """Initialize an :class:`AttrDict` instance."""
-        dict.__init__(self, *args, **kwargs)
-        self.__dict__ = self
-
-
-class ConfigurationStore(AttrDict):
-
-    """
-    Attribute dictionary of configuration values.
-
-    Options to most methods can be given as a dotted string,
-    e.g. 'providers.mycoolprovider.type'.
-    """
+    """Attribute dictionary of configuration values."""
 
     def __init__(self):
         """Initialize a :class:`Configuration` instance."""
-        AttrDict.__init__(self, copy.deepcopy(DEFAULTS))
+        pan.AttrDict.__init__(self, copy.deepcopy(DEFAULTS))
 
     def add(self, option, item):
         """Add `item` to the value of `option`."""
         root, name = self._split_option(option)
-        if not item in root[name]:
-            root[name].append(copy.deepcopy(item))
+        if item in root[name]: return
+        root[name].append(copy.deepcopy(item))
 
     def _coerce(self, value, ref):
         """Coerce type of `value` to match `ref`."""
-        # XXX: No coercion is done if ref is an empty list!
         if isinstance(value, list) and ref:
             return [self._coerce(x, ref[0]) for x in value]
         return type(ref)(value)
@@ -91,43 +75,18 @@ class ConfigurationStore(AttrDict):
 
     def read(self, path=None):
         """Read values of options from JSON file at `path`."""
-        if path is None:
-            path = os.path.join(pan.CONFIG_HOME_DIR, "pan-transit.json")
+        path = path or os.path.join(pan.CONFIG_HOME_DIR, "pan-transit.json")
         if not os.path.isfile(path): return
         values = {}
         with pan.util.silent(Exception, tb=True):
             values = pan.util.read_json(path)
-        if not values: return
         self._update(values)
-
-    def _register(self, values, root=None, defaults=None):
-        """Add entries for `values` if missing."""
-        if root is None: root = self
-        if defaults is None: defaults = DEFAULTS
-        for name, value in values.items():
-            if isinstance(value, dict):
-                self._register(values[name],
-                               root.setdefault(name, AttrDict()),
-                               defaults.setdefault(name, {}))
-            else:
-                # Do not change values if they already exist.
-                root.setdefault(name, copy.deepcopy(value))
-                defaults.setdefault(name, copy.deepcopy(value))
-
-    def register_provider(self, name, values):
-        """
-        Add configuration `values` for provider `name` if missing.
-
-        Calling ``register_provider("foo", {"type": 1})`` will make type
-        available as ``pan.conf.providers.foo.type``.
-        """
-        self._register({"providers": {name: values}})
 
     def remove(self, option, item):
         """Remove `item` from the value of `option`."""
         root, name = self._split_option(option)
-        if item in root[name]:
-            root[name].remove(item)
+        if not item in root[name]: return
+        root[name].remove(item)
 
     def set(self, option, value):
         """Set the value of `option`."""
@@ -140,7 +99,7 @@ class ConfigurationStore(AttrDict):
         for section in option.split(".")[:-1]:
             if create and not section in root:
                 # Create missing hierarchies.
-                root[section] = AttrDict()
+                root[section] = pan.AttrDict()
             root = root[section]
         name = option.split(".")[-1]
         return root, name
@@ -152,9 +111,9 @@ class ConfigurationStore(AttrDict):
         for name, value in values.items():
             if isinstance(value, dict):
                 self._update(value,
-                             root.setdefault(name, AttrDict()),
+                             root.setdefault(name, pan.AttrDict()),
                              defaults.setdefault(name, {}),
-                             (path + (name,)))
+                             path + (name,))
                 continue
             try:
                 if name in defaults:
@@ -163,17 +122,16 @@ class ConfigurationStore(AttrDict):
                 root[name] = copy.deepcopy(value)
             except Exception as error:
                 full_name = ".".join(path + (name,))
-                print("Discarding bad option-value pair ({}, {}): {}"
+                print("Discarding bad option-value pair {}, {}: {}"
                       .format(repr(full_name), repr(value), str(error)),
                       file=sys.stderr)
 
     def write(self, path=None):
         """Write values of options to JSON file at `path`."""
-        if path is None:
-            path = os.path.join(pan.CONFIG_HOME_DIR, "pan-transit.json")
+        path = path or os.path.join(pan.CONFIG_HOME_DIR, "pan-transit.json")
         out = copy.deepcopy(self)
         # Make sure no obsolete top-level options remain.
-        names = list(DEFAULTS.keys()) + ["providers"]
+        names = list(DEFAULTS.keys())
         for name in list(out.keys()):
             if not name in names:
                 del out[name]

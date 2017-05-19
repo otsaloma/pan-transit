@@ -35,6 +35,7 @@ from pan.paths import *
 from pan import i18n
 from pan import util
 from pan import http
+from pan.attrdict import *
 from pan.provider import *
 from pan.favorites import *
 from pan.history import *
