@@ -96,8 +96,7 @@ class TestModule(pan.test.TestCase):
 
     def test_get_json(self):
         url = "https://api.github.com/repos/otsaloma/pan-transit/releases"
-        json = pan.http.get_json(url)
-        assert isinstance(json, list)
+        assert isinstance(pan.http.get_json(url), list)
 
     def test_get_json__error(self):
         url = "https://github.com/otsaloma/pan-transit"
