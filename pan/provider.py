@@ -70,7 +70,7 @@ class Provider:
         for departure in departures:
             if "x" in departure and "y" in departure: continue
             # Add coordinates from cache if not set by provider.
-            stop = self.recall_stop(departure["stop"])
+            stop = self._stop_cache.get(departure["stop"], None)
             stop = stop or dict(x=0, y=0)
             departure["x"] = stop["x"]
             departure["y"] = stop["y"]
@@ -105,8 +105,6 @@ class Provider:
         name = "pan.provider{:d}".format(random.randrange(10**12))
         loader = importlib.machinery.SourceFileLoader(name, path)
         self._provider = loader.load_module(name)
-        if hasattr(self._provider, "CONF_DEFAULTS"):
-            pan.conf.register_provider(id, self._provider.CONF_DEFAULTS)
 
     def _load_attributes(self, id):
         """Read and return attributes from JSON file."""
@@ -115,19 +113,6 @@ class Provider:
         if not os.path.isfile(path):
             path = os.path.join(pan.DATA_DIR, leaf)
         return path, pan.util.read_json(path)
-
-    def recall_stop(self, id):
-        """Return stop from the cache of seen stops or ``None``."""
-        with pan.util.silent(LookupError):
-            return self._stop_cache[id]
-        return None
-
-    @property
-    def settings_qml_uri(self):
-        """Return URI to provider settings QML file or ``None``."""
-        path = re.sub(r"\.json$", "_settings.qml", self._path)
-        if not os.path.isfile(path): return None
-        return pan.util.path2uri(path)
 
     def store_stops(self, stops):
         """Inject `stops` into the cache of seen stops."""
