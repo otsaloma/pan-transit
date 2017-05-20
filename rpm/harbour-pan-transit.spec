@@ -7,9 +7,9 @@
 Name: harbour-pan-transit
 Version: 0.1
 Release: 1
-Summary: Departures from public transportation stops
+Summary: Departures from public transport stops
 License: GPLv3+
-URL: http://github.com/otsaloma/pan-transit
+URL: https://github.com/otsaloma/pan-transit
 Source: %{name}-%{version}.tar.xz
 BuildArch: noarch
 BuildRequires: gettext
@@ -21,9 +21,8 @@ Requires: qt5-qtdeclarative-import-positioning >= 5.2
 Requires: sailfishsilica-qt5
 
 %description
-Pan Transit is an application for Sailfish OS to view departures from
-public transport stops. It is designed to support multiple different
-providers (i.e. cities/regions).
+View departures from public transport stops. Pan Transit is designed to support
+multiple different providers (i.e. cities/regions).
 
 %prep
 %setup -q
