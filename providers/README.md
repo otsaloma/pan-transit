@@ -8,9 +8,9 @@ transforms into the format understood by Pan Transit. The functions you
 need to write are documented below.
 
 To download data you should always use `pan.http.get`,
-`pan.http.get_json` or `pan.http.post` in order to use Pan Transit's
-user-agent and default timeout and error handling. See the providers
-shipped with Pan Transit for examples.
+`pan.http.get_json` etc. in order to use Pan Transit's user-agent and
+default timeout and error handling. See the providers shipped with Pan
+Transit for examples.
 
 Use `~/.local/share/harbour-pan-transit/providers` as a local installation
 directory in which to place your files. Restart Pan Transit, and your provider
@@ -35,8 +35,8 @@ as part of Pan Transit.
 
 ```json
 {
-    "_name": "Helsinki Region Transport (HSL)",
-    "_description": "Public transport in the Helsinki region",
+    "_name": "Helsinki",
+    "_description": "Helsinki Region Transport (HSL)",
     "departure_list_item_qml": "DepartureListItemHsl.qml",
     "update_interval": 60
 }
@@ -45,7 +45,7 @@ as part of Pan Transit.
 * **`name`** and **`description`** are visible to the user in the
   provider selection screen. Use underscore prefixes if the values of
   the fields are translatable. If your provider requires some copyright
-  etc. attribution, you can include that in the description.
+  statement or attribution, you can include that in the description.
 
 * **`departure_list_item_qml`** should be the name of the QML file used
   for list items of individual departures. Currently there's two
