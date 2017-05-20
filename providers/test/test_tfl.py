@@ -26,41 +26,45 @@ class TestModule(pan.test.TestCase):
     def test_find_departures(self):
         stops = ["940GZZLUESQ", "HUBEUS"]
         departures = self.provider.find_departures(stops)
+        departures = list(map(pan.AttrDict, departures))
         assert departures
         for departure in departures:
-            assert departure["destination"]
-            assert departure["line"]
-            assert departure["stop"]
-            assert departure["time"]
+            assert departure.destination
+            assert departure.line
+            assert departure.stop
+            assert departure.time
 
     def test_find_lines(self):
         stops = ["940GZZLUESQ", "HUBEUS"]
         lines = self.provider.find_lines(stops)
+        lines = list(map(pan.AttrDict, lines))
         assert lines
         for line in lines:
-            assert line["color"]
-            assert line["destination"]
-            assert line["id"]
-            assert line["name"]
+            assert line.color
+            assert line.destination
+            assert line.id
+            assert line.name
 
     def test_find_nearby_stops(self):
         stops = self.provider.find_nearby_stops(-0.139, 51.535)
+        stops = list(map(pan.AttrDict, stops))
         assert stops
         for stop in stops:
-            assert stop["color"]
-            assert stop["description"]
-            assert stop["id"]
-            assert stop["name"]
-            assert stop["x"]
-            assert stop["y"]
+            assert stop.color
+            assert stop.description
+            assert stop.id
+            assert stop.name
+            assert stop.x
+            assert stop.y
 
     def test_find_stops(self):
         stops = self.provider.find_stops("mornington", -0.139, 51.535)
+        stops = list(map(pan.AttrDict, stops))
         assert stops
         for stop in stops:
-            assert stop["color"]
-            assert stop["description"]
-            assert stop["id"]
-            assert stop["name"]
-            assert stop["x"]
-            assert stop["y"]
+            assert stop.color
+            assert stop.description
+            assert stop.id
+            assert stop.name
+            assert stop.x
+            assert stop.y

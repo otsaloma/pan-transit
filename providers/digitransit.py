@@ -29,7 +29,7 @@ import re
 
 from pan.i18n import _
 
-COLORS = {
+COLORS = pan.AttrDict({
  "AIRPLANE": "#ed145d",
       "BUS": "#007ac9",
     "FERRY": "#00b9e4",
@@ -37,7 +37,7 @@ COLORS = {
    "SUBWAY": "#ff6319",
      "TRAM": "#00985f",
      "WALK": "#888888",
-}
+})
 
 HEADERS = {"Content-Type": "application/graphql"}
 URL = "http://api.digitransit.fi/routing/v1/routers/{region}/index/graphql"
@@ -51,19 +51,20 @@ def find_departures(stops):
     body = format_graphql("find_departures", ids=stops)
     url = URL.format(region=REGION)
     result = pan.http.post_json(url, body, headers=HEADERS)
+    result = pan.AttrDict(result)
     def departures():
-        for stop in result["data"]["stops"]:
-            for departure in stop["stoptimesWithoutPatterns"]:
+        for stop in result.data.stops:
+            for departure in stop.stoptimesWithoutPatterns:
                 yield stop, departure
     return pan.util.sorted_departures([{
-        "destination": parse_headsign(departure["trip"]["tripHeadsign"]),
-        "line": parse_line_name(departure["trip"]["route"]),
-        "realtime": bool(departure["realtime"]),
+        "destination": parse_headsign(departure.trip.tripHeadsign),
+        "line": parse_line_name(departure.trip.route),
+        "realtime": bool(departure.realtime),
         "scheduled_time": parse_scheduled_time(departure),
-        "stop": stop["gtfsId"],
+        "stop": stop.gtfsId,
         "time": parse_time(departure),
-        "x": float(stop["lon"]),
-        "y": float(stop["lat"]),
+        "x": float(stop.lon),
+        "y": float(stop.lat),
     } for stop, departure in departures()])
 
 def find_lines(stops):
@@ -72,15 +73,16 @@ def find_lines(stops):
     body = format_graphql("find_lines", ids=stops)
     url = URL.format(region=REGION)
     result = pan.http.post_json(url, body, headers=HEADERS)
+    result = pan.AttrDict(result)
     def patterns():
-        for stop in result["data"]["stops"]:
-            for pattern in stop["patterns"]:
+        for stop in result.data.stops:
+            for pattern in stop.patterns:
                 yield pattern
     return pan.util.sorted_unique_lines([{
-        "color": COLORS.get(pattern["route"]["mode"], COLORS["BUS"]),
-        "destination": parse_headsign(pattern["headsign"]),
-        "id": pattern["route"]["gtfsId"],
-        "name": parse_line_name(pattern["route"]),
+        "color": COLORS.get(pattern.route.mode, COLORS.BUS),
+        "destination": parse_headsign(pattern.headsign),
+        "id": pattern.route.gtfsId,
+        "name": parse_line_name(pattern.route),
     } for pattern in patterns()])
 
 def find_nearby_stops(x, y):
@@ -88,16 +90,17 @@ def find_nearby_stops(x, y):
     body = format_graphql("find_nearby_stops", x=x, y=y)
     url = URL.format(region=REGION)
     result = pan.http.post_json(url, body, headers=HEADERS)
+    result = pan.AttrDict(result)
     return [{
         "color": get_stop_color(stop),
-        "description": stop["desc"] or _("Stop"),
-        "id": stop["gtfsId"],
+        "description": stop.desc or _("Stop"),
+        "id": stop.gtfsId,
         "line_summary": get_line_summary(stop),
         "name": format_stop_name(stop),
-        "x": float(stop["lon"]),
-        "y": float(stop["lat"]),
-    } for stop in [x["node"]["stop"] for x in
-                   result["data"]["stopsByRadius"]["edges"]]]
+        "x": float(stop.lon),
+        "y": float(stop.lat),
+    } for stop in [x.node.stop for x in
+                   result.data.stopsByRadius.edges]]
 
 def find_stops(query, x, y):
     """Return a list of stops matching `query`."""
@@ -105,15 +108,16 @@ def find_stops(query, x, y):
     body = format_graphql("find_stops", query=query)
     url = URL.format(region=REGION)
     result = pan.http.post_json(url, body, headers=HEADERS)
+    result = pan.AttrDict(result)
     return [{
         "color": get_stop_color(stop),
-        "description": stop["desc"] or _("Stop"),
-        "id": stop["gtfsId"],
+        "description": stop.desc or _("Stop"),
+        "id": stop.gtfsId,
         "line_summary": get_line_summary(stop),
         "name": format_stop_name(stop),
-        "x": float(stop["lon"]),
-        "y": float(stop["lat"]),
-    } for stop in result["data"]["stops"]]
+        "x": float(stop.lon),
+        "y": float(stop.lat),
+    } for stop in result.data.stops]
 
 @functools.lru_cache(8)
 def format_graphql(name, **kwargs):
@@ -137,20 +141,20 @@ def format_stop_name(stop):
 
 def get_line_summary(stop):
     """Return a summary of lines that use `stop`."""
-    lines = pan.util.sorted_unique_lines([{
-        "name": parse_line_name(pattern["route"]),
-        "destination": parse_headsign(pattern["headsign"]),
-    } for pattern in stop["patterns"]])
-    return "\n".join("{} → {}".format(x["name"], x["destination"])
+    lines = pan.util.sorted_unique_lines([pan.AttrDict({
+        "name": parse_line_name(pattern.route),
+        "destination": parse_headsign(pattern.headsign),
+    }) for pattern in stop.patterns])
+    return "\n".join("{} → {}".format(x.name, x.destination)
                      for x in lines[:3])
 
 def get_stop_color(stop):
     """Return color to use for `stop` based on modes."""
-    modes = [x["route"]["mode"] for x in stop["patterns"]]
+    modes = [x.route.mode for x in stop.patterns]
     order = ["AIRPLANE", "FERRY", "RAIL", "SUBWAY", "TRAM"]
     order = [x for x in order if x in modes]
-    if not order: return COLORS["BUS"]
-    return COLORS.get(order[0], COLORS["BUS"])
+    if not order: return COLORS.BUS
+    return COLORS.get(order[0], COLORS.BUS)
 
 def parse_headsign(headsign):
     """Return shortened headsign for display."""
@@ -159,15 +163,15 @@ def parse_headsign(headsign):
 
 def parse_line_name(route):
     """Return short name to use for line of `route`."""
-    mode = (route["mode"] or "").capitalize()
-    return route["shortName"] or mode or "?"
+    mode = (route.mode or "").capitalize()
+    return route.shortName or mode or "?"
 
 def parse_scheduled_time(departure):
     """Return scheduled Unix time in seconds for `departure`."""
-    return (int(departure["serviceDay"]) +
-            int(departure["scheduledDeparture"]))
+    return (int(departure.serviceDay) +
+            int(departure.scheduledDeparture))
 
 def parse_time(departure):
     """Return Unix time in seconds for `departure`."""
-    return (int(departure["serviceDay"]) +
-            int(departure["realtimeDeparture"]))
+    return (int(departure.serviceDay) +
+            int(departure.realtimeDeparture))

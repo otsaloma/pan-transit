@@ -33,9 +33,8 @@ class AttrDict(dict):
     def __coerce(self, value):
         """Return value with dicts as AttrDicts."""
         if isinstance(value, AttrDict):
-            # Assume all children are AttrDicts as well.
-            # This allows us to do a fast AttrDict(d) to
-            # ensure that we're handling an AttrDict.
+            # Assume all children are AttrDicts as well. This allows us to do
+            # a fast AttrDict(d) to ensure that we're handling an AttrDict.
             return value
         if isinstance(value, dict):
             return AttrDict(value)

@@ -28,7 +28,7 @@ import pan
 import re
 import urllib.parse
 
-COLORS = {
+COLORS = pan.AttrDict({
              "bus": "#ed192d",
        "cable-car": "#ed192d",
            "coach": "#ed192d",
@@ -41,7 +41,7 @@ COLORS = {
          "tflrail": "#244ba6",
             "tram": "#59c134",
             "tube": "#244ba6",
-}
+})
 
 DESTINATION_SUFFIXES = [
     "dlr station",
@@ -90,15 +90,16 @@ def find_departures(stops):
             find_departures(stops[1:]))
     url = format_url("/StopPoint/{}/Arrivals".format(stops[0]))
     result = pan.http.get_json(url)
+    result = list(map(pan.AttrDict, result))
     return pan.util.sorted_departures([{
         "destination": parse_destination(
             departure.get("destinationName", "") or
             departure.get("towards", "")),
-        "line": departure["lineName"],
+        "line": departure.lineName,
         "realtime": False,
-        "scheduled_time": parse_time(departure["expectedArrival"]),
+        "scheduled_time": parse_time(departure.expectedArrival),
         "stop": stops[0],
-        "time": parse_time(departure["expectedArrival"]),
+        "time": parse_time(departure.expectedArrival),
     } for departure in result])
 
 def find_lines(stops):
@@ -109,11 +110,12 @@ def find_lines(stops):
             find_lines(stops[1:]))
     url = format_url("/StopPoint/{}/Route".format(stops[0]))
     result = pan.http.get_json(url)
+    result = list(map(pan.AttrDict, result))
     return pan.util.sorted_unique_lines([{
-        "color": COLORS.get(line["mode"], COLORS["bus"]),
-        "destination": parse_destination(line["destinationName"]),
-        "id": line["naptanId"],
-        "name": line["lineId"],
+        "color": COLORS.get(line.mode, COLORS.bus),
+        "destination": parse_destination(line.destinationName),
+        "id": line.naptanId,
+        "name": line.lineId,
     } for line in result])
 
 def find_nearby_stops(x, y):
@@ -131,15 +133,16 @@ def find_nearby_stops(x, y):
 
     url = format_url("/StopPoint", **params)
     result = pan.http.get_json(url)
+    result = pan.AttrDict(result)
     return [{
-        "color": get_stop_color(stop["modes"]),
+        "color": get_stop_color(stop.modes),
         "description": get_stop_description(stop),
-        "id": stop["id"],
+        "id": stop.id,
         "line_summary": get_line_summary(stop),
-        "name": stop["commonName"],
-        "x": float(stop["lon"]),
-        "y": float(stop["lat"]),
-    } for stop in result["stopPoints"]]
+        "name": stop.commonName,
+        "x": float(stop.lon),
+        "y": float(stop.lat),
+    } for stop in result.stopPoints]
 
 def find_stops(query, x, y):
     """Return a list of stops matching `query`."""
@@ -149,15 +152,16 @@ def find_stops(query, x, y):
     path = "/StopPoint/Search/{}".format(query)
     url = format_url(path, maxResults="50", includeHubs="false")
     result = pan.http.get_json(url)
+    result = pan.AttrDict(result)
     return [{
-        "color": get_stop_color(match["modes"]),
+        "color": get_stop_color(match.modes),
         "description": get_stop_description(match),
-        "id": match["id"],
+        "id": match.id,
         "line_summary": "",
-        "name": match["name"],
-        "x": float(match["lon"]),
-        "y": float(match["lat"]),
-    } for match in result["matches"]]
+        "name": match.name,
+        "x": float(match.lon),
+        "y": float(match.lat),
+    } for match in result.matches]
 
 def format_url(path, **params):
     """Return API URL for `path` with `params`."""
@@ -168,15 +172,15 @@ def format_url(path, **params):
 
 def get_line_summary(stop):
     """Return a list of lines that use `stop`."""
-    line = lambda x: dict(name=x["name"], destination="")
-    lines = pan.util.sorted_unique_lines(map(line, stop["lines"]))
-    return ", ".join(x["name"] for x in lines[:10])
+    line = lambda x: pan.AttrDict(name=x.name, destination="")
+    lines = pan.util.sorted_unique_lines(map(line, stop.lines))
+    return ", ".join(x.name for x in lines[:10])
 
 def get_stop_color(modes):
     """Return color to use for stop based on `modes`."""
     order = [x for x in MODE_COLOR_ORDER if x in modes]
-    if not order: return COLORS["bus"]
-    return COLORS.get(order[0], COLORS["bus"])
+    if not order: return COLORS.bus
+    return COLORS.get(order[0], COLORS.bus)
 
 def get_stop_description(stop):
     """Return description to use for stop."""
