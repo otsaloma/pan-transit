@@ -12,7 +12,7 @@ providers (i.e. cities/regions). For current support, look under the
 Pan Transit is free software released under the GNU General Public
 License (GPL), see the file [`COPYING`](COPYING) for details.
 
-For testing purposes you can just run `/usr/lib/qt5/bin/qmlscene
-qml/pan-transit.qml`. For installation, you probably want an
-RPM-package; for instructions on building that, see relevant parts from
-the file [`RELEASING.md`](RELEASING.md).
+For testing purposes you can just run `qmlscene qml/pan-transit.qml`.
+For installation, you can build the RPM package with command `make rpm`.
+You don't need an SDK to build the RPM, only basic tools: `make`,
+`rpmbuild`, `gettext` and `linguist` from `qttools`
