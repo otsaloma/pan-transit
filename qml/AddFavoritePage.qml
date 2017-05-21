@@ -24,14 +24,17 @@ Dialog {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
     canAccept: nameField && nameField.visible && nameField.text.length > 0
+
     property string key: ""
     property string name: ""
     property var nameField
+
     SilicaListView {
         id: view
         anchors.fill: parent
         // Prevent list items from stealing focus.
         currentIndex: -1
+
         delegate: FavoriteListItem {
             contentHeight: Theme.itemSizeMedium
             onClicked: {
@@ -41,10 +44,15 @@ Dialog {
                 page.accept();
             }
         }
+
         header: Column {
             height: header.height + favoriteCombo.height + spacer.height + nameField.height
             width: parent.width
-            DialogHeader { id: header }
+
+            DialogHeader {
+                id: header
+            }
+
             ComboBox {
                 id: favoriteCombo
                 anchors.left: parent.left
@@ -64,10 +72,12 @@ Dialog {
                     nameField.visible || page.populate();
                 }
             }
+
             Spacer {
                 id: spacer
                 height: Theme.paddingMedium
             }
+
             TextField {
                 id: nameField
                 anchors.left: parent.left
@@ -80,11 +90,17 @@ Dialog {
                 EnterKey.enabled: text.length > 0
                 EnterKey.onClicked: page.accept();
             }
+
             Component.onCompleted: page.nameField = nameField;
+
         }
+
         model: ListModel {}
+
         VerticalScrollDecorator {}
+
     }
+
     onAccepted: {
         // Add new favorite and store value of its key.
         if (page.nameField.visible) {
@@ -92,6 +108,7 @@ Dialog {
             page.key = py.call_sync("pan.app.favorites.add", [text]);
         }
     }
+
     function populate() {
         // Load favorites from the Python backend.
         view.model.clear();
@@ -101,4 +118,5 @@ Dialog {
             view.model.append(favorites[i]);
         }
     }
+
 }

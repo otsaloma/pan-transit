@@ -1,6 +1,6 @@
 {
     "_name": "London",
-    "_description": "Transport for London (Tfl) · Powered by TfL Open Data · Contains OS data © Crown copyright and database rights 2016",
+    "_description": "Transport for London (TfL) · Powered by TfL Open Data · Contains OS data © Crown copyright and database rights 2016",
     "departure_list_item_qml": "DepartureListItemTfl.qml",
     "update_interval": 60
 }

@@ -133,7 +133,7 @@ CoverBackground {
                 // Show the first few departures.
                 cover.clear();
                 cover.copyFrom(model);
-                image.opacity = 0;
+                image.visible = false;
                 title.visible = false;
                 view.visible = true;
             }
@@ -142,7 +142,7 @@ CoverBackground {
             // No departures; show image and title.
             cover.clear();
             view.visible = false;
-            image.opacity = 0.15;
+            image.visible = true;
             title.visible = true;
         }
     }

@@ -58,7 +58,9 @@ Page {
             onClicked: app.pageStack.push("FavoritePage.qml", {"props": model});
         }
 
-        header: PageHeader { title: "Pan Transit" }
+        header: PageHeader {
+            title: "Pan Transit"
+        }
 
         model: ListModel {}
 

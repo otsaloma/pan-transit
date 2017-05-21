@@ -148,14 +148,14 @@ class Favorites:
 
     def remove(self, key):
         """Remove favorite `key` from the list of favorites."""
-        self._favorites = list(filter(
-            lambda x: x.key != key, self._favorites))
+        keep = lambda x: x.key != key
+        self._favorites = list(filter(keep, self._favorites))
 
     def remove_stop(self, key, id):
         """Remove `id` from stops of favorite `key`."""
         favorite = self.get(key)
-        favorite.stops = list(filter(
-            lambda x: x.id != id, favorite.stops))
+        keep = lambda x: x.id != id
+        favorite.stops = list(filter(keep, favorite.stops))
         self._update_meta(key)
 
     def rename(self, key, name):
