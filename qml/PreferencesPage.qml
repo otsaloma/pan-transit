@@ -93,14 +93,12 @@ Page {
                 }
             }
 
-            Spacer {
-                height: Theme.paddingMedium
-            }
-
             ListItemLabel {
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeSmall
+                height: implicitHeight + 2 * Theme.paddingMedium
                 text: qsTranslate("", "When the time remaining to departure is below cutoff, it is shown as minutes remaining instead of the departure time.")
+                verticalAlignment: Text.AlignVCenter
                 wrapMode: Text.WordWrap
             }
 
