@@ -100,6 +100,15 @@ Page {
             text: qsTranslate("", "Once added, favorites appear here. Pull down to select a provider and to search for stops.")
         }
 
+        BusyIndicator {
+            anchors.left: parent.left
+            anchors.leftMargin: Theme.horizontalPageMargin
+            anchors.top: parent.top
+            anchors.topMargin: Theme.horizontalPageMargin
+            running: !gps.ready
+            size: BusyIndicatorSize.Medium
+        }
+
         VerticalScrollDecorator {}
 
     }
