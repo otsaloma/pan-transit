@@ -27,7 +27,6 @@ class TestModule(pan.test.TestCase):
         stops = ["940GZZLUESQ", "HUBEUS"]
         departures = self.provider.find_departures(stops)
         departures = list(map(pan.AttrDict, departures))
-        assert departures
         for departure in departures:
             assert departure.destination
             assert departure.line
