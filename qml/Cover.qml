@@ -28,12 +28,14 @@ CoverBackground {
 
     Image {
         id: image
-        anchors.centerIn: parent
-        height: 0.6 * parent.height
-        opacity: 0.15
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: Theme.paddingLarge
+        height: width/sourceSize.width * sourceSize.height
+        opacity: 0.1
         smooth: true
         source: "icons/cover.png"
-        width: height/sourceSize.height * sourceSize.width
+        width: 1.75 * parent.width
     }
 
     Label {
