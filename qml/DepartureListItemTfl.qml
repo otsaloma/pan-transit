@@ -73,12 +73,12 @@ ListItem {
 
     Label {
         id: destinationLabel
+        anchors.bottom: parent.bottom
         anchors.left: bar.right
         anchors.leftMargin: Theme.paddingLarge
         anchors.right: parent.right
         anchors.rightMargin: Theme.horizontalPageMargin
         anchors.top: parent.verticalCenter
-        anchors.bottom: parent.bottom
         color: Theme.secondaryColor
         font.pixelSize: Theme.fontSizeSmall
         text: model.destination

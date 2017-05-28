@@ -126,24 +126,20 @@ CoverBackground {
     function update() {
         // Query departures from the current page.
         var page = app.pageStack.currentPage;
-        var model = null;
-        if (page && page.canCover) {
-            var model = page.getModel();
-            if (model && model.count > 0) {
-                // Show the first few departures.
-                cover.clear();
-                cover.copyFrom(model);
-                image.visible = false;
-                title.visible = false;
-                view.visible = true;
-            }
-        }
-        if (!model || model.count === 0) {
-            // No departures; show image and title.
+        var model = page && page.canCover ? page.getModel() : null;
+        if (model && model.count > 0) {
+            // Show the first few departures.
             cover.clear();
-            view.visible = false;
+            cover.copyFrom(model);
+            image.visible = false;
+            title.visible = false;
+            view.visible  = true;
+        } else {
+            // Show image and title.
+            cover.clear();
             image.visible = true;
             title.visible = true;
+            view.visible  = false;
         }
     }
 
