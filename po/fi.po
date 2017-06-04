@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan-transit 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-14 22:31+0200\n"
-"PO-Revision-Date: 2017-02-14 22:32+0200\n"
+"POT-Creation-Date: 2017-06-04 03:29+0300\n"
+"PO-Revision-Date: 2017-06-04 03:31+0300\n"
 "Last-Translator: Osmo Salomaa <otsaloma@iki.fi>\n"
 "Language-Team: Finnish\n"
 "Language: fi\n"
@@ -21,189 +21,200 @@ msgstr ""
 msgid "Connection timed out"
 msgstr "Yhteys aikakatkaistiin"
 
-#: providers/digitransit.py:93 providers/digitransit.py:110
+#: providers/digitransit.py:96 providers/digitransit.py:114
 msgid "Stop"
 msgstr "Pysäkki"
 
-#: qml/AboutPage.qml:32
+#: qml/AboutPage.qml:36
 msgid "About Pan Transit"
 msgstr "Tietoja Pan Transitista"
 
-#: qml/AboutPage.qml:36
+#: qml/AboutPage.qml:42
 msgid "version %1"
 msgstr "versio %1"
 
-#: qml/AboutPage.qml:60
+#: qml/AboutPage.qml:49
+msgid "GitHub page"
+msgstr "GitHub-sivu"
+
+#: qml/AboutPage.qml:66
 msgid "Pan Transit is free software released under the GNU General Public License (GPL), version 3 or later."
 msgstr "Pan Transit on vapaa ohjelmisto, julkaistu lisenssillä GNU General Public License (GPL), versio 3 tai uudempi."
 
-#: qml/AboutPage.qml:63
+#: qml/AboutPage.qml:71
 msgid "Translated by"
 msgstr "Käännös"
 
-#. TRANSLATORS: This is a special message that shouldn't be
-#. translated literally. It is used in the about page to give
-#. credits to the translators. Thus, you should translate it to
-#. your name. You can also include other translators who have
-#. contributed to this translation; in that case, please write
-#. them on separate lines seperated by newlines (\n).
-#: qml/AboutPage.qml:74
+#. TRANSLATORS: This is a special message that shouldn't be translated
+#. literally. It is used in the about page to give credits to the translators.
+#. Thus, you should translate it to your name. You can also include other
+#. translators who have contributed to this translation; in that case, please
+#. write them on separate lines seperated by newlines (\n).
+#: qml/AboutPage.qml:83
 msgid "translator-credits"
 msgstr "Osmo Salomaa"
 
-#: qml/AboutPage.qml:83
+#: qml/AboutPage.qml:93
 msgid "You can add new user interface translations or contribute to existing ones at Transifex."
 msgstr "Voit lisätä uusia käyttöliittymäkäännöksiä tai osallistua nykyisten käännösten parantamiseen Transifexissa."
 
-#: qml/AddFavoritePage.qml:55
+#: qml/AboutPage.qml:101
+msgid "Transifex page"
+msgstr "Transifex-sivu"
+
+#: qml/AddFavoritePage.qml:63
 msgid "Favorite"
 msgstr "Suosikki"
 
-#: qml/AddFavoritePage.qml:57
+#: qml/AddFavoritePage.qml:65
 msgid "Create new"
 msgstr "Luo uusi"
 
-#: qml/AddFavoritePage.qml:58
+#: qml/AddFavoritePage.qml:66
 msgid "Add to existing"
 msgstr "Lisää olemassa olevaan"
 
-#: qml/AddFavoritePage.qml:78 qml/EditFavoritePage.qml:89
+#: qml/AddFavoritePage.qml:88 qml/EditFavoritePage.qml:102
 msgid "Name"
 msgstr "Nimi"
 
-#: qml/EditFavoritePage.qml:68 qml/MenuPage.qml:49 qml/SearchPage.qml:47
+#: qml/EditFavoritePage.qml:73 qml/MenuPage.qml:52 qml/SearchPage.qml:52
 msgid "Remove"
 msgstr "Poista"
 
-#: qml/EditFavoritePage.qml:97
+#: qml/EditFavoritePage.qml:111
 msgid "Stops"
 msgstr "Pysäkit"
 
-#: qml/FavoritePage.qml:55 qml/StopPage.qml:73
+#: qml/FavoritePage.qml:60 qml/StopPage.qml:83
 msgid "Filter lines"
 msgstr "Valitse linjat"
 
-#: qml/FavoritePage.qml:65 qml/FavoritePage.qml:91 qml/LineFilterPage.qml:89
-#: qml/StopPage.qml:82 qml/StopPage.qml:108
+#: qml/FavoritePage.qml:70 qml/FavoritePage.qml:102 qml/LineFilterPage.qml:100
+#: qml/StopPage.qml:92 qml/StopPage.qml:124
 msgid "Loading"
 msgstr "Ladataan"
 
-#: qml/FavoritePage.qml:125 qml/StopPage.qml:140
+#: qml/FavoritePage.qml:138 qml/StopPage.qml:158
 msgid "No departures found"
 msgstr "Ei löytynyt lähtöjä"
 
-#: qml/LineFilterPage.qml:69
+#: qml/LineFilterPage.qml:76
 msgid "Mark all"
 msgstr "Merkitse kaikki"
 
-#: qml/LineFilterPage.qml:73
+#: qml/LineFilterPage.qml:80
 msgid "Unmark all"
 msgstr "Tyhjennä merkinnät"
 
-#: qml/LineFilterPage.qml:121
+#: qml/LineFilterPage.qml:134
 msgid "No lines found"
 msgstr "Ei lähtöjä"
 
-#: qml/MenuPage.qml:45
+#: qml/MenuPage.qml:48
 msgid "Edit"
 msgstr "Muokkaa"
 
-#: qml/MenuPage.qml:62
+#: qml/MenuPage.qml:72
 msgid "About"
 msgstr "Tietoja"
 
-#: qml/MenuPage.qml:66 qml/PreferencesPage.qml:33
+#: qml/MenuPage.qml:77 qml/PreferencesPage.qml:37
 msgid "Preferences"
 msgstr "Asetukset"
 
-#: qml/MenuPage.qml:70 qml/SearchPage.qml:67
+#: qml/MenuPage.qml:82 qml/SearchPage.qml:77
 msgid "Search"
 msgstr "Etsi"
 
-#: qml/MenuPage.qml:78
+#: qml/MenuPage.qml:91
 msgid "Nearby"
 msgstr "Lähellä"
 
-#: qml/MenuPage.qml:85
+#: qml/MenuPage.qml:100
 msgid "Once added, favorites appear here. Pull down to select a provider and to search for stops."
 msgstr "Kun lisätty, suosikit näkyvät tässä. Vedä alaspäin valitaksesi palveluntarjoajan ja etsiäksesi pysäkkejä."
 
-#: qml/MenuPage.qml:135
+#: qml/MenuPage.qml:167
 msgid "Removing"
 msgstr "Poistetaan"
 
-#: qml/NearbyPage.qml:63 qml/SearchResultsPage.qml:63
+#: qml/NearbyPage.qml:74 qml/SearchResultsPage.qml:74
 msgid "Searching"
 msgstr "Etsitään"
 
-#: qml/NearbyPage.qml:79 qml/SearchResultsPage.qml:80
+#: qml/NearbyPage.qml:91 qml/SearchResultsPage.qml:92
 msgid "%1 Stops"
 msgstr "%1 pysäkkiä"
 
-#: qml/NearbyPage.qml:84 qml/SearchResultsPage.qml:85
+#: qml/NearbyPage.qml:96 qml/SearchResultsPage.qml:97
 msgid "No stops found"
 msgstr "Ei pysäkkejä"
 
-#: qml/PreferencesPage.qml:36
+#: qml/PreferencesPage.qml:42
 msgid "Provider"
 msgstr "Palveluntarjoaja"
 
-#: qml/PreferencesPage.qml:47
+#: qml/PreferencesPage.qml:55
 msgid "Display"
 msgstr "Esitys"
 
-#: qml/PreferencesPage.qml:51
+#: qml/PreferencesPage.qml:61
 msgid "Favorite highlight radius (m)"
 msgstr "Suosikin korostussäde (m)"
 
-#: qml/PreferencesPage.qml:69
+#: qml/PreferencesPage.qml:80
 msgid "Departure time cutoff (min)"
 msgstr "Lähdön aikaraja (min)"
 
-#: qml/PreferencesPage.qml:88
+#: qml/PreferencesPage.qml:100
 msgid "When the time remaining to departure is below cutoff, it is shown as minutes remaining instead of the departure time."
 msgstr "Kun lähtöön jäljellä oleva aika on alle aikarajan, niin se näytetään minuutteina jäljellä lähtöajan sijaan."
 
-#: qml/PreferencesPage.qml:93
+#: qml/PreferencesPage.qml:107
 msgid "Units"
 msgstr "Yksiköt"
 
-#: qml/PreferencesPage.qml:95
+#: qml/PreferencesPage.qml:109
 msgid "Metric"
 msgstr "Metrinen"
 
-#: qml/PreferencesPage.qml:96
+#: qml/PreferencesPage.qml:110
 msgid "American"
 msgstr "Amerikkalainen"
 
-#: qml/PreferencesPage.qml:97
+#: qml/PreferencesPage.qml:111
 msgid "British"
 msgstr "Brittiläinen"
 
-#: qml/SearchPage.qml:71
+#: qml/SearchPage.qml:82
 msgid "Stop name or number"
 msgstr "Pysäkin nimi tai numero"
 
-#: qml/StopPage.qml:54
+#: qml/StopPage.qml:64
 msgid "Add to favorites"
 msgstr "Lisää suosikkeihin"
 
 #: standard input:1
-msgid "Finnish Transport Agency"
-msgstr "Liikennevirasto"
+msgid "Finland"
+msgstr "Suomi"
 
 #: standard input:2
-msgid "Public transport in Finland"
-msgstr "Joukkoliikenne Suomessa"
+msgid "Finnish Transport Agency · Matka.fi"
+msgstr "Liikennevirasto · Matka.fi"
 
 #: standard input:3
+msgid "Helsinki"
+msgstr "Helsinki"
+
+#: standard input:4
 msgid "Helsinki Region Transport (HSL)"
 msgstr "Helsingin seudun liikenne (HSL)"
 
-#: standard input:4
-msgid "Public transport in the Helsinki region"
-msgstr "Joukkoliikenne Helsingin seudulla"
-
 #: standard input:5
-msgid "Public transport in the London region · Powered by TfL Open Data · Contains OS data © Crown copyright and database rights 2016"
-msgstr "Joukkoliikenne Lontoon seudulla · Powered by TfL Open Data · Contains OS data © Crown copyright and database rights 2016"
+msgid "London"
+msgstr "Lontoo"
+
+#: standard input:6
+msgid "Transport for London (TfL) · Powered by TfL Open Data · Contains OS data © Crown copyright and database rights 2016"
+msgstr "Transport for London (TfL) · Powered by TfL Open Data · Contains OS data © Crown copyright and database rights 2016"
