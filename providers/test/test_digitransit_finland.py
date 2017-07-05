@@ -24,7 +24,7 @@ class TestModule(pan.test.TestCase):
         self.provider = pan.Provider("digitransit_finland")
 
     def test_find_departures(self):
-        stops = ["MATKA:300340", "MATKA:310513"]
+        stops = ["tampere:3734", "tampere:3735"]
         departures = self.provider.find_departures(stops)
         departures = list(map(pan.AttrDict, departures))
         assert departures
@@ -37,7 +37,7 @@ class TestModule(pan.test.TestCase):
             assert departure.y
 
     def test_find_lines(self):
-        stops = ["MATKA:300340", "MATKA:310513"]
+        stops = ["tampere:3734", "tampere:3735"]
         lines = self.provider.find_lines(stops)
         lines = list(map(pan.AttrDict, lines))
         assert lines
