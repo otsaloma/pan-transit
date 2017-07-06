@@ -44,10 +44,13 @@ install:
 	mkdir -p $(DATADIR)/pan
 	cp pan/*.py $(DATADIR)/pan
 	@echo "Installing QML files..."
-	mkdir -p $(DATADIR)/qml/icons
+	mkdir -p $(DATADIR)/qml
 	cp qml/pan-transit.qml $(DATADIR)/qml/$(NAME).qml
 	cp qml/[ABCDEFGHIJKLMNOPQRSTUVXYZ]*.qml $(DATADIR)/qml
+    mkdir -p $(DATADIR)/qml/icons
 	cp qml/icons/*.png $(DATADIR)/qml/icons
+	mkdir -p $(DATADIR)/qml/js
+	cp qml/js/*.js $(DATADIR)/qml/js
 	@echo "Installing providers..."
 	mkdir -p $(DATADIR)/providers
 	cp providers/*.json $(DATADIR)/providers
@@ -91,7 +94,7 @@ pot:
 	 --keyword=qsTranslate:2 \
 	 --add-comments=TRANSLATORS: \
 	 --no-wrap \
-	 */*.qml
+	 */*.qml qml/js/*.js
 
 	cat */*.json \
 	 | grep '^ *"_' \
