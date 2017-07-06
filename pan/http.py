@@ -26,8 +26,16 @@ import sys
 import threading
 import urllib.parse
 
-HEADERS = {"Connection": "Keep-Alive",
-           "User-Agent": "pan-transit/{}".format(pan.__version__)}
+BROKEN_CONNECTION_ERRORS = [
+    BrokenPipeError,
+    ConnectionResetError,
+    http.client.BadStatusLine,
+]
+
+HEADERS = {
+    "Connection": "Keep-Alive",
+    "User-Agent": "pan-transit/{}".format(pan.__version__),
+}
 
 RE_LOCALHOST = re.compile(r"://(127.0.0.1|localhost)\b")
 
@@ -201,13 +209,8 @@ def _request(method, url, body=None, encoding=None, retry=1, headers=None):
         if not pool.is_alive(): raise
         connection.close()
         connection = None
-        # These probably mean that the connection was broken.
-        broken = [
-            BrokenPipeError,
-            ConnectionResetError,
-            http.client.BadStatusLine,
-        ]
-        if not isinstance(error, tuple(broken)) or retry == 0:
+        broken = tuple(BROKEN_CONNECTION_ERRORS)
+        if not isinstance(error, broken) or retry == 0:
             name = error.__class__.__name__
             print("{} failed: {}: {}"
                   .format(method, name, str(error)),
@@ -244,5 +247,6 @@ def _request_json(method, url, body=None, encoding="utf_8", retry=1, headers=Non
     except Exception as error:
         name = error.__class__.__name__
         print("Failed to parse JSON data: {}: {}"
-              .format(name, str(error)), file=sys.stderr)
+              .format(name, str(error)),
+              file=sys.stderr)
         raise # Exception
