@@ -25,13 +25,13 @@ Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
 
-    property bool canCover: true
-    property var downloadTime: -1
-    property var ignores: []
-    property bool loading: false
-    property bool populated: false
-    property var props: {}
-    property var results: {}
+    property bool   canCover: true
+    property var    downloadTime: -1
+    property var    ignores: []
+    property bool   loading: false
+    property bool   populated: false
+    property var    props: {}
+    property var    results: {}
     property string title: ""
 
     // Column widths to be set based on data.

@@ -24,9 +24,9 @@ Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
 
-    property bool loading: false
-    property bool populated: false
-    property var results: {}
+    property bool   loading: false
+    property bool   populated: false
+    property var    results: {}
     property string title: ""
 
     SilicaGridView {

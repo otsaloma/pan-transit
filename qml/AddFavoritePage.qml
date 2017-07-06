@@ -27,7 +27,7 @@ Dialog {
 
     property string key: ""
     property string name: ""
-    property var nameField
+    property var    nameField
 
     SilicaListView {
         id: view

@@ -24,9 +24,9 @@ Dialog {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
 
-    property var ignores: []
+    property var  ignores: []
     property bool loading: false
-    property var stops: []
+    property var  stops: []
 
     SilicaGridView {
         id: view
