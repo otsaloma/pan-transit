@@ -37,4 +37,14 @@ ApplicationWindow {
         py.ready && py.call_sync("pan.app.quit", []);
     }
 
+    function tr(message) {
+        // Return translated message.
+        // In addition to the message, string formatting arguments can be passed
+        // as well as short-hand for message.arg(arg1).arg(arg2)...
+        message = qsTranslate("", message);
+        for (var i = 1; i < arguments.length; i++)
+            message = message.arg(arguments[i]);
+        return message;
+    }
+
 }

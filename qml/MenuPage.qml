@@ -45,11 +45,11 @@ Page {
             menu: ContextMenu {
                 id: contextMenu
                 MenuItem {
-                    text: qsTranslate("", "Edit")
+                    text: app.tr("Edit")
                     onClicked: page.editFavorite(model.index);
                 }
                 MenuItem {
-                    text: qsTranslate("", "Remove")
+                    text: app.tr("Remove")
                     onClicked: page.removeFavorite(listItem, model.index);
                 }
                 onActiveChanged: view.menuOpen = contextMenu.active;
@@ -69,17 +69,17 @@ Page {
         PullDownMenu {
 
             MenuItem {
-                text: qsTranslate("", "About")
+                text: app.tr("About")
                 onClicked: app.pageStack.push("AboutPage.qml");
             }
 
             MenuItem {
-                text: qsTranslate("", "Preferences")
+                text: app.tr("Preferences")
                 onClicked: app.pageStack.push("PreferencesPage.qml");
             }
 
             MenuItem {
-                text: qsTranslate("", "Search")
+                text: app.tr("Search")
                 onClicked: {
                     app.pageStack.push("SearchPage.qml");
                     app.pageStack.pushAttached("SearchResultsPage.qml");
@@ -88,7 +88,7 @@ Page {
 
             MenuItem {
                 enabled: gps.ready
-                text: qsTranslate("", "Nearby")
+                text: app.tr("Nearby")
                 onClicked: app.pageStack.push("NearbyPage.qml");
             }
 
@@ -97,7 +97,7 @@ Page {
         ViewPlaceholder {
             id: viewPlaceholder
             enabled: false
-            text: qsTranslate("", "Once added, favorites appear here. Pull down to select a provider and to search for stops.")
+            text: app.tr("Once added, favorites appear here. Pull down to select a provider and to search for stops.")
         }
 
         BusyIndicator {
@@ -164,7 +164,7 @@ Page {
 
     function removeFavorite(listItem, index) {
         // Remove favorite at index.
-        listItem.remorseAction(qsTranslate("", "Removing"), function() {
+        listItem.remorseAction(app.tr("Removing"), function() {
             var item = view.model.get(index);
             py.call_sync("pan.app.favorites.remove", [item.key]);
             view.model.remove(index);

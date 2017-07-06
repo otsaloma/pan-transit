@@ -49,7 +49,7 @@ Page {
             ContextMenu {
                 id: contextMenu
                 MenuItem {
-                    text: qsTranslate("", "Remove")
+                    text: app.tr("Remove")
                     onClicked: {
                         py.call_sync("pan.app.history.remove", [model.name]);
                         var index = page.history.indexOf(model.name);
@@ -74,12 +74,12 @@ Page {
 
             PageHeader {
                 id: header
-                title: qsTranslate("", "Search")
+                title: app.tr("Search")
             }
 
             SearchField {
                 id: searchField
-                placeholderText: qsTranslate("", "Stop name or number")
+                placeholderText: app.tr("Stop name or number")
                 width: parent.width
                 EnterKey.enabled: text.length > 0
                 EnterKey.onClicked: app.pageStack.navigateForward();

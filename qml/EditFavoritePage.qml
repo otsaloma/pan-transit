@@ -70,7 +70,7 @@ Dialog {
             ContextMenu {
                 id: contextMenu
                 MenuItem {
-                    text: qsTranslate("", "Remove")
+                    text: app.tr("Remove")
                     onClicked: {
                         // Mark stop to be removed once dialog is accepted.
                         page.removals.push(model.id);
@@ -99,7 +99,7 @@ Dialog {
                 anchors.leftMargin: Theme.horizontalPageMargin
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.horizontalPageMargin
-                label: qsTranslate("", "Name")
+                label: app.tr("Name")
                 text: page.name
                 EnterKey.enabled: text.length > 0
                 EnterKey.iconSource: "image://theme/icon-m-enter-close"
@@ -108,7 +108,7 @@ Dialog {
 
             SectionHeader {
                 id: titleLabel
-                text: qsTranslate("", "Stops")
+                text: app.tr("Stops")
             }
 
             Component.onCompleted: page.nameField = nameField;

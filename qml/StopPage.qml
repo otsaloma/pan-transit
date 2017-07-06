@@ -61,7 +61,7 @@ Page {
             visible: !page.loading || false
 
             MenuItem {
-                text: qsTranslate("", "Add to favorites")
+                text: app.tr("Add to favorites")
                 onClicked: {
                     var options = {"name": page.props.name};
                     var dialog = pageStack.push("AddFavoritePage.qml", options);
@@ -80,7 +80,7 @@ Page {
             }
 
             MenuItem {
-                text: qsTranslate("", "Filter lines")
+                text: app.tr("Filter lines")
                 onClicked: {
                     var options = {"stops": [page.props.id], "ignores": page.ignores};
                     var dialog = pageStack.push("LineFilterPage.qml", options);
@@ -89,7 +89,7 @@ Page {
                         view.model.clear();
                         page.loading = true;
                         page.title = "";
-                        busy.text = qsTranslate("", "Loading");
+                        busy.text = app.tr("Loading");
                         page.populate();
                     });
                 }
@@ -121,7 +121,7 @@ Page {
             view.model.clear();
             page.loading = true;
             page.title = "";
-            busy.text = qsTranslate("", "Loading");
+            busy.text = app.tr("Loading");
         } else if (page.status === PageStatus.Active) {
             page.populate();
         }
@@ -155,7 +155,7 @@ Page {
                 }
             } else {
                 silent || (page.title = "");
-                silent || (busy.error = qsTranslate("", "No departures found"));
+                silent || (busy.error = app.tr("No departures found"));
             }
             page.downloadTime = Date.now();
             page.loading = false;

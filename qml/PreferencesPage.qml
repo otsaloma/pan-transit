@@ -34,12 +34,12 @@ Page {
             anchors.fill: parent
 
             PageHeader {
-                title: qsTranslate("", "Preferences")
+                title: app.tr("Preferences")
             }
 
             ValueButton {
                 id: providerButton
-                label: qsTranslate("", "Provider")
+                label: app.tr("Provider")
                 height: Theme.itemSizeSmall
                 value: py.evaluate("pan.app.provider.name")
                 width: parent.width
@@ -52,13 +52,13 @@ Page {
             }
 
             SectionHeader {
-                text: qsTranslate("", "Display")
+                text: app.tr("Display")
             }
 
             TextField {
                 id: radiusField
                 inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
-                label: qsTranslate("", "Favorite highlight radius (m)")
+                label: app.tr("Favorite highlight radius (m)")
                 text: app.conf.get("favorite_highlight_radius").toString()
                 validator: RegExpValidator { regExp: /^[0-9]+$/ }
                 width: parent.width
@@ -77,7 +77,7 @@ Page {
             TextField {
                 id: cutOffField
                 inputMethodHints: Qt.ImhDigitsOnly | Qt.ImhNoPredictiveText
-                label: qsTranslate("", "Departure time cutoff (min)")
+                label: app.tr("Departure time cutoff (min)")
                 text: app.conf.get("departure_time_cutoff").toString()
                 validator: RegExpValidator { regExp: /^[0-9]+$/ }
                 width: parent.width
@@ -97,18 +97,18 @@ Page {
                 color: Theme.secondaryColor
                 font.pixelSize: Theme.fontSizeSmall
                 height: implicitHeight + 2 * Theme.paddingMedium
-                text: qsTranslate("", "When the time remaining to departure is below cutoff, it is shown as minutes remaining instead of the departure time.")
+                text: app.tr("When the time remaining to departure is below cutoff, it is shown as minutes remaining instead of the departure time.")
                 verticalAlignment: Text.AlignVCenter
                 wrapMode: Text.WordWrap
             }
 
             ComboBox {
                 id: unitsComboBox
-                label: qsTranslate("", "Units")
+                label: app.tr("Units")
                 menu: ContextMenu {
-                    MenuItem { text: qsTranslate("", "Metric") }
-                    MenuItem { text: qsTranslate("", "American") }
-                    MenuItem { text: qsTranslate("", "British") }
+                    MenuItem { text: app.tr("Metric") }
+                    MenuItem { text: app.tr("American") }
+                    MenuItem { text: app.tr("British") }
                 }
                 property var values: ["metric", "american", "british"]
                 Component.onCompleted: {

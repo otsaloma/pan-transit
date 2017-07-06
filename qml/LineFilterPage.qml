@@ -73,11 +73,11 @@ Dialog {
             id: menu
             visible: !page.loading && view.model.count > 0
             MenuItem {
-                text: qsTranslate("", "Mark all")
+                text: app.tr("Mark all")
                 onClicked: menu.setAllChecked(true);
             }
             MenuItem {
-                text: qsTranslate("", "Unmark all")
+                text: app.tr("Unmark all")
                 onClicked: menu.setAllChecked(false);
             }
             function setAllChecked(checked) {
@@ -97,7 +97,7 @@ Dialog {
 
     Component.onCompleted: {
         page.loading = true;
-        busy.text = qsTranslate("", "Loading")
+        busy.text = app.tr("Loading")
         page.populate();
     }
 
@@ -131,7 +131,7 @@ Dialog {
                     view.model.append(results[i]);
                 }
             } else {
-                busy.error = qsTranslate("", "No lines found");
+                busy.error = app.tr("No lines found");
             }
             page.loading = false;
         });

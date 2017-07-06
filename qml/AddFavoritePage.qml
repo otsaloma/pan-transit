@@ -60,10 +60,10 @@ Dialog {
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.horizontalPageMargin
                 currentIndex: 0
-                label: qsTranslate("", "Favorite")
+                label: app.tr("Favorite")
                 menu: ContextMenu {
-                    MenuItem { text: qsTranslate("", "Create new") }
-                    MenuItem { text: qsTranslate("", "Add to existing") }
+                    MenuItem { text: app.tr("Create new") }
+                    MenuItem { text: app.tr("Add to existing") }
                 }
                 onCurrentIndexChanged: {
                     // Show either nameField or view.
@@ -85,7 +85,7 @@ Dialog {
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.horizontalPageMargin
                 height: visible ? implicitHeight : 0
-                label: qsTranslate("", "Name")
+                label: app.tr("Name")
                 text: page.name
                 EnterKey.enabled: text.length > 0
                 EnterKey.onClicked: page.accept();

@@ -71,7 +71,7 @@ Page {
             view.model.clear();
             page.loading = true;
             page.title = "";
-            busy.text = qsTranslate("", "Searching")
+            busy.text = app.tr("Searching")
         } else if (page.status === PageStatus.Active) {
             page.populate(app.searchQuery);
         }
@@ -89,12 +89,12 @@ Page {
                 busy.error = results.message;
             } else if (results && results.length > 0) {
                 page.results = results;
-                page.title = qsTranslate("", "%1 Stops").arg(results.length);
+                page.title = app.tr("%1 Stops", results.length);
                 for (var i = 0; i < results.length; i++)
                     view.model.append(results[i]);
             } else {
                 page.title = "";
-                busy.error = qsTranslate("", "No stops found");
+                busy.error = app.tr("No stops found");
             }
             page.loading = false;
             page.populatedQuery = query;
