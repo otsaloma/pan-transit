@@ -20,6 +20,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "."
 
+import "js/util.js" as Util
+
 Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
@@ -79,7 +81,7 @@ Page {
 
             SearchField {
                 id: searchField
-                placeholderText: app.tr("Stop name or number")
+                placeholderText: app.tr("Search")
                 width: parent.width
                 EnterKey.enabled: text.length > 0
                 EnterKey.onClicked: app.pageStack.navigateForward();
@@ -97,6 +99,13 @@ Page {
 
         property var searchField
 
+        ViewPlaceholder {
+            id: viewPlaceholder
+            enabled: false
+            hintText: app.tr("You can search for stops by name, number or address, depending on the provider.")
+            text: app.tr("No matches in history")
+        }
+
         VerticalScrollDecorator {}
 
     }
@@ -110,39 +119,20 @@ Page {
 
     function filterHistory() {
         // Filter search history for the current search field text.
-        var query = view.searchField.text.toLowerCase();
-        var found = [], n = 0;
-        for (var i = 0; i < page.history.length; i++) {
-            // Prefer matches at the start of the query,
-            // place other matches at the end.
-            var item = page.history[i].toLowerCase();
-            if (query.length > 0 && item.indexOf(query) === 0) {
-                found.splice(n++, 0, page.history[i]);
-                if (found.length >= view.count) break;
-            } else if (query.length === 0 || item.indexOf(query) > 0) {
-                found.push(page.history[i]);
-                if (found.length >= view.count) break;
-            }
-        }
-        for (var i = 0; i < found.length; i++) {
-            var text = Theme.highlightText(found[i], query, Theme.highlightColor);
-            view.model.setProperty(i, "name", found[i]);
-            view.model.setProperty(i, "text", text);
-            view.model.setProperty(i, "visible", true);
-        }
-        for (var i = found.length; i < view.count; i++)
-            view.model.setProperty(i, "visible", false);
+        var query = view.searchField.text;
+        var found = Util.findMatches(query, page.history, view.model.count);
+        Util.injectMatches(view.model, found, "name", "text");
+        viewPlaceholder.enabled = found.length === 0;
     }
 
     function loadHistory() {
         // Load search history and preallocate list items.
         page.history = py.evaluate("pan.app.history.queries");
         while (view.model.count < 50)
-            view.model.append({
-                "name": "",
-                "text": "",
-                "visible": false
-            });
+            view.model.append({"name": "",
+                               "text": "",
+                               "visible": false});
+
     }
 
 }
