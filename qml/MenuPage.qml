@@ -100,7 +100,7 @@ Page {
             id: viewPlaceholder
             enabled: false
             hintText: app.tr("Pull down to select a provider and to search for stops.")
-            text: app.tr("Once added, favorites appear here.")
+            text: app.tr("Once added, favorites appear here")
         }
 
         BusyIndicator {
