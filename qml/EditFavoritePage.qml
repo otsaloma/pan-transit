@@ -20,6 +20,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "."
 
+import "js/util.js" as Util
+
 Dialog {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
@@ -80,7 +82,6 @@ Dialog {
             }
 
             ListView.onRemove: animateRemoval(listItem);
-
             onClicked: listItem.showMenu();
 
         }
@@ -125,8 +126,7 @@ Dialog {
         // Load stops from the Python backend.
         view.model.clear();
         var stops = py.call_sync("pan.app.favorites.get_stops", [page.key]);
-        for (var i = 0; i < stops.length; i++)
-            view.model.append(stops[i]);
+        Util.appendAll(view.model, stops);
     }
 
     onAccepted: {

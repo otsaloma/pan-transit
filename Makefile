@@ -47,7 +47,7 @@ install:
 	mkdir -p $(DATADIR)/qml
 	cp qml/pan-transit.qml $(DATADIR)/qml/$(NAME).qml
 	cp qml/[ABCDEFGHIJKLMNOPQRSTUVXYZ]*.qml $(DATADIR)/qml
-    mkdir -p $(DATADIR)/qml/icons
+	mkdir -p $(DATADIR)/qml/icons
 	cp qml/icons/*.png $(DATADIR)/qml/icons
 	mkdir -p $(DATADIR)/qml/js
 	cp qml/js/*.js $(DATADIR)/qml/js

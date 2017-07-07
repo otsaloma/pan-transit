@@ -20,6 +20,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "."
 
+import "js/util.js" as Util
+
 Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
@@ -89,8 +91,7 @@ Page {
             } else if (results && results.length > 0) {
                 page.results = results;
                 page.title = app.tr("%1 Stops", results.length);
-                for (var i = 0; i < results.length; i++)
-                    view.model.append(results[i]);
+                Util.appendAll(view.model, results);
             } else {
                 page.title = "";
                 busy.error = app.tr("No stops found");

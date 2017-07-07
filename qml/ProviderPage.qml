@@ -20,6 +20,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "."
 
+import "js/util.js" as Util
+
 Dialog {
     id: dialog
     allowedOrientations: app.defaultAllowedOrientations
@@ -62,16 +64,14 @@ Dialog {
         }
 
         header: DialogHeader {}
-
         model: ListModel {}
 
         VerticalScrollDecorator {}
 
         Component.onCompleted: {
-            // Load provider model entries from the Python backend.
+            // Load provider model items from the Python backend.
             py.call("pan.util.get_providers", [], function(providers) {
-                for (var i = 0; i < providers.length; i++)
-                    listView.model.append(providers[i]);
+                Util.appendAll(listView.model, providers);
             });
         }
 

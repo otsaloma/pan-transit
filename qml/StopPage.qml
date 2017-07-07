@@ -21,6 +21,8 @@ import QtPositioning 5.2
 import Sailfish.Silica 1.0
 import "."
 
+import "js/util.js" as Util
+
 Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
@@ -148,11 +150,9 @@ Page {
                 page.timeWidth = 0;
                 page.results = results;
                 page.title = page.props.name;
-                for (var i = 0; i < results.length; i++) {
-                    results[i].color_qml = ""
-                    results[i].time_qml = ""
-                    view.model.append(results[i]);
-                }
+                Util.addProperties(results, "color_qml", "")
+                Util.addProperties(results, "time_qml", "")
+                Util.appendAll(view.model, results);
             } else {
                 silent || (page.title = "");
                 silent || (busy.error = app.tr("No departures found"));

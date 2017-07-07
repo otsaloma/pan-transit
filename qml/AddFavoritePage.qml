@@ -20,6 +20,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "."
 
+import "js/util.js" as Util
+
 Dialog {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
@@ -113,10 +115,8 @@ Dialog {
         // Load favorites from the Python backend.
         view.model.clear();
         var favorites = py.evaluate("pan.app.favorites.favorites");
-        for (var i = 0; i < favorites.length; i++) {
-            favorites[i].near = true;
-            view.model.append(favorites[i]);
-        }
+        Util.addProperties(favorites, "near", true);
+        Util.appendAll(view.model, favorites);
     }
 
 }
