@@ -21,6 +21,8 @@ import QtPositioning 5.2
 import Sailfish.Silica 1.0
 import "."
 
+import "js/util.js" as Util
+
 Page {
     id: page
     allowedOrientations: app.defaultAllowedOrientations
@@ -97,7 +99,8 @@ Page {
         ViewPlaceholder {
             id: viewPlaceholder
             enabled: false
-            text: app.tr("Once added, favorites appear here. Pull down to select a provider and to search for stops.")
+            hintText: app.tr("Pull down to select a provider and to search for stops.")
+            text: app.tr("Once added, favorites appear here.")
         }
 
         BusyIndicator {
@@ -154,10 +157,8 @@ Page {
         // Load favorites from the Python backend.
         view.model.clear();
         var favorites = py.evaluate("pan.app.favorites.favorites");
-        for (var i = 0; i < favorites.length; i++) {
-            favorites[i].near = false;
-            view.model.append(favorites[i]);
-        }
+        Util.addProperties(favorites, "near", false);
+        Util.appendAll(view.model, favorites);
         viewPlaceholder.enabled = (view.model.count === 0);
         page.populatedProvider = app.conf.get("provider");
     }
