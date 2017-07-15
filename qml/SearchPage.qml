@@ -103,7 +103,6 @@ Page {
             id: viewPlaceholder
             enabled: false
             hintText: app.tr("You can search for stops by name, number or address, depending on the provider.")
-            text: app.tr("No matches in history")
         }
 
         VerticalScrollDecorator {}
