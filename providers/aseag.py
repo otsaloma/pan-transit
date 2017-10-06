@@ -16,7 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-Public transport stops and departures from Aachen, Germany (Aseag).
+Public transport stops and departures from ASEAG, Aachen Germany.
+API not seperately documented but uses URA interface like TfL.
+See: http://content.tfl.gov.uk/tfl-live-bus-river-bus-arrivals-api-documentation.pdf
 """
 
 import pan
@@ -25,10 +27,11 @@ import urllib.parse
 import json
 from operator import itemgetter
 
-baseurl		= "http://ivu.aseag.de/interfaces/ura/{}"
-url_l		= "location"
-url_i		= "instant_V2"
-returnlist	= "StopPointName,StopID,StopPointState,StopPointIndicator,Latitude,Longitude,VisitNumber,TripID,VehicleID,LineID,LineName,DirectionID,DestinationName,DestinationText,EstimatedTime,BaseVersion"
+baseurl = "http://ivu.aseag.de/interfaces/ura/{}"
+url_l = "location"
+url_i = "instant_V2"
+returnlist = "StopPointName,StopID,StopPointState,StopPointIndicator,Latitude,Longitude,VisitNumber,TripID,VehicleID,LineID,LineName,DirectionID,DestinationName,DestinationText,EstimatedTime,BaseVersion"
+radius = 500
 
 def find_departures(stops):
 	parameter = {"ReturnList": returnlist, "StopID": ",".join(map(str, stops)) }
@@ -62,7 +65,31 @@ def parsejson_find_lines(data):
 
 
 def find_nearby_stops(x, y):
-	return {}
+	parameter = {"ReturnList": returnlist, "Circle": str(y)+","+str(x)+","+str(radius) }
+	request = pan.http.get( format_url(baseurl.format(url_i), parameter), encoding="utf_8" )
+	data = parsejson_find_nearby_stops(request)
+	return data
+
+def parsejson_find_nearby_stops(data):
+	output = []
+	init = True
+	oldStop = ""
+	line_summary = ""
+	for line in data.splitlines():
+		linelist = json.loads(line)
+		if (linelist[0] == 1):
+			line_summary_substring = linelist[9] + " -> " + linelist[11]
+			if (oldStop != linelist[2]):
+				if (init == False):
+					newdict = { "color": "#bb0032", "description": linelist[1], "id": linelist[2], "name": linelist[1], "line_summary": line_summary, "y": linelist[5], "x": linelist[6] }
+					output.append(newdict)
+				line_summary = line_summary_substring
+			else:
+				if (not (line_summary_substring in line_summary)):
+					line_summary = line_summary + ", " + line_summary_substring
+			oldStop = linelist[2]
+			init = False
+	return output
 
 def find_stops(query, x, y):
 	parameter = {"searchString": query, "maxResults": "10", "searchTypes": "STOPPOINT"}
@@ -74,7 +101,7 @@ def parsejson_find_stops(data):
 	output = []
 	data = data["resultList"]
 	for line in data:
-		output.append({ "color": "#007ac9", "description": line["stopPointName"], "id": line["stopPointId"], "line_summary": "",  "name": line["stopPointName"], "x": line["longitude"], "y": line["latitude"] })
+		output.append({ "color": "#bb0032", "description": line["stopPointName"], "id": line["stopPointId"], "line_summary": "",  "name": line["stopPointName"], "x": line["longitude"], "y": line["latitude"] })
 	return output
 
 

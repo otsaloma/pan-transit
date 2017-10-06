@@ -1,6 +1,6 @@
 {
-    "_name": "Aseag (Aachen, Germany)",
-    "_description": "Transport for Aachen (Aseag)",
+    "_name": "Aachen",
+    "_description": "ASEAG",
     "departure_list_item_qml": "DepartureListItemHsl.qml",
     "update_interval": 60
 }
