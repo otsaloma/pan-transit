@@ -26,6 +26,8 @@ import json
 import pan
 import urllib.parse
 
+from pan.i18n import _
+
 RETURN_LIST = [
     "StopPointName",
     "StopID",
@@ -123,7 +125,7 @@ def parsejson_find_nearby_stops(data):
                 if init == False:
                     newdict = {
                         "color": "#bb0032",
-                        "description": linelist[1],
+                        "description": _("Stop"),
                         "id": linelist[2],
                         "line_summary": "\n".join(line_summary[:3]),
                         "name": linelist[1],
@@ -156,7 +158,7 @@ def parsejson_find_stops(data):
     for line in data:
         output.append({
             "color": "#bb0032",
-            "description": line["stopPointName"],
+            "description": _("Stop"),
             "id": line["stopPointId"],
             "line_summary": "",
             "name": line["stopPointName"],
