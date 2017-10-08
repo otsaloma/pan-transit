@@ -114,27 +114,27 @@ def parsejson_find_nearby_stops(data):
     output = []
     init = True
     oldStop = ""
-    line_summary = ""
+    line_summary = []
     for line in data.splitlines():
         linelist = json.loads(line)
         if linelist[0] == 1:
-            line_summary_substring = linelist[9] + " -> " + linelist[11]
+            one_line_summary = "{} → {}".format(linelist[9], linelist[11])
             if oldStop != linelist[2]:
                 if init == False:
                     newdict = {
                         "color": "#bb0032",
                         "description": linelist[1],
                         "id": linelist[2],
-                        "line_summary": line_summary,
+                        "line_summary": "\n".join(line_summary[:3]),
                         "name": linelist[1],
                         "x": float(linelist[6]),
                         "y": float(linelist[5]),
                     }
                     output.append(newdict)
-                line_summary = line_summary_substring
+                line_summary = [one_line_summary]
             else:
-                if not line_summary_substring in line_summary:
-                    line_summary = line_summary + ", " + line_summary_substring
+                if not one_line_summary in line_summary:
+                    line_summary.append(one_line_summary)
             oldStop = linelist[2]
             init = False
     return output
