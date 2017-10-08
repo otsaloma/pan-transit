@@ -28,18 +28,15 @@ import json
 
 from operator import itemgetter
 
-baseurl = "http://ivu.aseag.de/interfaces/ura/{}"
-url_l = "location"
-url_i = "instant_V2"
 returnlist = "StopPointName,StopID,StopPointState,StopPointIndicator,Latitude,Longitude,VisitNumber,TripID,VehicleID,LineID,LineName,DirectionID,DestinationName,DestinationText,EstimatedTime,BaseVersion"
 radius = 500
 
 def find_departures(stops):
-    parameter = {
+    params = {
         "ReturnList": returnlist,
         "StopID": ",".join(map(str, stops)),
     }
-    url = format_url(baseurl.format(url_i), parameter)
+    url = format_url("/instant_V2", **params)
     request = pan.http.get(url, encoding="utf_8")
     data = parsejson_find_departures(request)
     return sorted(data, key=itemgetter("time"))
@@ -62,11 +59,11 @@ def parsejson_find_departures(data):
     return output
 
 def find_lines(stops):
-    parameter = {
+    params = {
         "ReturnList": returnlist,
         "StopID": ",".join(map(str, stops)),
     }
-    url = format_url(baseurl.format(url_i), parameter)
+    url = format_url("/instant_V2", **params)
     request = pan.http.get(url, encoding="utf_8")
     data = parsejson_find_lines(request)
     return sorted(data, key=itemgetter("name"))
@@ -86,12 +83,12 @@ def parsejson_find_lines(data):
     return output
 
 def find_nearby_stops(x, y):
-    parameter = {
+    params = {
         "Circle": str(y)+","+str(x)+","+str(radius),
         "ReturnList": returnlist,
     }
-    url = format_url(baseurl.format(url_i)
-    request = pan.http.get(url, parameter), encoding="utf_8")
+    url = format_url("/instant_V2", **params)
+    request = pan.http.get(url, encoding="utf_8")
     return parsejson_find_nearby_stops(request)
 
 def parsejson_find_nearby_stops(data):
@@ -124,12 +121,12 @@ def parsejson_find_nearby_stops(data):
     return output
 
 def find_stops(query, x, y):
-    parameter = {
+    params = {
         "maxResults": "10",
         "searchString": query,
         "searchTypes": "STOPPOINT",
     }
-    url = format_url(baseurl.format(url_l), parameter)
+    url = format_url("/location", **params)
     request = pan.http.get_json(url, encoding="utf_8")
     return parsejson_find_stops(request)
 
@@ -148,8 +145,8 @@ def parsejson_find_stops(data):
         })
     return output
 
-def format_url(url, p, **params):
+def format_url(path, **params):
     """Return API URL for `path` with `params`."""
-    params.update(p)
+    url = "http://ivu.aseag.de/interfaces/ura{}".format(path)
     params = "&".join("=".join(x) for x in params.items())
     return "?".join((url, params))
