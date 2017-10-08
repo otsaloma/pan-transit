@@ -25,6 +25,7 @@ import pan
 import re
 import urllib.parse
 import json
+
 from operator import itemgetter
 
 baseurl = "http://ivu.aseag.de/interfaces/ura/{}"
@@ -34,79 +35,121 @@ returnlist = "StopPointName,StopID,StopPointState,StopPointIndicator,Latitude,Lo
 radius = 500
 
 def find_departures(stops):
-	parameter = {"ReturnList": returnlist, "StopID": ",".join(map(str, stops)) }
-	request = pan.http.get( format_url(baseurl.format(url_i), parameter), encoding="utf_8" )
-	data = parsejson_find_departures(request)
-	return sorted(data, key=itemgetter("time")) 
+    parameter = {
+        "ReturnList": returnlist,
+        "StopID": ",".join(map(str, stops)),
+    }
+    url = format_url(baseurl.format(url_i), parameter)
+    request = pan.http.get(url, encoding="utf_8")
+    data = parsejson_find_departures(request)
+    return sorted(data, key=itemgetter("time"))
 
 def parsejson_find_departures(data):
-	output = []
-	for line in data.splitlines():
-		linelist = json.loads(line)
-		if (linelist[0] == 1):
-			output.append({ "destination": linelist[11], "line": linelist[9], "realtime": True, "scheduled_time": linelist[15]/1000, "stop": linelist[2], "time": linelist[15]/1000, "y": linelist[5], "x": linelist[6] })
-	return output
+    output = []
+    for line in data.splitlines():
+        linelist = json.loads(line)
+        if linelist[0] == 1:
+            output.append({
+                "destination": linelist[11],
+                "line": linelist[9],
+                "realtime": True,
+                "scheduled_time": linelist[15]/1000,
+                "stop": linelist[2],
+                "time": linelist[15]/1000,
+                "x": linelist[6],
+                "y": linelist[5],
+            })
+    return output
 
 def find_lines(stops):
-	parameter = {"ReturnList": returnlist, "StopID": ",".join(map(str, stops)) }
-	request = pan.http.get( format_url(baseurl.format(url_i), parameter), encoding="utf_8" )
-	data = parsejson_find_lines(request)
-	return sorted(data, key=itemgetter("name")) 
+    parameter = {
+        "ReturnList": returnlist,
+        "StopID": ",".join(map(str, stops)),
+    }
+    url = format_url(baseurl.format(url_i), parameter)
+    request = pan.http.get(url, encoding="utf_8")
+    data = parsejson_find_lines(request)
+    return sorted(data, key=itemgetter("name"))
 
 def parsejson_find_lines(data):
-	output = []
-	for line in data.splitlines():
-		linelist = json.loads(line)
-		if (linelist[0] == 1):
-			newdict = { "destination": linelist[11], "id": linelist[9], "name": linelist[9] }
-			if newdict not in output:
-				output.append(newdict)
-	return output
-
+    output = []
+    for line in data.splitlines():
+        linelist = json.loads(line)
+        if linelist[0] == 1:
+            newdict = {
+                "destination": linelist[11],
+                "id": linelist[9],
+                "name": linelist[9],
+            }
+            if newdict not in output:
+                output.append(newdict)
+    return output
 
 def find_nearby_stops(x, y):
-	parameter = {"ReturnList": returnlist, "Circle": str(y)+","+str(x)+","+str(radius) }
-	request = pan.http.get( format_url(baseurl.format(url_i), parameter), encoding="utf_8" )
-	data = parsejson_find_nearby_stops(request)
-	return data
+    parameter = {
+        "Circle": str(y)+","+str(x)+","+str(radius),
+        "ReturnList": returnlist,
+    }
+    url = format_url(baseurl.format(url_i)
+    request = pan.http.get(url, parameter), encoding="utf_8")
+    return parsejson_find_nearby_stops(request)
 
 def parsejson_find_nearby_stops(data):
-	output = []
-	init = True
-	oldStop = ""
-	line_summary = ""
-	for line in data.splitlines():
-		linelist = json.loads(line)
-		if (linelist[0] == 1):
-			line_summary_substring = linelist[9] + " -> " + linelist[11]
-			if (oldStop != linelist[2]):
-				if (init == False):
-					newdict = { "color": "#bb0032", "description": linelist[1], "id": linelist[2], "name": linelist[1], "line_summary": line_summary, "y": linelist[5], "x": linelist[6] }
-					output.append(newdict)
-				line_summary = line_summary_substring
-			else:
-				if (not (line_summary_substring in line_summary)):
-					line_summary = line_summary + ", " + line_summary_substring
-			oldStop = linelist[2]
-			init = False
-	return output
+    output = []
+    init = True
+    oldStop = ""
+    line_summary = ""
+    for line in data.splitlines():
+        linelist = json.loads(line)
+        if linelist[0] == 1:
+            line_summary_substring = linelist[9] + " -> " + linelist[11]
+            if oldStop != linelist[2]:
+                if init == False:
+                    newdict = {
+                        "color": "#bb0032",
+                        "description": linelist[1],
+                        "id": linelist[2],
+                        "name": linelist[1],
+                        "line_summary": line_summary,
+                        "x": linelist[6],
+                        "y": linelist[5],
+                    }
+                    output.append(newdict)
+                line_summary = line_summary_substring
+            else:
+                if not line_summary_substring in line_summary:
+                    line_summary = line_summary + ", " + line_summary_substring
+            oldStop = linelist[2]
+            init = False
+    return output
 
 def find_stops(query, x, y):
-	parameter = {"searchString": query, "maxResults": "10", "searchTypes": "STOPPOINT"}
-	request = pan.http.get_json( format_url(baseurl.format(url_l), parameter), encoding="utf_8" )
-	data = parsejson_find_stops(request)
-	return data
+    parameter = {
+        "maxResults": "10",
+        "searchString": query,
+        "searchTypes": "STOPPOINT",
+    }
+    url = format_url(baseurl.format(url_l), parameter)
+    request = pan.http.get_json(url, encoding="utf_8")
+    return parsejson_find_stops(request)
 
 def parsejson_find_stops(data):
-	output = []
-	data = data["resultList"]
-	for line in data:
-		output.append({ "color": "#bb0032", "description": line["stopPointName"], "id": line["stopPointId"], "line_summary": "",  "name": line["stopPointName"], "x": line["longitude"], "y": line["latitude"] })
-	return output
-
+    output = []
+    data = data["resultList"]
+    for line in data:
+        output.append({
+            "color": "#bb0032",
+            "description": line["stopPointName"],
+            "id": line["stopPointId"],
+            "line_summary": "",
+            "name": line["stopPointName"],
+            "x": line["longitude"],
+            "y": line["latitude"],
+        })
+    return output
 
 def format_url(url, p, **params):
-	"""Return API URL for `path` with `params`."""
-	params.update(p)
-	params = "&".join("=".join(x) for x in params.items())
-	return "?".join((url, params))
+    """Return API URL for `path` with `params`."""
+    params.update(p)
+    params = "&".join("=".join(x) for x in params.items())
+    return "?".join((url, params))
