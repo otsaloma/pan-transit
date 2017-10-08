@@ -89,6 +89,7 @@ def parsejson_find_lines(data):
         linelist = json.loads(line)
         if linelist[0] == 1:
             newdict = {
+                "color": "#bb0032",
                 "destination": linelist[11],
                 "id": linelist[9],
                 "name": linelist[9],
@@ -123,8 +124,8 @@ def parsejson_find_nearby_stops(data):
                         "color": "#bb0032",
                         "description": linelist[1],
                         "id": linelist[2],
-                        "name": linelist[1],
                         "line_summary": line_summary,
+                        "name": linelist[1],
                         "x": linelist[6],
                         "y": linelist[5],
                     }
