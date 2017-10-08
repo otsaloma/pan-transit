@@ -25,8 +25,6 @@ import pan
 import urllib.parse
 import json
 
-from operator import itemgetter
-
 RETURN_LIST = [
     "StopPointName",
     "StopID",
@@ -55,7 +53,7 @@ def find_departures(stops):
     url = format_url("/instant_V2", **params)
     request = pan.http.get(url, encoding="utf_8")
     data = parsejson_find_departures(request)
-    return sorted(data, key=itemgetter("time"))
+    return pan.util.sorted_departures(data)
 
 def parsejson_find_departures(data):
     output = []
@@ -83,7 +81,7 @@ def find_lines(stops):
     url = format_url("/instant_V2", **params)
     request = pan.http.get(url, encoding="utf_8")
     data = parsejson_find_lines(request)
-    return sorted(data, key=itemgetter("name"))
+    return pan.util.sorted_unique_lines(data)
 
 def parsejson_find_lines(data):
     output = []
