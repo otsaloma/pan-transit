@@ -48,7 +48,7 @@ def find_departures(stops):
     """Return a list of departures from `stops`."""
     params = {
         "ReturnList": ",".join(RETURN_LIST),
-        "StopID": ",".join(map(str, stops)),
+        "StopID": ",".join(stops),
     }
     url = format_url("/instant_V2", **params)
     request = pan.http.get(url, encoding="utf_8")
@@ -64,11 +64,11 @@ def parsejson_find_departures(data):
                 "destination": linelist[11],
                 "line": linelist[9],
                 "realtime": True,
-                "scheduled_time": linelist[15]/1000,
+                "scheduled_time": int(linelist[15]/1000),
                 "stop": linelist[2],
-                "time": linelist[15]/1000,
-                "x": linelist[6],
-                "y": linelist[5],
+                "time": int(linelist[15]/1000),
+                "x": float(linelist[6]),
+                "y": float(linelist[5]),
             })
     return output
 
@@ -76,7 +76,7 @@ def find_lines(stops):
     """Return a list of lines that use `stops`."""
     params = {
         "ReturnList": ",".join(RETURN_LIST),
-        "StopID": ",".join(map(str, stops)),
+        "StopID": ",".join(stops),
     }
     url = format_url("/instant_V2", **params)
     request = pan.http.get(url, encoding="utf_8")
@@ -126,8 +126,8 @@ def parsejson_find_nearby_stops(data):
                         "id": linelist[2],
                         "line_summary": line_summary,
                         "name": linelist[1],
-                        "x": linelist[6],
-                        "y": linelist[5],
+                        "x": float(linelist[6]),
+                        "y": float(linelist[5]),
                     }
                     output.append(newdict)
                 line_summary = line_summary_substring
@@ -160,8 +160,8 @@ def parsejson_find_stops(data):
             "id": line["stopPointId"],
             "line_summary": "",
             "name": line["stopPointName"],
-            "x": line["longitude"],
-            "y": line["latitude"],
+            "x": float(line["longitude"]),
+            "y": float(line["latitude"]),
         })
     return output
 
