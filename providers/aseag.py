@@ -22,7 +22,6 @@ See: http://content.tfl.gov.uk/tfl-live-bus-river-bus-arrivals-api-documentation
 """
 
 import pan
-import re
 import urllib.parse
 import json
 
