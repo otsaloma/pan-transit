@@ -16,14 +16,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-Public transport stops and departures from ASEAG, Aachen Germany.
+Public transport stops and departures from ASEAG, Aachen, Germany.
+
 API not seperately documented but uses URA interface like TfL.
-See: http://content.tfl.gov.uk/tfl-live-bus-river-bus-arrivals-api-documentation.pdf
+http://content.tfl.gov.uk/tfl-live-bus-river-bus-arrivals-api-documentation.pdf
 """
 
+import json
 import pan
 import urllib.parse
-import json
 
 RETURN_LIST = [
     "StopPointName",
@@ -102,7 +103,7 @@ def find_nearby_stops(x, y):
     """Return a list of stops near given coordinates."""
     radius = 500
     params = {
-        "Circle": str(y)+","+str(x)+","+str(radius),
+        "Circle": "{:.6f},{:.6f},{:d}".format(y, x, radius),
         "ReturnList": ",".join(RETURN_LIST),
     }
     url = format_url("/instant_V2", **params)
@@ -140,10 +141,9 @@ def parsejson_find_nearby_stops(data):
 
 def find_stops(query, x, y):
     """Return a list of stops matching `query`."""
-    query = urllib.parse.quote(query)
     params = {
         "maxResults": "10",
-        "searchString": query,
+        "searchString": urllib.parse.quote(query),
         "searchTypes": "STOPPOINT",
     }
     url = format_url("/location", **params)
