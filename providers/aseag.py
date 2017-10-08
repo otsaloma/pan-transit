@@ -48,6 +48,7 @@ RETURN_LIST = [
 ]
 
 def find_departures(stops):
+    """Return a list of departures from `stops`."""
     params = {
         "ReturnList": ",".join(RETURN_LIST),
         "StopID": ",".join(map(str, stops)),
@@ -75,6 +76,7 @@ def parsejson_find_departures(data):
     return output
 
 def find_lines(stops):
+    """Return a list of lines that use `stops`."""
     params = {
         "ReturnList": ",".join(RETURN_LIST),
         "StopID": ",".join(map(str, stops)),
@@ -99,6 +101,7 @@ def parsejson_find_lines(data):
     return output
 
 def find_nearby_stops(x, y):
+    """Return a list of stops near given coordinates."""
     radius = 500
     params = {
         "Circle": str(y)+","+str(x)+","+str(radius),
@@ -138,6 +141,7 @@ def parsejson_find_nearby_stops(data):
     return output
 
 def find_stops(query, x, y):
+    """Return a list of stops matching `query`."""
     params = {
         "maxResults": "10",
         "searchString": query,
