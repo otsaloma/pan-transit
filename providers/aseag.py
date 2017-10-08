@@ -142,6 +142,7 @@ def parsejson_find_nearby_stops(data):
 
 def find_stops(query, x, y):
     """Return a list of stops matching `query`."""
+    query = urllib.parse.quote(query)
     params = {
         "maxResults": "10",
         "searchString": query,
