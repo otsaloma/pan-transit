@@ -28,12 +28,28 @@ import json
 
 from operator import itemgetter
 
-returnlist = "StopPointName,StopID,StopPointState,StopPointIndicator,Latitude,Longitude,VisitNumber,TripID,VehicleID,LineID,LineName,DirectionID,DestinationName,DestinationText,EstimatedTime,BaseVersion"
-radius = 500
+RETURN_LIST = [
+    "StopPointName",
+    "StopID",
+    "StopPointState",
+    "StopPointIndicator",
+    "Latitude",
+    "Longitude",
+    "VisitNumber",
+    "TripID",
+    "VehicleID",
+    "LineID",
+    "LineName",
+    "DirectionID",
+    "DestinationName",
+    "DestinationText",
+    "EstimatedTime",
+    "BaseVersion",
+]
 
 def find_departures(stops):
     params = {
-        "ReturnList": returnlist,
+        "ReturnList": ",".join(RETURN_LIST),
         "StopID": ",".join(map(str, stops)),
     }
     url = format_url("/instant_V2", **params)
@@ -60,7 +76,7 @@ def parsejson_find_departures(data):
 
 def find_lines(stops):
     params = {
-        "ReturnList": returnlist,
+        "ReturnList": ",".join(RETURN_LIST),
         "StopID": ",".join(map(str, stops)),
     }
     url = format_url("/instant_V2", **params)
@@ -83,9 +99,10 @@ def parsejson_find_lines(data):
     return output
 
 def find_nearby_stops(x, y):
+    radius = 500
     params = {
         "Circle": str(y)+","+str(x)+","+str(radius),
-        "ReturnList": returnlist,
+        "ReturnList": ",".join(RETURN_LIST),
     }
     url = format_url("/instant_V2", **params)
     request = pan.http.get(url, encoding="utf_8")
