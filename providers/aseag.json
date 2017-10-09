@@ -1,0 +1,6 @@
+{
+    "_name": "Aachen",
+    "description": "ASEAG",
+    "departure_list_item_qml": "DepartureListItemHsl.qml",
+    "update_interval": 60
+}
