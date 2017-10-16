@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-04 03:29+0300\n"
+"POT-Creation-Date: 2017-10-17 00:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,8 @@ msgstr ""
 msgid "Connection timed out"
 msgstr ""
 
-#: providers/digitransit.py:96 providers/digitransit.py:114
+#: providers/aseag.py:128 providers/aseag.py:161 providers/digitransit.py:96
+#: providers/digitransit.py:114
 msgid "Stop"
 msgstr ""
 
@@ -62,36 +63,36 @@ msgstr ""
 msgid "Transifex page"
 msgstr ""
 
-#: qml/AddFavoritePage.qml:63
+#: qml/AddFavoritePage.qml:65
 msgid "Favorite"
 msgstr ""
 
-#: qml/AddFavoritePage.qml:65
+#: qml/AddFavoritePage.qml:67
 msgid "Create new"
 msgstr ""
 
-#: qml/AddFavoritePage.qml:66
+#: qml/AddFavoritePage.qml:68
 msgid "Add to existing"
 msgstr ""
 
-#: qml/AddFavoritePage.qml:88 qml/EditFavoritePage.qml:102
+#: qml/AddFavoritePage.qml:90 qml/EditFavoritePage.qml:103
 msgid "Name"
 msgstr ""
 
-#: qml/EditFavoritePage.qml:73 qml/MenuPage.qml:52 qml/SearchPage.qml:52
+#: qml/EditFavoritePage.qml:75 qml/MenuPage.qml:54 qml/SearchPage.qml:54
 msgid "Remove"
 msgstr ""
 
-#: qml/EditFavoritePage.qml:111
+#: qml/EditFavoritePage.qml:112
 msgid "Stops"
 msgstr ""
 
-#: qml/FavoritePage.qml:60 qml/StopPage.qml:83
+#: qml/FavoritePage.qml:62 qml/StopPage.qml:85
 msgid "Filter lines"
 msgstr ""
 
-#: qml/FavoritePage.qml:70 qml/FavoritePage.qml:102 qml/LineFilterPage.qml:100
-#: qml/StopPage.qml:92 qml/StopPage.qml:124
+#: qml/FavoritePage.qml:72 qml/FavoritePage.qml:104 qml/LineFilterPage.qml:100
+#: qml/StopPage.qml:94 qml/StopPage.qml:126
 msgid "Loading"
 msgstr ""
 
@@ -111,43 +112,47 @@ msgstr ""
 msgid "No lines found"
 msgstr ""
 
-#: qml/MenuPage.qml:48
+#: qml/MenuPage.qml:50
 msgid "Edit"
 msgstr ""
 
-#: qml/MenuPage.qml:72
+#: qml/MenuPage.qml:74
 msgid "About"
 msgstr ""
 
-#: qml/MenuPage.qml:77 qml/PreferencesPage.qml:37
+#: qml/MenuPage.qml:79 qml/PreferencesPage.qml:37
 msgid "Preferences"
 msgstr ""
 
-#: qml/MenuPage.qml:82 qml/SearchPage.qml:77
+#: qml/MenuPage.qml:84 qml/SearchPage.qml:79 qml/SearchPage.qml:84
 msgid "Search"
 msgstr ""
 
-#: qml/MenuPage.qml:91
+#: qml/MenuPage.qml:93
 msgid "Nearby"
 msgstr ""
 
-#: qml/MenuPage.qml:100
-msgid "Once added, favorites appear here. Pull down to select a provider and to search for stops."
+#: qml/MenuPage.qml:102
+msgid "Pull down to select a provider and to search for stops."
 msgstr ""
 
-#: qml/MenuPage.qml:167
+#: qml/MenuPage.qml:103
+msgid "Once added, favorites appear here"
+msgstr ""
+
+#: qml/MenuPage.qml:168
 msgid "Removing"
 msgstr ""
 
-#: qml/NearbyPage.qml:74 qml/SearchResultsPage.qml:74
+#: qml/NearbyPage.qml:76 qml/SearchResultsPage.qml:76
 msgid "Searching"
 msgstr ""
 
-#: qml/NearbyPage.qml:91 qml/SearchResultsPage.qml:92
+#: qml/NearbyPage.qml:93 qml/SearchResultsPage.qml:94
 msgid "%1 Stops"
 msgstr ""
 
-#: qml/NearbyPage.qml:96 qml/SearchResultsPage.qml:97
+#: qml/NearbyPage.qml:97 qml/SearchResultsPage.qml:98
 msgid "No stops found"
 msgstr ""
 
@@ -187,34 +192,38 @@ msgstr ""
 msgid "British"
 msgstr ""
 
-#: qml/SearchPage.qml:82
-msgid "Stop name or number"
+#: qml/SearchPage.qml:105
+msgid "You can search for stops by name, number or address, depending on the provider."
 msgstr ""
 
-#: qml/StopPage.qml:64
+#: qml/StopPage.qml:66
 msgid "Add to favorites"
 msgstr ""
 
 #: standard input:1
-msgid "Finland"
+msgid "Aachen"
 msgstr ""
 
 #: standard input:2
-msgid "Finnish Transport Agency · Matka.fi"
+msgid "Finland"
 msgstr ""
 
 #: standard input:3
-msgid "Helsinki"
+msgid "Finnish Transport Agency · Matka.fi"
 msgstr ""
 
 #: standard input:4
-msgid "Helsinki Region Transport (HSL)"
+msgid "Helsinki"
 msgstr ""
 
 #: standard input:5
-msgid "London"
+msgid "Helsinki Region Transport (HSL)"
 msgstr ""
 
 #: standard input:6
+msgid "London"
+msgstr ""
+
+#: standard input:7
 msgid "Transport for London (TfL) · Powered by TfL Open Data · Contains OS data © Crown copyright and database rights 2016"
 msgstr ""

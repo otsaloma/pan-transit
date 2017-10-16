@@ -24,10 +24,10 @@ the Python interpreter or a test script, e.g.
 >>> provider.find_stops("lasipalatsi", 24, 60)
 ```
 
-and qmlscene (`/usr/lib/qt5/bin/qmlscene qml/pan-maps.qml`) for testing.
-Once your provider is ready for wider use, send a pull request
-on [GitHub][pull-request] to have it added to the repository and shipped
-as part of Pan Transit.
+and qmlscene (`qmlscene qml/pan-maps.qml`) for testing. Once your
+provider is ready for wider use, send a pull request on
+[GitHub][pull-request] to have it added to the repository and shipped as
+part of Pan Transit.
 
 [pull-request]: https://github.com/otsaloma/pan-transit/pulls
 
@@ -58,7 +58,6 @@ as part of Pan Transit.
   real-time data or considerably limits the amount of departures
   returned per call, you might want to set this low, e.g. 60–300
   seconds, otherwise something higher to avoid unnecessary data traffic.
-
 
 ## Python code
 
