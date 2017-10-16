@@ -1,3 +1,11 @@
+2017-10-17: Pan Transit 0.3
+===========================
+
+* Add provider for ASEAG, Aachen, Germany (contibuted by aquac)
+* Add hint text to search screen
+* Fix string escapes in Python calls from QML
+* Add German translation
+
 2017-06-04: Pan Transit 0.2
 ===========================
 
