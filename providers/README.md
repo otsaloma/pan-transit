@@ -24,7 +24,7 @@ the Python interpreter or a test script, e.g.
 >>> provider.find_stops("lasipalatsi", 24, 60)
 ```
 
-and qmlscene (`qmlscene qml/pan-maps.qml`) for testing. Once your
+and qmlscene (`qmlscene qml/pan-transit.qml`) for testing. Once your
 provider is ready for wider use, send a pull request on
 [GitHub][pull-request] to have it added to the repository and shipped as
 part of Pan Transit.
