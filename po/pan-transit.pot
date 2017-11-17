@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-17 00:34+0300\n"
+"POT-Creation-Date: 2017-11-17 01:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,10 +39,16 @@ msgid "GitHub page"
 msgstr ""
 
 #: qml/AboutPage.qml:66
-msgid "Pan Transit is free software released under the GNU General Public License (GPL), version 3 or later."
+msgid ""
+"Pan Transit is free software released under the GNU General Public License "
+"(GPL), version 3 or later."
 msgstr ""
 
-#: qml/AboutPage.qml:71
+#: qml/AboutPage.qml:74
+msgid "Donate via PayPal"
+msgstr ""
+
+#: qml/AboutPage.qml:79
 msgid "Translated by"
 msgstr ""
 
@@ -51,15 +57,17 @@ msgstr ""
 #. Thus, you should translate it to your name. You can also include other
 #. translators who have contributed to this translation; in that case, please
 #. write them on separate lines seperated by newlines (\n).
-#: qml/AboutPage.qml:83
+#: qml/AboutPage.qml:91
 msgid "translator-credits"
 msgstr ""
 
-#: qml/AboutPage.qml:93
-msgid "You can add new user interface translations or contribute to existing ones at Transifex."
+#: qml/AboutPage.qml:101
+msgid ""
+"You can add new user interface translations or contribute to existing ones "
+"at Transifex."
 msgstr ""
 
-#: qml/AboutPage.qml:101
+#: qml/AboutPage.qml:109
 msgid "Transifex page"
 msgstr ""
 
@@ -173,7 +181,9 @@ msgid "Departure time cutoff (min)"
 msgstr ""
 
 #: qml/PreferencesPage.qml:100
-msgid "When the time remaining to departure is below cutoff, it is shown as minutes remaining instead of the departure time."
+msgid ""
+"When the time remaining to departure is below cutoff, it is shown as minutes "
+"remaining instead of the departure time."
 msgstr ""
 
 #: qml/PreferencesPage.qml:107
@@ -193,7 +203,9 @@ msgid "British"
 msgstr ""
 
 #: qml/SearchPage.qml:105
-msgid "You can search for stops by name, number or address, depending on the provider."
+msgid ""
+"You can search for stops by name, number or address, depending on the "
+"provider."
 msgstr ""
 
 #: qml/StopPage.qml:66
@@ -225,5 +237,7 @@ msgid "London"
 msgstr ""
 
 #: standard input:7
-msgid "Transport for London (TfL) · Powered by TfL Open Data · Contains OS data © Crown copyright and database rights 2016"
+msgid ""
+"Transport for London (TfL) · Powered by TfL Open Data · Contains OS data © "
+"Crown copyright and database rights 2016"
 msgstr ""

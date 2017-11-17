@@ -1,58 +1,59 @@
-# Finnish translations for pan-transit package.
-# Copyright (C) 2017 Osmo Salomaa
-# This file is distributed under the same license as the pan-transit package.
-# Osmo Salomaa <otsaloma@iki.fi>, 2017.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: pan-transit 0.1\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-17 01:56+0200\n"
-"PO-Revision-Date: 2017-11-17 01:57+0200\n"
-"Last-Translator: Osmo Salomaa <otsaloma@iki.fi>\n"
-"Language-Team: Finnish\n"
-"Language: fi\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Dimitrios Glentadakis <dglent@free.fr>, 2017\n"
+"Language-Team: Greek (https://www.transifex.com/otsaloma/teams/71442/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: pan/util.py:56
 msgid "Connection timed out"
-msgstr "Yhteys aikakatkaistiin"
+msgstr "Λήξη χρονικού ορίου σύνδεσης"
 
 #: providers/aseag.py:128 providers/aseag.py:161 providers/digitransit.py:96
 #: providers/digitransit.py:114
 msgid "Stop"
-msgstr "Pysäkki"
+msgstr "Διακοπή"
 
 #: qml/AboutPage.qml:36
 msgid "About Pan Transit"
-msgstr "Tietoja Pan Transitista"
+msgstr "Περί του Pan Transit"
 
 #: qml/AboutPage.qml:42
 msgid "version %1"
-msgstr "versio %1"
+msgstr "έκδοση %1"
 
 #: qml/AboutPage.qml:49
 msgid "GitHub page"
-msgstr "GitHub-sivu"
+msgstr "Σελίδα στο GitHub"
 
 #: qml/AboutPage.qml:66
 msgid ""
 "Pan Transit is free software released under the GNU General Public License "
 "(GPL), version 3 or later."
 msgstr ""
-"Pan Transit on vapaa ohjelmisto, julkaistu lisenssillä GNU General Public "
-"License (GPL), versio 3 tai uudempi."
+"Το Pan Transit είναι ελεύθερο λογισμικό και κυκλοφορεί υπό τους όρους της "
+"Γενικής Άδειας Χρήσης GNU, έκδοση 3 ή μεταγενέστερη."
 
 #: qml/AboutPage.qml:74
 msgid "Donate via PayPal"
-msgstr "Lahjoita PayPalin kautta"
+msgstr ""
 
 #: qml/AboutPage.qml:79
 msgid "Translated by"
-msgstr "Käännös"
+msgstr "Μετάφραση"
 
 #. TRANSLATORS: This is a special message that shouldn't be translated
 #. literally. It is used in the about page to give credits to the translators.
@@ -61,193 +62,196 @@ msgstr "Käännös"
 #. write them on separate lines seperated by newlines (\n).
 #: qml/AboutPage.qml:91
 msgid "translator-credits"
-msgstr "Osmo Salomaa"
+msgstr "Δημήτριος Γλενταδάκης"
 
 #: qml/AboutPage.qml:101
 msgid ""
 "You can add new user interface translations or contribute to existing ones "
 "at Transifex."
 msgstr ""
-"Voit lisätä uusia käyttöliittymäkäännöksiä tai osallistua nykyisten "
-"käännösten parantamiseen Transifexissa."
+"Μπορείτε να προσθέσετε μια νέα μετάφραση ή να συνεισφέρετε σε μια υπάρχουσα "
+"στο Transifex."
 
 #: qml/AboutPage.qml:109
 msgid "Transifex page"
-msgstr "Transifex-sivu"
+msgstr "Σελίδα στο Transifex"
 
 #: qml/AddFavoritePage.qml:65
 msgid "Favorite"
-msgstr "Suosikki"
+msgstr "Σελιδοδείκτης"
 
 #: qml/AddFavoritePage.qml:67
 msgid "Create new"
-msgstr "Luo uusi"
+msgstr "Δημιουργία νέου"
 
 #: qml/AddFavoritePage.qml:68
 msgid "Add to existing"
-msgstr "Lisää olemassa olevaan"
+msgstr "Προσθήκη στον υπάρχων"
 
 #: qml/AddFavoritePage.qml:90 qml/EditFavoritePage.qml:103
 msgid "Name"
-msgstr "Nimi"
+msgstr "Όνομα"
 
 #: qml/EditFavoritePage.qml:75 qml/MenuPage.qml:54 qml/SearchPage.qml:54
 msgid "Remove"
-msgstr "Poista"
+msgstr "Αφαίρεση"
 
 #: qml/EditFavoritePage.qml:112
 msgid "Stops"
-msgstr "Pysäkit"
+msgstr "Στάσεις"
 
 #: qml/FavoritePage.qml:62 qml/StopPage.qml:85
 msgid "Filter lines"
-msgstr "Valitse linjat"
+msgstr "Φίλτρο γραμμών"
 
 #: qml/FavoritePage.qml:72 qml/FavoritePage.qml:104 qml/LineFilterPage.qml:100
 #: qml/StopPage.qml:94 qml/StopPage.qml:126
 msgid "Loading"
-msgstr "Ladataan"
+msgstr "Φόρτωση"
 
 #: qml/FavoritePage.qml:138 qml/StopPage.qml:158
 msgid "No departures found"
-msgstr "Ei löytynyt lähtöjä"
+msgstr "Δεν βρέθηκαν αναχωρήσεις"
 
 #: qml/LineFilterPage.qml:76
 msgid "Mark all"
-msgstr "Merkitse kaikki"
+msgstr "Επιλογή όλων"
 
 #: qml/LineFilterPage.qml:80
 msgid "Unmark all"
-msgstr "Tyhjennä merkinnät"
+msgstr "Αποεπιλογή όλων"
 
 #: qml/LineFilterPage.qml:134
 msgid "No lines found"
-msgstr "Ei lähtöjä"
+msgstr "Κανένα αποτέλεσμα"
 
 #: qml/MenuPage.qml:50
 msgid "Edit"
-msgstr "Muokkaa"
+msgstr "Επεξεργασία"
 
 #: qml/MenuPage.qml:74
 msgid "About"
-msgstr "Tietoja"
+msgstr "Περί"
 
 #: qml/MenuPage.qml:79 qml/PreferencesPage.qml:37
 msgid "Preferences"
-msgstr "Asetukset"
+msgstr "Προτιμήσεις"
 
 #: qml/MenuPage.qml:84 qml/SearchPage.qml:79 qml/SearchPage.qml:84
 msgid "Search"
-msgstr "Etsi"
+msgstr "Αναζήτηση"
 
 #: qml/MenuPage.qml:93
 msgid "Nearby"
-msgstr "Lähellä"
+msgstr "Πλησίον"
 
 #: qml/MenuPage.qml:102
 msgid "Pull down to select a provider and to search for stops."
-msgstr "Vedä alaspäin valitaksesi palveluntarjoajan ja etsiäksesi pysäkkejä."
+msgstr ""
+"Τραβήξτε προς τα κάτω για να επιλέξετε έναν πάροχο και να αναζητήσετε "
+"στάσεις."
 
 #: qml/MenuPage.qml:103
 msgid "Once added, favorites appear here"
-msgstr "Kun lisätty, suosikit näkyvät tässä."
+msgstr "Μετά την προσθήκη, οι σελιδοδείκτες εμφανίζονται εδώ"
 
 #: qml/MenuPage.qml:168
 msgid "Removing"
-msgstr "Poistetaan"
+msgstr "Αφαίρεση"
 
 #: qml/NearbyPage.qml:76 qml/SearchResultsPage.qml:76
 msgid "Searching"
-msgstr "Etsitään"
+msgstr "Αναζήτηση"
 
 #: qml/NearbyPage.qml:93 qml/SearchResultsPage.qml:94
 msgid "%1 Stops"
-msgstr "%1 pysäkkiä"
+msgstr "%1 Στάση"
 
 #: qml/NearbyPage.qml:97 qml/SearchResultsPage.qml:98
 msgid "No stops found"
-msgstr "Ei pysäkkejä"
+msgstr "Δεν βρέθηκαν στάσεις"
 
 #: qml/PreferencesPage.qml:42
 msgid "Provider"
-msgstr "Palveluntarjoaja"
+msgstr "Πάροχος"
 
 #: qml/PreferencesPage.qml:55
 msgid "Display"
-msgstr "Esitys"
+msgstr "Εμφάνιση"
 
 #: qml/PreferencesPage.qml:61
 msgid "Favorite highlight radius (m)"
-msgstr "Suosikin korostussäde (m)"
+msgstr "Τονισμός σελιδοδείκτη με σε ακτίνα απόστασης (μ)"
 
 #: qml/PreferencesPage.qml:80
 msgid "Departure time cutoff (min)"
-msgstr "Lähdön aikaraja (min)"
+msgstr "Εμφάνιση του εναπομένοντος χρόνου αναχώρησης (λεπ)"
 
 #: qml/PreferencesPage.qml:100
 msgid ""
-"When the time remaining to departure is below cutoff, it is shown as minutes "
-"remaining instead of the departure time."
+"When the time remaining to departure is below cutoff, it is shown as minutes"
+" remaining instead of the departure time."
 msgstr ""
-"Kun lähtöön jäljellä oleva aika on alle aikarajan, niin se näytetään "
-"minuutteina jäljellä lähtöajan sijaan."
+"Όταν ο εναπομένων χρόνος αναχώρησης κάτω του ορίου αυτού,  αντί της ώρας "
+"αναχώρησης εμφανίζεται ο εναπομένων χρόνος."
 
 #: qml/PreferencesPage.qml:107
 msgid "Units"
-msgstr "Yksiköt"
+msgstr "Μονάδες"
 
 #: qml/PreferencesPage.qml:109
 msgid "Metric"
-msgstr "Metrinen"
+msgstr "Μετρικό"
 
 #: qml/PreferencesPage.qml:110
 msgid "American"
-msgstr "Amerikkalainen"
+msgstr "Αμερικανικό"
 
 #: qml/PreferencesPage.qml:111
 msgid "British"
-msgstr "Brittiläinen"
+msgstr "Βρετανικό"
 
 #: qml/SearchPage.qml:105
 msgid ""
 "You can search for stops by name, number or address, depending on the "
 "provider."
 msgstr ""
-"Voit etsiä pysäkkejä nimen, numeron tai osoitteen perusteella, "
-"palveluntarjoajasta riippuen."
+"Μπορείτε να αναζητήσετε για στάσεις ανά όνομα, αριθμό ή διεύθυνση, ανάλογα "
+"με τον πάροχο."
 
 #: qml/StopPage.qml:66
 msgid "Add to favorites"
-msgstr "Lisää suosikkeihin"
+msgstr "Προσθήκη στους σελιδοδείκτες"
 
 #: standard input:1
 msgid "Aachen"
-msgstr "Aachen"
+msgstr "Άαχεν"
 
 #: standard input:2
 msgid "Finland"
-msgstr "Suomi"
+msgstr "Φινλανδία"
 
 #: standard input:3
 msgid "Finnish Transport Agency · Matka.fi"
-msgstr "Liikennevirasto · Matka.fi"
+msgstr "Φιλανδικός πράκτορας μεταφορών · Matka.fi"
 
 #: standard input:4
 msgid "Helsinki"
-msgstr "Helsinki"
+msgstr "Ελσίνκι"
 
 #: standard input:5
 msgid "Helsinki Region Transport (HSL)"
-msgstr "Helsingin seudun liikenne (HSL)"
+msgstr "Περιφερειακός μεταφορέας Ελσίνκι (HSL)"
 
 #: standard input:6
 msgid "London"
-msgstr "Lontoo"
+msgstr "Λονδίνο"
 
 #: standard input:7
 msgid ""
 "Transport for London (TfL) · Powered by TfL Open Data · Contains OS data © "
 "Crown copyright and database rights 2016"
 msgstr ""
-"Transport for London (TfL) · Powered by TfL Open Data · Contains OS data © "
-"Crown copyright and database rights 2016"
+"Μεταφορές για το Λονδίνο (Tfl) · Τροφοδοτούμενο από την TfL Open Data · "
+"Περιέχει δεδομένα OS © Crown πνευματικά δικαιώματα και δικαιώματα βάσης "
+"δεδομένων 2016"
