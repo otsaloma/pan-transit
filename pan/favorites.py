@@ -18,6 +18,7 @@
 """A collection of favorite stop groups and their metadata."""
 
 import copy
+import json
 import os
 import pan
 import sys
@@ -144,6 +145,7 @@ class Favorites:
                 self._favorites = list(map(
                     pan.AttrDict,
                     pan.util.read_json(self._path)))
+                self._validate()
                 self._update_meta()
 
     def remove(self, key):
@@ -187,6 +189,11 @@ class Favorites:
             favorite = self.get(key)
             stops = self.get_stop_ids(key)
             lines = provider.find_lines(stops)
+            if not isinstance(lines, list):
+                # Likely due to a timeout, see util.api_query.
+                raise TypeError("Bad value for lines: {}"
+                                .format(json.dumps(lines)))
+
             ignores = self.get_ignore_lines(key)
             lines = pan.util.filter_lines(lines, ignores)
             favorite.lines = list(filter(None, lines))
@@ -208,6 +215,32 @@ class Favorites:
                 threading.Thread(target=self._update_lines,
                                  args=[favorite.key, provider],
                                  daemon=True).start()
+
+    def _validate(self):
+        """Drop invalid entries in favorites."""
+        # This might be needed if the API returns some kind of an error
+        # and we fail to handle that correctly. Possible issues are likely
+        # to be related to fields updated after the favorite creation, either
+        # automatically (see _update_lines) or by the user.
+        for favorite in self._favorites:
+            self._validate_field(favorite, "ignore_lines", list, [], dict)
+            self._validate_field(favorite, "lines", list, [], dict)
+            self._validate_field(favorite, "stops", list, [], dict)
+
+    def _validate_field(self, values, key, value_type, default, child_type=None):
+        """Set `key` in `values` to `default` if invalid."""
+        if not isinstance(values[key], value_type):
+            print("Discarding bad value for '{}': {}"
+                  .format(key, repr(values[key])),
+                  file=sys.stderr)
+            values[key] = default
+        if child_type is None: return
+        for i in reversed(range(len(values[key]))):
+            if not isinstance(values[key][i], child_type):
+                print("Discarding bad child under '{}': {}"
+                      .format(key, json.dumps(values[key][i])),
+                      file=sys.stderr)
+                del values[key][i]
 
     def write(self):
         """Write list of favorites to file."""
