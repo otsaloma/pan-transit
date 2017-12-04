@@ -1,7 +1,7 @@
 # -*- coding: us-ascii-unix -*-
 
 NAME       = harbour-pan-transit
-VERSION    = 0.3
+VERSION    = 1.0
 LANGS      = $(basename $(notdir $(wildcard po/*.po)))
 
 DESTDIR    =

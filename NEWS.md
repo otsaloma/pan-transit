@@ -1,3 +1,11 @@
+2017-12-04: Pan Transit 1.0
+===========================
+
+* Fix API errors causing invalid data in favorites
+* Add donate button to about page
+* Add Greek and Polish translations
+* Update translations
+
 2017-10-17: Pan Transit 0.3
 ===========================
 
