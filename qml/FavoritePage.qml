@@ -147,14 +147,15 @@ Page {
     }
 
     function update() {
+        // Always update times remaining to departure first,
+        // since any API call to load new data will take a while.
+        page.updateTimes();
+        page.updateWidths();
+        app.cover.update();
         if (Date.now() - page.downloadTime >
             py.evaluate("pan.app.provider.update_interval") * 1000) {
             // Load new departures from the API.
             page.populate(true);
-        } else {
-            page.updateTimes();
-            page.updateWidths();
-            app.cover.update();
         }
     }
 
