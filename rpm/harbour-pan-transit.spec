@@ -5,7 +5,7 @@
 %define __provides_exclude_from ^%{_datadir}/.*$
 
 Name: harbour-pan-transit
-Version: 1.0
+Version: 1.1
 Release: 1
 Summary: Departures from public transport stops
 License: GPLv3+

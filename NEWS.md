@@ -1,3 +1,10 @@
+2018-02-18: Pan Transit 1.1
+===========================
+
+* Update times remaining to departure faster after returning from
+  another app or from device sleep
+* Update translations
+
 2017-12-04: Pan Transit 1.0
 ===========================
 
