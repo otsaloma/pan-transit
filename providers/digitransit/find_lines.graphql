@@ -1,12 +1,12 @@
 {
-    stops(ids: [{ids}]) {
-        patterns {
-            headsign
-            route {
-                gtfsId
-                mode
-                shortName
-            }
-        }
+  stops(ids: [{ids}]) {
+    patterns {
+      headsign
+      route {
+        gtfsId
+        mode
+        shortName
+      }
     }
+  }
 }

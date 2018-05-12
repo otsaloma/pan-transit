@@ -1,6 +1,6 @@
 {
-    "_name": "Finland",
-    "_description": "Finnish Transport Agency · Matka.fi",
-    "departure_list_item_qml": "DepartureListItemHsl.qml",
-    "update_interval": 300
+  "_name": "Finland",
+  "_description": "Finnish Transport Agency · Matka.fi",
+  "departure_list_item_qml": "DepartureListItemHsl.qml",
+  "update_interval": 300
 }

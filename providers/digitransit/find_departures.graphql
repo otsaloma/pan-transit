@@ -1,20 +1,20 @@
 {
-    stops(ids: [{ids}]) {
-        gtfsId
-        lat
-        lon
-        stoptimesWithoutPatterns(numberOfDepartures: 30) {
-            realtime
-            realtimeDeparture
-            scheduledDeparture
-            serviceDay
-            trip {
-                route {
-                    mode
-                    shortName
-                }
-                tripHeadsign
-            }
+  stops(ids: [{ids}]) {
+    gtfsId
+    lat
+    lon
+    stoptimesWithoutPatterns(numberOfDepartures: 30) {
+      realtime
+      realtimeDeparture
+      scheduledDeparture
+      serviceDay
+      trip {
+        route {
+          mode
+          shortName
         }
+        tripHeadsign
+      }
     }
+  }
 }
