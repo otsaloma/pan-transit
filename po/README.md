@@ -28,10 +28,10 @@ translation to the Pan Transit source tree, build the RPM and install it.
    code, e.g. `fi.po` or `pt_BR.po`.
 
 1. Run command `make rpm` in the source directory. You'll need `make`,
-   `rpmbuild`, `gettext` and `linguist` from `qttools`. You'll find the
-   resulting RPM under the `rpm` directory. Copy that to your device and
-   install e.g. via the File Browser app or `pkcon install-local ...` at
-   a command line.
+   `rpmbuild`, `gettext` and `qttools`. You'll find the resulting RPM
+   under the `rpm` directory. Copy that to your device and install e.g.
+   via the File Browser app or `pkcon install-local ...` at a command
+   line.
 
 [dl-po]: https://www.transifex.com/otsaloma/pan-transit/pan-transitpot/fi/download/for_use/
 [releases]: https://github.com/otsaloma/pan-transit/releases
