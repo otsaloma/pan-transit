@@ -15,4 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from pan.test.unittest import *
+from pan.test.unittest import TestCase
+
+assert TestCase

@@ -31,17 +31,36 @@ except ImportError:
         def send(*args): pass
     sys.modules["pyotherside"] = pyotherside()
 
-from pan.paths import *
+from pan.paths import CACHE_HOME_DIR
+from pan.paths import CONFIG_HOME_DIR
+from pan.paths import DATA_DIR
+from pan.paths import DATA_HOME_DIR
+from pan.paths import LOCALE_DIR
 from pan import i18n
 from pan import util
 from pan import http
-from pan.attrdict import *
-from pan.provider import *
-from pan.favorites import *
-from pan.history import *
-from pan.config import *
+from pan.attrdict import AttrDict
+from pan.provider import Provider
+from pan.favorites import Favorites
+from pan.history import History
+from pan.config import ConfigurationStore
 conf = ConfigurationStore()
-from pan.application import *
+from pan.application import Application
+
+assert Application
+assert AttrDict
+assert CACHE_HOME_DIR
+assert CONFIG_HOME_DIR
+assert ConfigurationStore
+assert DATA_DIR
+assert DATA_HOME_DIR
+assert Favorites
+assert History
+assert http
+assert i18n
+assert LOCALE_DIR
+assert Provider
+assert util
 
 def main():
     """Initialize application."""
