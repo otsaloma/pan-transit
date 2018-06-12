@@ -1,3 +1,9 @@
+2018-06-12: Pan Transit 1.2
+===========================
+
+* Bump PyOtherSide dependency to 1.5.1
+* Update translations
+
 2018-02-18: Pan Transit 1.1
 ===========================
 

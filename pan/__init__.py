@@ -17,7 +17,7 @@
 
 """Departures from public transportation stops."""
 
-__version__ = "1.1"
+__version__ = "1.2"
 
 try:
     import pyotherside
