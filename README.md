@@ -1,8 +1,7 @@
 Pan Transit
 ===========
 
-[![Build Status](https://travis-ci.org/otsaloma/pan-transit.svg)](https://travis-ci.org/otsaloma/pan-transit)
-[![Donate](https://img.shields.io/badge/donate-paypal.me-blue.svg)](https://www.paypal.me/otsaloma)
+![Not Maintained](https://img.shields.io/maintenance/no/2018.svg)
 
 Pan Transit is an application for Sailfish OS to view departures from
 public transport stops. It is designed to support multiple different
