@@ -1,0 +1,251 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Guillaume Lanternier <guillaume.lanternier@protonmail.com>, 2017
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-06-12 22:27+0300\n"
+"PO-Revision-Date: 2017-02-05 00:47+0000\n"
+"Last-Translator: Guillaume Lanternier <guillaume.lanternier@protonmail.com>, 2017\n"
+"Language-Team: French (https://www.transifex.com/otsaloma/teams/71442/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: pan/util.py:56
+msgid "Connection timed out"
+msgstr "Echec de la connexion"
+
+#: providers/aseag.py:128 providers/aseag.py:161 providers/digitransit.py:96
+#: providers/digitransit.py:114
+msgid "Stop"
+msgstr "Arrêt / station"
+
+#: qml/AboutPage.qml:36
+msgid "About Pan Transit"
+msgstr "A propos de Pan Transit"
+
+#: qml/AboutPage.qml:42
+msgid "version %1"
+msgstr "version %1"
+
+#: qml/AboutPage.qml:49
+msgid "GitHub page"
+msgstr ""
+
+#: qml/AboutPage.qml:66
+msgid ""
+"Pan Transit is free software released under the GNU General Public License "
+"(GPL), version 3 or later."
+msgstr ""
+"Pan Transit est un logiciel libre diffusé sous licence GNU General Public "
+"License (GPL), version 3 ou ultérieure."
+
+#: qml/AboutPage.qml:74
+msgid "Donate via PayPal"
+msgstr ""
+
+#: qml/AboutPage.qml:79
+msgid "Translated by"
+msgstr "Traduit par"
+
+#. TRANSLATORS: This is a special message that shouldn't be translated
+#. literally. It is used in the about page to give credits to the translators.
+#. Thus, you should translate it to your name. You can also include other
+#. translators who have contributed to this translation; in that case, please
+#. write them on separate lines seperated by newlines (\n).
+#: qml/AboutPage.qml:91
+msgid "translator-credits"
+msgstr "G. Lanternier"
+
+#: qml/AboutPage.qml:101
+msgid ""
+"You can add new user interface translations or contribute to existing ones "
+"at Transifex."
+msgstr "Vous pouvez contribuer à la traduction de Pan-Transit sur Transifex."
+
+#: qml/AboutPage.qml:109
+msgid "Transifex page"
+msgstr ""
+
+#: qml/AddFavoritePage.qml:65
+msgid "Favorite"
+msgstr "Favori"
+
+#: qml/AddFavoritePage.qml:67
+msgid "Create new"
+msgstr "Créer un nouveau favori"
+
+#: qml/AddFavoritePage.qml:68
+msgid "Add to existing"
+msgstr "Ajouter à un favori existant"
+
+#: qml/AddFavoritePage.qml:90 qml/EditFavoritePage.qml:103
+msgid "Name"
+msgstr "Nom"
+
+#: qml/EditFavoritePage.qml:75 qml/MenuPage.qml:54 qml/SearchPage.qml:54
+msgid "Remove"
+msgstr "Supprimer"
+
+#: qml/EditFavoritePage.qml:112
+msgid "Stops"
+msgstr "Arrêts"
+
+#: qml/FavoritePage.qml:62 qml/StopPage.qml:85
+msgid "Filter lines"
+msgstr "Filtrer les lignes"
+
+#: qml/FavoritePage.qml:72 qml/FavoritePage.qml:104 qml/LineFilterPage.qml:100
+#: qml/StopPage.qml:94 qml/StopPage.qml:126
+msgid "Loading"
+msgstr "En cours de chargement"
+
+#: qml/FavoritePage.qml:138 qml/StopPage.qml:158
+msgid "No departures found"
+msgstr "Pas de départs"
+
+#: qml/LineFilterPage.qml:76
+msgid "Mark all"
+msgstr "Tout sélectionner"
+
+#: qml/LineFilterPage.qml:80
+msgid "Unmark all"
+msgstr "Tout déselectionner"
+
+#: qml/LineFilterPage.qml:134
+msgid "No lines found"
+msgstr "Aucun résultat"
+
+#: qml/MenuPage.qml:50
+msgid "Edit"
+msgstr "Modifier"
+
+#: qml/MenuPage.qml:74
+msgid "About"
+msgstr "A propos"
+
+#: qml/MenuPage.qml:79 qml/PreferencesPage.qml:37
+msgid "Preferences"
+msgstr "Paramètres"
+
+#: qml/MenuPage.qml:84 qml/SearchPage.qml:79 qml/SearchPage.qml:84
+msgid "Search"
+msgstr "Rechercher"
+
+#: qml/MenuPage.qml:93
+msgid "Nearby"
+msgstr "A proximité"
+
+#: qml/MenuPage.qml:102
+msgid "Pull down to select a provider and to search for stops."
+msgstr ""
+
+#: qml/MenuPage.qml:103
+msgid "Once added, favorites appear here"
+msgstr ""
+
+#: qml/MenuPage.qml:168
+msgid "Removing"
+msgstr "Supprimer"
+
+#: qml/NearbyPage.qml:76 qml/SearchResultsPage.qml:76
+msgid "Searching"
+msgstr "Recherche en cours"
+
+#: qml/NearbyPage.qml:93 qml/SearchResultsPage.qml:94
+msgid "%1 Stops"
+msgstr "%1 arrêts"
+
+#: qml/NearbyPage.qml:97 qml/SearchResultsPage.qml:98
+msgid "No stops found"
+msgstr "Pas d'arrêt trouvé"
+
+#: qml/PreferencesPage.qml:42
+msgid "Provider"
+msgstr "Réseau"
+
+#: qml/PreferencesPage.qml:55
+msgid "Display"
+msgstr "Affichage"
+
+#: qml/PreferencesPage.qml:61
+msgid "Favorite highlight radius (m)"
+msgstr "Surligner les favoris dans un rayon de proximité de (m)"
+
+#: qml/PreferencesPage.qml:80
+msgid "Departure time cutoff (min)"
+msgstr "Afficher le compte à rebours à partir de (mins)"
+
+#: qml/PreferencesPage.qml:100
+msgid ""
+"When the time remaining to departure is below cutoff, it is shown as minutes"
+" remaining instead of the departure time."
+msgstr ""
+"Quand le temps restant avant le départ est inférieur à cette limite, c'est "
+"le compte à rebours qui est affiché en lieu et place de l'heure de départ."
+
+#: qml/PreferencesPage.qml:107
+msgid "Units"
+msgstr "Unités"
+
+#: qml/PreferencesPage.qml:109
+msgid "Metric"
+msgstr "Système métrique"
+
+#: qml/PreferencesPage.qml:110
+msgid "American"
+msgstr "Américain"
+
+#: qml/PreferencesPage.qml:111
+msgid "British"
+msgstr "Britannique"
+
+#: qml/SearchPage.qml:105
+msgid ""
+"You can search for stops by name, number or address, depending on the "
+"provider."
+msgstr ""
+
+#: qml/StopPage.qml:66
+msgid "Add to favorites"
+msgstr "Ajouter aux favoris"
+
+#: standard input:1
+msgid "Aachen"
+msgstr ""
+
+#: standard input:2
+msgid "Finland"
+msgstr ""
+
+#: standard input:3
+msgid "Finnish Transport Agency · Matka.fi"
+msgstr ""
+
+#: standard input:4
+msgid "Helsinki"
+msgstr ""
+
+#: standard input:5
+msgid "Helsinki Region Transport (HSL)"
+msgstr "Helsinki Region Transport (HSL)"
+
+#: standard input:6
+msgid "London"
+msgstr ""
+
+#: standard input:7
+msgid ""
+"Transport for London (TfL) · Powered by TfL Open Data · Contains OS data © "
+"Crown copyright and database rights 2016"
+msgstr ""
